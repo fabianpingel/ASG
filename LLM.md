@@ -1,9 +1,10 @@
-# 🧠 Installation eines LLM auf einem Raspberry Pi Zero 2 W mit Ollama
+# 🚀 Build Your Own AI 🧠
+# 💬 Dein eigenes Sprachmodell 'Tiny-GPT' auf einem Raspberry Pi Zero 2 W
 
-Diese Anleitung orientiert sich an [diesem](https://github.com/Gilzone/Installing-a-LLM-on-Raspberry-Pi-Zero-2-W) englischsprachigen Tutorial und zeigt dir Schritt für Schritt, wie du auf einem sehr kleinen, kostengünstigen Computer – dem **[Raspberry Pi Zero 2 W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/)** – ein eigenes **Großes-Sprach-Modell (LLM)** installierst und ausführst.
+Diese Anleitung orientiert sich an diesem englischsprachigen [Tutorial](https://github.com/Gilzone/Installing-a-LLM-on-Raspberry-Pi-Zero-2-W) und zeigt dir Schritt für Schritt, wie du auf einem sehr kleinen, kostengünstigen Computer – dem **[Raspberry Pi Zero 2 W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/)** – ein eigenes **Großes-Sprach-Modell (auf englisch Large-Language-Model, LLM)** installierst und ausführst.
 
-Du brauchst **keine Programmier- oder Linux-Vorkenntnisse**.  
-Alles wird erklärt 😊
+Du brauchst hierfür **keine Programmier- oder IT-Vorkenntnisse**.  
+Alles wird Dir erklärt 😊
 
 ---
 
@@ -11,6 +12,7 @@ Alles wird erklärt 😊
 
 Am Ende kannst du:
 
+- EIn Betriebssystem installieren
 - Ein LLM lokal auf deinem Raspberry Pi starten
 - Fragen an das Sprachmodell stellen
 - Verstehen, wie KI „auf Hardware läuft“
@@ -19,7 +21,105 @@ Am Ende kannst du:
 
 # 🧰 Voraussetzungen
 
-## Hardware
+## 💻 Hardware (die Geräte)
+
+### 🧠 Raspberry Pi Zero 2 W
+
+Der Raspberry Pi ist ein Mini-Computer.
+Er ist ungefähr halb so groß wie eine Kredit- oder EC-Karte und passt in Deine Hosentasche, kann aber Programme ausführen wie ein 'normaler' PC.
+
+![Raspberry Pi Zero 2 W](https://assets.raspberrypi.com/static/51035ec4c2f8f630b3d26c32e90c93f1/2b8d7/zero2-hero.webp)
+
+Hier mal ein Vergleich, was ein mein erster PC konnte, als ich so alt war wie ihr.
+
+#### Vergleich: Raspberry Pi Zero 2 W vs. PC von 1995
+
+| Merkmal | Raspberry Pi Zero 2 W | Typischer PC (ca. 1995) |
+|----------|----------------------|---------------------------|
+| 🧠 Prozessor | 1 GHz (viel schneller) | 75–166 MHz |
+| 💾 Arbeitsspeicher | 512 MB | 8–16 MB |
+| 💽 Speicher | SD-Karte bis 32 GB+ | Festplatte 500 MB – 1 GB |
+| 📶 Netzwerk | WLAN & Bluetooth eingebaut | meist Modem oder kein Netzwerk |
+| 📺 Bildschirm | externer Monitor möglich | großer Röhrenmonitor |
+| ⚡ Stromverbrauch | sehr wenig | viel Strom |
+| 💰 Preis | ca. 17 € | oft 1000 DM oder mehr |
+| 📏 Größe | kreditkartengroß | großer Desktop-PC |
+
+---
+
+### 💾 MicroSD-Karte (mindestens 32 GB)
+
+Die SD-Karte ist die **Festplatte** des Raspberry Pi. 
+Darauf werden das Betriebssystem, Programme, gespeichert:
+- 
+- Programme
+- unser Sprachmodell
+
+👉 Ohne SD-Karte kann der Raspberry Pi nicht starten.
+
+![SD-Karte](https://www.sandisk.com/content/dam/store/en-us/assets/products/memory-cards/extreme-uhs-i-microsd/extreme-uhs-i-microsd-32gb.png.wdthumb.1280.1280.webp)
+
+
+### 🧑‍💻 Software (die Programme)
+##### 🐧 Betriebssystem
+
+Das Betriebssystem ist wie Windows oder macOS, nur für den Raspberry Pi.
+Es sorgt dafür, dass Programme laufen können.
+
+👉 Beispiel: Raspberry Pi OS.
+
+##### 🤖 Ollama
+
+Ollama ist ein Programm, mit dem man ein Sprachmodell starten kann.
+Es lädt das Modell herunter und macht es nutzbar.
+
+👉 Damit sprechen wir mit unserer eigenen KI.
+
+
+##### 🧠 Sprachmodell (LLM)
+
+Ein Sprachmodell ist ein Programm, das Texte versteht und Antworten schreibt.
+Zum Beispiel ähnlich wie ChatGPT – nur kleiner und auf unserem eigenen Gerät.
+
+👉 So lernen wir, wie KI funktioniert.
+
+
+
+
+### 🔌 Micro-USB-Netzteil
+
+Der Raspberry Pi braucht Strom, genau wie ein Handy.
+Das Netzteil steckt in der Steckdose und versorgt den Pi mit Energie.
+
+👉 Ohne Strom funktioniert der Pi nicht.
+
+
+### 🌐 Internetverbindung (WLAN)
+
+Wir brauchen Internet, um:
+- Programme herunterzuladen
+- das Sprachmodell zu installieren
+
+Der Raspberry Pi Zero 2 W hat bereits WLAN eingebaut.
+Man kann ihn wie ein Handy mit dem WLAN verbinden.
+
+⚠️ Besorgt Euch schon mal den WLAN Namen (SSID) und das Passwort.
+Dies braucht ihr später!
+
+👉 Später wird das Modell auch ohne Internet laufen!
+
+
+
+
+### 👩‍🏫 Was ihr außerdem braucht
+
+- etwas Geduld 😊
+- Teamarbeit
+- Lust, Neues auszuprobieren
+
+👉 Fehler gehören dazu – so lernt man am besten.
+
+---
 
 - Raspberry Pi Zero 2 W  
 - MicroSD-Karte (mind. 32 GB empfohlen)
@@ -368,3 +468,4 @@ Du hast:
 
 🎉 Ergebnis:
 Dein eigener Mini-KI-Computer!
+
