@@ -1,10 +1,9 @@
 # 🚀 Build Your Own AI 🧠
-# 💬 Dein eigenes Sprachmodell 'Tiny-GPT' auf einem Raspberry Pi Zero 2 W
+# 💬 Dein eigenes Sprachmodell *Tiny-GPT* auf einem Raspberry Pi Zero
 
-Diese Anleitung orientiert sich an diesem englischsprachigen [Tutorial](https://github.com/Gilzone/Installing-a-LLM-on-Raspberry-Pi-Zero-2-W) und zeigt dir Schritt für Schritt, wie du auf einem sehr kleinen, kostengünstigen Computer – dem **[Raspberry Pi Zero 2 W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/)** – ein eigenes **Großes-Sprach-Modell (auf englisch Large-Language-Model, LLM)** installierst und ausführst.
+Diese Anleitung orientiert sich an diesem englischsprachigen [Tutorial](https://github.com/Gilzone/Installing-a-LLM-on-Raspberry-Pi-Zero-2-W) und zeigt dir Schritt für Schritt, wie du auf einem sehr kleinen, kostengünstigen Computer – dem **[Raspberry Pi Zero 2 W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/)** – ein eigenes **Großes-Sprach-Modell (Large-Language-Model, LLM)** installierst und ausführst.
 
-Du brauchst hierfür **keine Programmier- oder IT-Kenntnisse**.  
-Alles wird Dir erklärt 😊
+Du brauchst hierfür **keine Programmier- oder IT-Kenntnisse**.  Alles wird Dir erklärt 😊
 
 ---
 
@@ -21,11 +20,11 @@ Am Ende kannst du:
 ## 📍 Was bedeutet „lokal“?
 
 👉 **Lokal** heißt:
-- Auf deinem eigenen Gerät (volle Kontrolle)
-- Ohne Internet (niemald liest mit)
+- Auf deinem eigenen Gerät (volle Kontrolle!)
+- Ohne Internet (niemald liest mit!)
 - Daten bleiben bei dir (Datenschutz!)
 
-**🌍 Gegenteil Online:** Normalerweise werden LLMs wie z.B. [Chat-GPT](https://chatgpt.com/)  oder [Gemini](https://gemini.google.com/?is_sa=1&is_sa=1&android-min-version=301356232&ios-min-version=322.0&campaign_id=bkws&utm_source=sem&utm_medium=paid-media&utm_campaign=bkws&pt=9008&mt=8&ct=p-growth-sem-bkws&gclsrc=aw.ds&gad_source=1&gad_campaignid=20437330488&gbraid=0AAAAApk5Bhll4UdF6H12nDRP-hYPNvO_3&gclid=Cj0KCQiA18DMBhDeARIsABtYwT1UtnWIxdl1yIjM5aGZn1GUVL_2VCC23zdFXqipTi6-jjiXP40WlQ0aAnB1EALw_wcB) in der Cloud ausgeführt. Dazu werden Eure Fragen und Antworten übers Internet an die jeweiligen Anbieter (OpenAI/Google) geschickt. 
+🌍 **Online** (Gegenteil): Normalerweise werden LLMs wie z.B. [Chat-GPT](https://chatgpt.com/)  oder [Gemini](https://gemini.google.com/?is_sa=1&is_sa=1&android-min-version=301356232&ios-min-version=322.0&campaign_id=bkws&utm_source=sem&utm_medium=paid-media&utm_campaign=bkws&pt=9008&mt=8&ct=p-growth-sem-bkws&gclsrc=aw.ds&gad_source=1&gad_campaignid=20437330488&gbraid=0AAAAApk5Bhll4UdF6H12nDRP-hYPNvO_3&gclid=Cj0KCQiA18DMBhDeARIsABtYwT1UtnWIxdl1yIjM5aGZn1GUVL_2VCC23zdFXqipTi6-jjiXP40WlQ0aAnB1EALw_wcB) *in der Cloud* ausgeführt. Dazu werden Eure Fragen und Antworten übers Internet an die Supercomputer der jeweiligen Anbieter (OpenAI/Google) geschickt und dort verarbeitet. 
 
 ---
 
@@ -35,12 +34,12 @@ Am Ende kannst du:
 
 ### 🧠 Raspberry Pi Zero 2 W
 
-Der Raspberry Pi Zero ist ein Mini-Computer.
-Er ist ungefähr halb so groß wie eine Kredit- oder EC-Karte und passt in Deine Hosentasche, kann aber Programme ausführen wie ein 'normaler' PC.
+Der Raspberry Pi Zero 2 W ist ein Mini-Computer.
+Er ist ungefähr halb so groß wie eine Kredit- oder EC-Karte und passt in Deine Hosentasche, kann aber Programme ausführen wie ein *normaler* PC.
 
 <img src="https://assets.raspberrypi.com/static/51035ec4c2f8f630b3d26c32e90c93f1/2b8d7/zero2-hero.webp" style="width:600px;">
 
-Hier mal zum Vergleich, was mein erster PC konnte, als ich so alt war wie ihr.
+Hier mal zum Vergleich, was mein erster PC konnte, als ich so alt war wie ihr. (lang ist es her... 😄)
 
 | Merkmal | Raspberry Pi Zero 2 W | Typischer PC (ca. 1996) |
 |----------|----------------------|---------------------------|
@@ -53,87 +52,131 @@ Hier mal zum Vergleich, was mein erster PC konnte, als ich so alt war wie ihr.
 | 💰 Preis | ca. 17 € | oft 1000 DM oder mehr |
 | 📏 Größe | kreditkartengroß | großer Desktop-PC |
 
----
+--- 
 
 ### 💾 MicroSD-Karte (mindestens 32 GB)
 
-Die SD-Karte ist die **Festplatte** des Raspberry Pi. 
+Die SD-Karte ist die **Festplatte** des Raspberry Pi's. 
 
 <img src="https://www.sandisk.com/content/dam/store/en-us/assets/products/memory-cards/extreme-uhs-i-microsd/extreme-uhs-i-microsd-32gb.png.wdthumb.1280.1280.webp" style="width:300px;">
 
-Darauf werden das Betriebssystem, Programme und unser Sprachmodell gespeichert:
+Darauf werden das Betriebssystem, alle Programme und unser Sprachmodell gespeichert.
 
 👉 Ohne SD-Karte kann der Raspberry Pi nicht starten!
 
-### 🧑‍💻 Software (die Programme)
-##### 🐧 Betriebssystem
-
-Das Betriebssystem ist wie Windows oder macOS, nur für den Raspberry Pi.
-Es sorgt dafür, dass Programme laufen können.
-
-👉 Beispiel: Raspberry Pi OS.
-
-##### 🤖 Ollama
-
-Ollama ist ein Programm, mit dem man ein Sprachmodell starten kann.
-Es lädt das Modell herunter und macht es nutzbar.
-
-👉 Damit sprechen wir mit unserer eigenen KI.
-
-
-##### 🧠 Sprachmodell (LLM)
-
-Ein Sprachmodell ist ein Programm, das Texte versteht und Antworten schreibt.
-Zum Beispiel ähnlich wie ChatGPT – nur kleiner und auf unserem eigenen Gerät.
-
-👉 So lernen wir, wie KI funktioniert.
-
-
-
+--- 
 
 ### 🔌 Micro-USB-Netzteil
 
-Der Raspberry Pi braucht Strom, genau wie ein Handy.
-Das Netzteil steckt in der Steckdose und versorgt den Pi mit Energie.
+Der Raspberry Pi braucht Strom (Energie), genau wie jedes elektrische Gerät.
 
-👉 Ohne Strom funktioniert der Pi nicht.
+<img src="https://assets.raspberrypi.com/static/c7430727cbd44e1a3873a1696de85284/9ff6b/38da32b0-76fe-4cb6-9b6e-7dea9238f1dd_PSU%2BHero.webp" style="width:300px;">
 
+**⚠️ Wichtiger Hinweis:**
 
-### 🌐 Internetverbindung (WLAN)
+Nur geprüfte Netzteil mit **Micro-USB Anschluss und 5V / 2.5A DC** benutzen!
 
-Wir brauchen Internet, um:
-- Programme herunterzuladen
+Ein falsches Netzteil kann Probleme machen:
+  - Pi startet nicht
+  - Programme stürzen ab
+  - SD-Karte kann beschädigt werden
+  - Zu hohe Spannung (>5V) kann den Pi dauerhaft beschädigen 
+
+👉 Sicherheit geht vor❗
+
+---
+
+## 🌐 Internetverbindung (WLAN)
+
+Wir brauchen zunächst das Internet, um:
+- Programme herunterzuladen und 
 - das Sprachmodell zu installieren
 
 Der Raspberry Pi Zero 2 W hat bereits WLAN eingebaut.
 Man kann ihn wie ein Handy mit dem WLAN verbinden.
 
-⚠️ Besorgt Euch schon mal den WLAN Namen (SSID) und das Passwort.
-Dies braucht ihr später!
+⚠️ Besorgt Euch schon mal den WLAN-Namen (SSID) und das WLAN-Passwort.
+Dies braucht ihr später noch!
 
-👉 Später wird das Modell auch ohne Internet laufen!
+👉 Wenn alles eingerichtet ist, wird das Modell aber ohne Internet laufen!
+
+---
+
+## 🧑‍💻 Software (die Programme)
+### 🐧 Betriebssystem
+
+Das Betriebssystem ist wie Windows oder macOS und sorgt dafür, dass Programme laufen können.
+Für den Raspberry Pi benutzen wir **Raspberry Pi OS (Legacy, 64-bit) Lite**.  
+
+---
+
+### 🤖 Ollama
+
+[Ollama](https://ollama.com/) ist ein Programm, mit dem man Sprachmodelle auf dem eigenen Computer starten kann.
+
+Die Gründer heißen *Jeffrey Morgan* und *Michael Chiang*. Ihr Ziel war es, KI **für alle zugänglich** und **einfach nutzbar** zu machen – auch ohne teure Server oder Cloud‑Dienste. Solche Art von Software nennt man auch **Open-Source**!
+
+#### 🛠️ Was bedeutet Open-Source?
+
+👉 Jeder kann den Code sehen, *kostenlos* benutzen und mithelfen.
+
+👉 Es ist wie ein Rezeptbuch für Programme – offen für alle Menschen auf der ganzen Welt.
+
+- Man kann den Quelltext/Code lesen und verstehen, wie das Programm funktioniert
+- Mitmachen erlaubt: Man kann Fehler verbessern und neue Funktionen hinzufügen
+
+---
+
+### 🧠 Sprachmodell (LLM)
+
+Ein großes Sprachmodell (**L**arge-**L**anguage-**M**odel **LLM**) ist ein Programm, das Texte versteht und Antworten schreibt.
+Zum Beispiel ähnlich wie ChatGPT – nur kleiner und auf unserem eigenen Gerät.
+
+Im Gegensatz zu kommerziellen Sprachmodellen z.B. ChatGPT (OpenAI) sind Open-Source LLMs **kostenlos** nutzbar.
+
+Es gibt inzwischen sehr viele freie LLMs z.B. für Bildung & Forschung (Universitäten), Schüler:innen, Entwickler:innen sollen KI verstehen können
 
 
 
 
-### 👩‍🏫 Was ihr außerdem braucht
+👉 Vorteile:
+
+Privatsphäre – Daten bleiben lokal
+
+Kostenlos nutzbar
+
+Lehrreich – man kann sehen, wie KI funktioniert
+
+Experimente – ihr könnt eigene Versionen bauen
+
+🌟 Warum gibt es freie LLMs?
+
+Bildung & Forschung
+
+Universitäten, Schüler:innen, Entwickler:innen sollen KI verstehen können
+
+Transparenz & Kontrolle
+
+Jeder kann prüfen, wie die KI Antworten erzeugt
+
+Zugang für alle
+
+Nicht jeder kann teure Server oder Cloud-Dienste bezahlen
+
+
+
+
+
+## 👩‍🏫 Was ihr außerdem braucht
 
 - etwas Geduld 😊
-- Teamarbeit
+- Teamarbeit (helft Euch gegenseitig!)
 - Lust, Neues auszuprobieren
 
-👉 Fehler gehören dazu – so lernt man am besten.
+👉 Und denkt immer daran: Fehler gehören dazu – nur so lernt man (am besten).
 
 ---
 
-- Raspberry Pi Zero 2 W  
-- MicroSD-Karte (mind. 32 GB empfohlen)
-- Micro-USB-Netzteil
-- Internetverbindung (WLAN oder Adapter)
-
-👉 Die SD-Karte ist die „Festplatte“ des Raspberry Pi.
-
----
 
 ## Software
 
@@ -144,9 +187,6 @@ Diese Programme brauchst du auf deinem Computer:
 
 - **Raspberry Pi OS (Legacy, 64-bit) Lite**  
   (Wird im Imager ausgewählt)
-
-- **Ollama**  
-  https://ollama.com
 
 ---
 
@@ -473,5 +513,6 @@ Du hast:
 
 🎉 Ergebnis:
 Dein eigener Mini-KI-Computer!
+
 
 
