@@ -3,7 +3,7 @@
 
 Diese Anleitung orientiert sich an diesem englischsprachigen [Tutorial](https://github.com/Gilzone/Installing-a-LLM-on-Raspberry-Pi-Zero-2-W) und zeigt dir Schritt für Schritt, wie du auf einem sehr kleinen, kostengünstigen Computer – dem **[Raspberry Pi Zero 2 W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/)** – ein eigenes **Großes-Sprach-Modell (auf englisch Large-Language-Model, LLM)** installierst und ausführst.
 
-Du brauchst hierfür **keine Programmier- oder IT-Vorkenntnisse**.  
+Du brauchst hierfür **keine Programmier- oder IT-Kenntnisse**.  
 Alles wird Dir erklärt 😊
 
 ---
@@ -12,10 +12,20 @@ Alles wird Dir erklärt 😊
 
 Am Ende kannst du:
 
-- EIn Betriebssystem installieren
-- Ein LLM lokal auf deinem Raspberry Pi starten
+- Ein Betriebssystem installieren
+- Ein LLM **lokal** auf deinem Raspberry Pi starten
 - Fragen an das Sprachmodell stellen
-- Verstehen, wie KI „auf Hardware läuft“
+- Verstehen, wie Sprachmodelle „funktionieren“
+
+
+## 📍 Was bedeutet „lokal“?
+
+👉 **Lokal** heißt:
+- Auf deinem eigenen Gerät (volle Kontrolle)
+- Ohne Internet (niemald liest mit)
+- Daten bleiben bei dir (Datenschutz!)
+
+**🌍 Gegenteil Online:** Normalerweise werden LLMs wie z.B. [Chat-GPT](https://chatgpt.com/)  oder [Gemini](https://gemini.google.com/?is_sa=1&is_sa=1&android-min-version=301356232&ios-min-version=322.0&campaign_id=bkws&utm_source=sem&utm_medium=paid-media&utm_campaign=bkws&pt=9008&mt=8&ct=p-growth-sem-bkws&gclsrc=aw.ds&gad_source=1&gad_campaignid=20437330488&gbraid=0AAAAApk5Bhll4UdF6H12nDRP-hYPNvO_3&gclid=Cj0KCQiA18DMBhDeARIsABtYwT1UtnWIxdl1yIjM5aGZn1GUVL_2VCC23zdFXqipTi6-jjiXP40WlQ0aAnB1EALw_wcB) in der Cloud ausgeführt. Dazu werden Eure Fragen und Antworten übers Internet an die jeweiligen Anbieter (OpenAI/Google) geschickt. 
 
 ---
 
@@ -25,16 +35,14 @@ Am Ende kannst du:
 
 ### 🧠 Raspberry Pi Zero 2 W
 
-Der Raspberry Pi ist ein Mini-Computer.
+Der Raspberry Pi Zero ist ein Mini-Computer.
 Er ist ungefähr halb so groß wie eine Kredit- oder EC-Karte und passt in Deine Hosentasche, kann aber Programme ausführen wie ein 'normaler' PC.
 
-![Raspberry Pi Zero 2 W](https://assets.raspberrypi.com/static/51035ec4c2f8f630b3d26c32e90c93f1/2b8d7/zero2-hero.webp)
+<img src="https://assets.raspberrypi.com/static/51035ec4c2f8f630b3d26c32e90c93f1/2b8d7/zero2-hero.webp" style="width:600px;">
 
-Hier mal ein Vergleich, was ein mein erster PC konnte, als ich so alt war wie ihr.
+Hier mal zum Vergleich, was mein erster PC konnte, als ich so alt war wie ihr.
 
-#### Vergleich: Raspberry Pi Zero 2 W vs. PC von 1995
-
-| Merkmal | Raspberry Pi Zero 2 W | Typischer PC (ca. 1995) |
+| Merkmal | Raspberry Pi Zero 2 W | Typischer PC (ca. 1996) |
 |----------|----------------------|---------------------------|
 | 🧠 Prozessor | 1 GHz (viel schneller) | 75–166 MHz |
 | 💾 Arbeitsspeicher | 512 MB | 8–16 MB |
@@ -50,15 +58,12 @@ Hier mal ein Vergleich, was ein mein erster PC konnte, als ich so alt war wie ih
 ### 💾 MicroSD-Karte (mindestens 32 GB)
 
 Die SD-Karte ist die **Festplatte** des Raspberry Pi. 
-Darauf werden das Betriebssystem, Programme, gespeichert:
-- 
-- Programme
-- unser Sprachmodell
 
-👉 Ohne SD-Karte kann der Raspberry Pi nicht starten.
+<img src="https://www.sandisk.com/content/dam/store/en-us/assets/products/memory-cards/extreme-uhs-i-microsd/extreme-uhs-i-microsd-32gb.png.wdthumb.1280.1280.webp" style="width:300px;">
 
-![SD-Karte](https://www.sandisk.com/content/dam/store/en-us/assets/products/memory-cards/extreme-uhs-i-microsd/extreme-uhs-i-microsd-32gb.png.wdthumb.1280.1280.webp)
+Darauf werden das Betriebssystem, Programme und unser Sprachmodell gespeichert:
 
+👉 Ohne SD-Karte kann der Raspberry Pi nicht starten!
 
 ### 🧑‍💻 Software (die Programme)
 ##### 🐧 Betriebssystem
@@ -468,4 +473,5 @@ Du hast:
 
 🎉 Ergebnis:
 Dein eigener Mini-KI-Computer!
+
 
