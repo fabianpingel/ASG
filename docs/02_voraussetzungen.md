@@ -3,6 +3,9 @@ Damit wir unser kleines Sprachmodell später lokal auf dem Raspberry Pi starten 
 
 Keine Sorge: Das meiste ist schnell vorbereitet ✅
 
+# Raspberry Pi Imager installieren
+TODO
+
 ---
 
 ## ✅ Kurz-Checkliste (zum Abhaken)
