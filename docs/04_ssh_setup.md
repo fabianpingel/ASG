@@ -154,7 +154,7 @@ ssh pi@192.168.1.42
 
 ***
 
-## 4) Erste Verbindung: Sicherheitsabfrage bestätigen
+## 4.4 Erste Verbindung: Sicherheitsabfrage bestätigen
 
 Beim ersten Verbinden kommt oft eine Meldung wie:
 
