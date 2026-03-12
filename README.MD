@@ -73,14 +73,16 @@ Das ist ein besonders leistungsfähiges Sprachmodell, das mit *sehr vielen Daten
 
 
 ## 📚 Kapitel 
-1. [🔍Worum geht’s?](docs/01_worum_gehts.md)   
-2. [🍓Hardware & Software (Checkliste)](docs/03_voraussetzungen.md)  
+1. [❓ Worum geht’s?](docs/01_worum_gehts.md)   
+2. [🍓 Hardware & Software (Checkliste)](docs/03_voraussetzungen.md)  
 3. [▶️ Betriebssystem flashen (Raspberry Pi Imager)](docs/03_os_flashen.md)  
 4. [⚙️ Erste Einrichtung: Start, IP finden, SSH](docs/04_ssh_setup.md)  
 5. [⚡System aktualisieren (Updates)](docs/05_updates.md)  
-6. [Ollama installieren](docs/06_ollama.md)  
+6. [🦙 Ollama installieren](docs/06_ollama.md) 
+7. [💬 Mit Modellen chatten](docs/07_chat.md)
+8. [✍️ Prompts ans Modell senden](docs/08_prompts.md)
 7. [Optional: Pi schneller machen (Swap/Overclocking)](docs/07_optimierung_optional.md)  
-8. [LLM starten & testen](docs/09_modell_starten.md)  
+ 
 9. [Hinweise: Leistung & Temperatur](docs/10_hinweise.md)  
 10. [❓FAQ / typische Probleme](docs/11_faq.md)
 99. [Glossar](docs/99_glossar.md)

@@ -1,7 +1,10 @@
-# 6. Ollama installieren 🦙 (LLM lokal starten)
+# 6. 🦙 Ollama installieren (und LLM lokal starten)
 
 In diesem Kapitel installierst du [**Ollama**](https://ollama.com/) auf deinem Raspberry Pi.  
 Ollama ist ein Programm, mit dem man **Sprachmodelle (LLMs)** lokal herunterladen und starten kann.
+
+<img src="..\images\Ollama\01_Ollama_App.png" style="width:700px;" alt="Windows Hinweis Datenträger einlegen">
+
 
 > ✅ Nach der Installation prüfen wir kurz, ob Ollama läuft.  
 > ▶️ Das eigentliche Starten eines Modells kommt im nächsten Kapitel.
@@ -11,7 +14,7 @@ Ollama ist ein Programm, mit dem man **Sprachmodelle (LLMs)** lokal herunterlade
 ## ✅ Voraussetzungen
 - Du bist per **SSH** auf dem Raspberry Pi eingeloggt (Kapitel: [Erste Einrichtung: Start, IP finden, SSH](04_ssh_setup.md))
 - Dein System ist **aktualisiert** (Kapitel: [System aktualisieren (Updates)](05_updates.md)  )
-- Internet ist verfügbar (nur für Download/Installation nötig)
+- Internet ist verfügbar (für Download/Installation nötig)
 
 ***
 
@@ -23,6 +26,8 @@ ping -c 3 8.8.8.8
 ```
 
 Wenn du Antworten bekommst: ✅ Internet klappt.
+
+<img src="..\images\Ollama\02_Ollama_ping.png" style="width:700px;" alt="Internetverbindugn prüfen">
 
 ***
 
@@ -36,8 +41,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 
 > ⏳ Das dauert je nach Verbindung 1–5 Minuten.
 
-
-Bild einfügen
+<img src="..\images\Ollama\03_Ollama_install.png" style="width:700px;" alt="Ollama Installation">
 
 ***
 
@@ -50,21 +54,26 @@ Wenn die Installation geklappt hat:
 ollama --version
 ```
 
-✅ Du solltest eine Versionsausgabe sehen (z. B. `ollama version ...`).
+✅ Du solltest eine Versionsausgabe sehen (z. B. `ollama version is ...`).
+
+<img src="..\images\Ollama\04_Ollama_version.png" style="width:700px;" alt="Ollama Version überprüfen">
 
 ***
 
 ## 6.4 Dienst starten (falls nötig)
 
-Auf vielen Systemen wird Ollama als Dienst eingerichtet. Prüfe den Status:
+Auf vielen Systemen wird Ollama automatisch als Dienst eingerichtet. Prüfe den Status:
 
 ```bash
 sudo systemctl status ollama --no-pager
 ```
 
-Wenn dort steht „active (running)“: ✅ läuft.
+Wenn dort „active (running)“ steht läuft Ollama bereits ✅ 
 
-Falls nicht, starte Ollama:
+<img src="..\images/Ollama/05_Ollama_systemctl.png" style="width:700px;" alt="Ollama Dienst starten">
+
+
+Falls nicht, starte Ollama mit:
 
 ```bash
 sudo systemctl enable --now ollama
@@ -74,19 +83,21 @@ sudo systemctl enable --now ollama
 
 ## 6.5 Kurzer Funktionstest
 
-Ollama zeigt dir Hilfe und verfügbare Befehle:
+Ollama zeigt dir Hilfe und verfügbare Befehle mit:
 
 ```bash
 ollama help
 ```
 
-Optional:
+<img src="..\images\Ollama\06_Ollama_help.png" style="width:700px;" alt="Ollama Befehlsübersicht">
+
+Mit `ollama list` bekommst Du Modelle angezeigt, die bereits lokal vorhanden sind. Am Anfang ist die Liste meist leer.
 
 ```bash
 ollama list
 ```
 
-> `ollama list` zeigt Modelle, die bereits lokal vorhanden sind. Am Anfang ist die Liste meist leer.
+<img src="..\images\Ollama\07_Ollama_list.png" style="width:700px;" alt="Ollama Modelle">
 
 ***
 
@@ -100,9 +111,9 @@ Beantworte kurz:
 
 ***
 
-## Troubleshooting (häufige Probleme)
+## 🛠️ Troubleshooting (häufige Probleme)
 
-### Problem 1: `ollama: command not found`
+### 🚧 Problem 1: `ollama: command not found`
 
 **Ursache:** Installation ist nicht korrekt durchgelaufen oder du bist in einer alten SSH-Session.
 
@@ -117,7 +128,7 @@ Beantworte kurz:
 
 ***
 
-### Problem 2: Dienst läuft nicht / keine Antwort
+### 🚧 Problem 2: Dienst läuft nicht / keine Antwort
 
 **Lösung:**
 
@@ -128,7 +139,7 @@ sudo systemctl status ollama --no-pager
 
 ***
 
-### Problem 3: „Zu wenig Speicherplatz“
+### 🚧 Problem 3: „Zu wenig Speicherplatz“
 
 **Ursache:** SD-Karte ist zu voll (Modelle brauchen Platz).
 
@@ -143,22 +154,23 @@ sudo systemctl status ollama --no-pager
     sudo apt autoremove -y
     sudo apt clean
     ```
+*   größere MicroSD-Karte verwenden (>32 GB)
 
 ***
 
-### Problem 4: Installation bricht ab (sehr langsam / hängt)
+### 🚧 Problem 4: Installation bricht ab (sehr langsam / hängt)
 
 **Ursache:** WLAN instabil oder SD-Karte sehr langsam.
 
 **Lösung:**
 
 *   Nochmal versuchen (oft klappt es beim zweiten Mal)
-*   Pi näher an den Router / besseres WLAN
+*   Pi näher an den Router positionieren / besseres WLAN
 *   (wenn möglich) bessere SD-Karte nutzen
 
 ***
 
-### Problem 4: `curl` fehlt (selten)
+### 🚧 Problem 4: `curl` fehlt (sehr selten)
 
 ```bash
 sudo apt update
@@ -167,7 +179,7 @@ sudo apt install -y curl
 
 ***
 
-# ✅ Nächster Schritt
+# ➡️ Nächster Schritt
 
 ➡️ Weiter mit **„Modell starten“**:  
 Wir laden ein kleines Modell und starten den Chat mit:

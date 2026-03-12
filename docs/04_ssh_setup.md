@@ -1,7 +1,7 @@
-# 4. SSH-Setup: Mit dem Raspberry Pi verbinden (Headless)
+# 4. 🔐 SSH-Setup: Mit dem Raspberry Pi verbinden (Headless)
 
 In diesem Kapitel verbindest du dich per **SSH** mit deinem Raspberry Pi – also **ohne Monitor, Tastatur und Maus**.  
-Du steuerst den Pi dann vom PC aus über ein Terminal (mit Textbefehlen).
+Du steuerst den Pi dann vom PC/Laptop aus über ein Terminal („Retro-Computing“ mit Textbefehlen wie in den 1980ern 💀).
 
 ***
 
@@ -14,7 +14,7 @@ Am Ende kannst du:
 
 ***
 
-## ✅ Was du brauchst
+## 📋 Was du brauchst
 
 - Raspberry Pi ist **geflasht** (Kapitel: [Betriebssystem flashen](03_os_flashen.md)) und wurde **eingeschaltet**
 - Pi ist im **gleichen WLAN** wie dein PC/Laptop
@@ -27,7 +27,7 @@ Am Ende kannst du:
 
 ***
 
-## 🔎 Begriffe kurz erklärt (für dieses SSH‑Kapitel)
+## ℹ️ Begriffe kurz erklärt (für dieses SSH‑Kapitel)
 
 **SSH (Secure Shell)**  
 SSH ist ein **sicherer Fernzugriff**: Du kannst dich von deinem Computer aus bei einem anderen Gerät (z.B. dem Raspberry Pi) **anmelden** und es **über Textbefehle steuern** – verschlüsselt, damit niemand im WLAN einfach mitlesen kann.
@@ -90,6 +90,8 @@ ping raspberrypi.local
 
 Wenn du Antworten bekommst (z. B. „Antwort von …“), ist der Pi erreichbar ✅
 
+<img src="..\images\SSH\01_ping_RPI.png" style="width:700px;" alt="Raspberry Pi im Netzwerk über Hostname finden">
+
 > **Warum `.local`?** Das ist ein Netzwerk-„Namensdienst“ im lokalen WLAN (mDNS). Oft funktioniert das direkt.
 
 ***
@@ -105,6 +107,9 @@ arp -a
 ```
 
 Suche in der Liste nach einem Eintrag, der neu aussieht oder „raspberry“ ähnlich ist.  
+
+<img src="..\images\SSH\02_arp_a.png" style="width:700px;" alt="IP-Adresse über `arp` finden">
+
 Oft hilft auch: Pi kurz vom Strom trennen, wieder einstecken und **direkt danach** nochmal `arp -a` ausführen.
 
 > ✅ Tipp: Viele Schulrouter vergeben IPs wie `192.168.0.x` oder `192.168.1.x`.
@@ -113,10 +118,12 @@ Oft hilft auch: Pi kurz vom Strom trennen, wieder einstecken und **direkt danach
 
 ### Möglichkeit C: Router-/WLAN-Übersicht
 
-Wenn ihr Zugriff habt:
+Wenn ihr zu Hause Zugriff auf euren Router habt:
 
-*   In der Routeroberfläche nach „Geräte“ / „Client-Liste“ schauen
-*   Nach Namen wie `rpi...`, `raspberrypi` oder „Raspberry Pi“ suchen
+*   In der Routeroberfläche nach „Mesh“ / „Geräte“ / „Client-Liste“ schauen
+*   Nach (Host-)Namen wie `rpi0-gruppe1`, `raspberrypi` oder „Raspberry Pi“ suchen
+
+<img src="..\images\SSH\03_Router_RPI.png" style="width:700px;" alt="IP-Adresse über den Router finden">
 
 ***
 
@@ -160,7 +167,8 @@ Beim ersten Verbinden kommt oft eine Meldung wie:
 
 > „Are you sure you want to continue connecting (yes/no/\[fingerprint])?“
 
-Bild einfügen
+
+<img src="..\images\SSH\04_ssh_key.png" style="width:700px;" alt="Sicherheitsabfrage bei erster Verbindung">
 
 
 Tippe:
@@ -171,11 +179,16 @@ yes
 
 Dann Passwort eingeben (beim Tippen siehst du **keine Zeichen** – das ist normal).
 
+<img src="..\images\SSH\05_ssh_pwd.png" style="width:700px;" alt="Passworteingabe">
+
+
 ✅ Wenn du danach so etwas siehst, bist du drin:
 
 ```text
 pi@raspberrypi:~ $
 ```
+
+<img src="..\images\SSH\06_ssh_loggedin.png" style="width:700px;" alt="Passworteingabe">
 
 ***
 
@@ -183,19 +196,47 @@ pi@raspberrypi:~ $
 
 Gib folgende Befehle ein:
 
+Aktuellen Rechnernamen anzeigen: 
+
 ```bash
 hostname
 ```
 
+Systeminformationen anzeigen (Kernel, Hardware/Architektur etc.)
+
 ```bash
 uname -a
 ```
+
+Netzwerk‑Infos anzeigen:
 
 ```bash
 ip a
 ```
 
 Wenn das sinnvolle Ausgaben liefert: perfekt ✅
+
+<img src="..\images\SSH\07_ssh_check.png" style="width:700px;" alt="Schnelltests">
+
+***
+
+## 4.6 Weiteres WLAN hinzufügen
+
+TODO
+
+***
+
+## 4.6 Pi herunterfahren / ausschalten
+
+Um den Pi ordentlich herunterzufahren tippen wir im Terminal:
+
+```bash
+sudo poweroff
+```
+
+<img src="..\images\SSH\08_ssh_poweroff.png" style="width:700px;" alt="Raspberry Pi herunterfahren">
+
+Wenn die grüne LED nicht mehr leuchtet sind alle Schreibvorgänge abgeschlossen und wir können das Netzteil aus der Steckdose ziehen.
 
 ***
 
@@ -239,7 +280,8 @@ ssh BENUTZERNAME@192.168.x.y
 1.  Prüfe Benutzername & Passwort aus dem Imager.
 2.  Achte auf Groß-/Kleinschreibung.
 3.  Falls ihr einen anderen Benutzernamen gesetzt habt: nicht `pi` verwenden.
-4.  Notfalls: SD-Karte neu flashen und User/SSH sauber setzen.
+4.  Lasst den ersten Buchstaben vom Passwort weg ([Bug](https://github.com/raspberrypi/rpi-imager/issues/754) im RPI Imager)
+5.  Notfalls: SD-Karte neu flashen und User/SSH sauber setzen.
 
 ***
 
