@@ -3,10 +3,6 @@ Damit wir unser kleines Sprachmodell später lokal auf dem Raspberry Pi starten 
 
 Keine Sorge: Das meiste ist schnell vorbereitet ✅
 
-# Raspberry Pi Imager installieren
-TODO
-
----
 
 ## ✅ Kurz-Checkliste (zum Abhaken)
 
@@ -23,7 +19,7 @@ TODO
 - [ ] Terminal/PowerShell (für SSH)
 - [ ] (später auf dem Pi) Ollama + ein kleines Sprachmodell (LLM)
 
----
+***
 
 ## 💻 Hardware (die Geräte)
 
@@ -46,7 +42,7 @@ Hier mal zum Vergleich, was mein erster PC konnte, als ich so alt war wie ihr. (
 | 💰 Preis | ca. 17 € | oft 1000 DM oder mehr |
 | 📏 Größe | kreditkartengroß | großer Desktop-PC |
 
----
+***
 
 ### 💾 MicroSD‑Karte (mindestens 32 GB)
 Die SD‑Karte ist die **Festplatte** des Raspberry Pi.
@@ -62,7 +58,7 @@ Darauf werden gespeichert:
 
 **Empfehlung:** 32 GB oder mehr (damit genug Platz für Updates & Modelle da ist).
 
----
+***
 
 ### 🔌 Micro‑USB‑Netzteil
 Der Raspberry Pi braucht Strom (Energie), genau wie jedes elektrische Gerät.
@@ -80,7 +76,7 @@ Ein falsches Netzteil kann Probleme machen:
 
 👉 **Sicherheit geht vor❗**
 
----
+***
 
 ## 🌐 Internetverbindung (WLAN)
 Wir brauchen zunächst das Internet, um:
@@ -95,9 +91,43 @@ Der Raspberry Pi Zero 2 W hat WLAN schon eingebaut – man verbindet ihn wie ein
 
 👉 Wenn alles eingerichtet ist, kann das Modell später **auch ohne Internet** laufen.
 
----
+***
 
 ## 🧑‍💻 Software (die Programme)
+
+### Raspberry Pi Imager - Installationsanleitung
+
+Der **Raspberry Pi Imager** ist ein Programm, mit dem Du das Betriebssystem für deinen Raspberry Pi ganz einfach auf eine **microSD-Karte** kopieren kannst.
+
+#### 🔽 Schritt 1: Raspberry Pi Imager herunterladen
+
+Öffne einen Browser (z. B. Edge oder Chrome) und gehe auf die **offizielle Website**: https://www.raspberrypi.com/software/  
+
+<img src="../images\RPIImager\0_Download.png" style="width:700px;" alt="Schreibfortschritt">
+
+Klicke auf **„Download for Windows“**. 
+
+***
+
+#### 💾 Schritt 2: Programm installieren
+1. Öffne die heruntergeladene Datei (z. B. `imager.exe`)
+2. Klicke auf **„Installieren“**
+3. Falls Windows nachfragt → **„Ja“** anklicken
+
+➡️ Nach ein paar Sekunden ist der Raspberry Pi Imager installiert.  
+
+***
+
+#### ▶️ Schritt 3: Raspberry Pi Imager starten
+- Öffne das **Startmenü**
+- Suche nach **„Raspberry Pi Imager“**
+- Klicke auf das Programmsymbol 🥧
+
+Jetzt ist alles bereit für den nächsten Schritt:  
+👉 Das Betriebssystem auf die SD‑Karte schreiben!
+
+***
+
 
 ### 🐧 Betriebssystem (Raspberry Pi OS)
 Ein Betriebssystem ist wie Windows oder macOS – es sorgt dafür, dass Programme laufen können.

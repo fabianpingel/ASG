@@ -81,10 +81,8 @@ Das ist ein besonders leistungsfähiges Sprachmodell, das mit *sehr vielen Daten
 6. [🦙 Ollama installieren](docs/06_ollama.md) 
 7. [💬 Mit Modellen chatten](docs/07_chat.md)
 8. [✍️ Prompts ans Modell senden](docs/08_prompts.md)
-7. [Optional: Pi schneller machen (Swap/Overclocking)](docs/07_optimierung_optional.md)  
- 
-9. [Hinweise: Leistung & Temperatur](docs/10_hinweise.md)  
-10. [❓FAQ / typische Probleme](docs/11_faq.md)
+9. [Optional: Pi schneller machen (Swap/Overclocking)](docs/07_optimierung_optional.md)  
+10. [Fazit](docs/10_fazit.md)  
 99. [Glossar](docs/99_glossar.md)
 
 
