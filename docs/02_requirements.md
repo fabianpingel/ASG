@@ -1,5 +1,5 @@
 # 🧰 Voraussetzungen (Checkliste)
-Damit wir unser kleines Sprachmodell später lokal auf dem Raspberry Pi starten können, brauchst du ein paar Dinge.
+Damit wir unser kleines Sprachmodell später lokal auf dem Raspberry Pi starten können, brauchst Du ein paar Dinge.
 
 Keine Sorge: Das meiste ist schnell vorbereitet ✅
 
@@ -16,7 +16,7 @@ Keine Sorge: Das meiste ist schnell vorbereitet ✅
 ### Software (auf deinem Computer)
 - [ ] Raspberry Pi Imager
 - [ ] Raspberry Pi OS (Legacy, 64-bit) Lite (wird im Imager ausgewählt)
-- [ ] Terminal/PowerShell (für SSH)
+- [ ] Terminal/PowerShell (für SSH) (ist standardmäßig installiert)
 - [ ] (später auf dem Pi) Ollama + ein kleines Sprachmodell (LLM)
 
 ***
@@ -132,13 +132,17 @@ Jetzt ist alles bereit für den nächsten Schritt:
 ### 🐧 Betriebssystem (Raspberry Pi OS)
 Ein Betriebssystem ist wie Windows oder macOS – es sorgt dafür, dass Programme laufen können.
 
-Für den Raspberry Pi benutzen wir:
-- **Raspberry Pi OS (Legacy, 64-bit) Lite**
+Für den Raspberry Pi benutzen wir **Raspberry Pi OS (Legacy, 64-bit) Lite**.
 
-**Warum „Lite“?**
-- weniger Schnickschnack
-- schneller auf schwacher Hardware
-- ideal für Terminal/SSH und unser Mini‑LLM
+Diese Version wurde speziell für den Einsatz auf leistungsschwacher Hardware entwickelt: 
+
+* Das System startet ohne grafische Benutzeroberfläche (Desktop, Fenster oder Maussteuerung). Die Bedienung erfolgt über Terminal oder SSH.
+
+* Es sind nur die wichtigsten Systemkomponenten installiert.
+Alles, was nicht benötigt wird, bleibt bewusst weg.
+
+* Geringer Ressourcenverbrauch(weniger Speicherbedarf (RAM),
+weniger Hintergrundprozesse, schnellerer Systemstart)
 
 ---
 
@@ -156,12 +160,13 @@ Open‑Source bedeutet:
 - kostenlos nutzen,
 - und Verbesserungen beitragen.
 
-👉 Wie ein „Rezeptbuch“ für Software – offen für alle.
+👉 Wie ein „Rezeptbuch“ für Software – offen und kostenlos für alle.
 
 ---
 
 ### 🧠 Sprachmodell (LLM)
-Ein **Large Language Model (LLM)** ist ein Programm, das Texte verarbeitet und Antworten erzeugt – ähnlich wie ChatGPT, nur kleiner und lokal auf unserem Gerät.
+Ein **Large Language Model (LLM)** ist ein Programm, das Texte verarbeitet und Antworten erzeugt – ähnlich wie ChatGPT, nur kleiner und lokal auf unserem Gerät (vgl. [Kapitel 1](01_basics_llm.md)).
+
 
 **Warum nutzen wir ein kleines LLM?**
 - läuft auf schwacher Hardware (Pi Zero)
@@ -182,19 +187,19 @@ Ein **Large Language Model (LLM)** ist ein Programm, das Texte verarbeitet und A
 
 👉 Merksatz: **Fehler gehören dazu – so lernt man am besten.**
 
----
+## 🧪 Aufgabe: Montage (5-10 Minuten)
 
-## 💻 Software auf deinem Computer (Download/Installation)
-Dieses Programme brauchst du auf deinem Computer:
+Montiert das Gehäuse um den Raspberry Pi, damit die Platine geschützt ist.
 
-- **Raspberry Pi Imager**  
-  https://www.raspberrypi.com/software/
+Anschließend könnt ihr mit dem Abstandshalter den Kühler auf die CPU kleben. 
 
-- **Raspberry Pi OS (Legacy, 64-bit) Lite**  
-  (wird später im Imager ausgewählt)
+Der Abstandshalter wird anschließend wieder entfernt und sorgt dafür, dass zwischen dem gedruckten Kunststoff und dem Alu-Kühler kein Kontakt besteht.
 
-Optional (je nach Computer):
-- SD‑Karten‑Adapter / Kartenleser
-- Terminal/PowerShell (ist meistens schon vorhanden)
+<img src="../images/Hardware/Hardware.gif" style="width:700px;" alt="Schreibfortschritt">
 
----
+***
+
+## ➡️ Nächster Schritt
+
+> ➡️ Wenn das Gehäuse und der Kühler montiert sind, geht’s weiter mit Kapitel 3: [▶️ Betriebssystem flashen (Raspberry Pi Imager)](03_os_flashen.md).
+

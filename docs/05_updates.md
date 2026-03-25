@@ -7,7 +7,7 @@ Das sorgt für **Sicherheit**, **Stabilität** und weniger Fehler bei Installati
 
 ## 🎯 Lernziel
 
-Am Ende kannst du:
+Am Ende kannst Du:
 - dein System aktualisieren (Pakete + Sicherheitsupdates)
 - prüfen, ob alles sauber durchgelaufen ist
 - (optional) den Pi neu starten
@@ -90,7 +90,7 @@ sudo rpi-update
 ⚠️ **Hinweis:** `rpi-update` kann experimentell sein, weil es sehr neue Firmware/Kernel einspielt.  
 Wenn ihr möglichst „stabil“ bleiben wollt, könnt ihr diesen Schritt auch weglassen und nur `apt` nutzen.
 
-✅ Wenn ihr es ausführt: Danach ist ein Neustart notwendig.
+✅ Wenn ihr es ausführt ist danach ein Neustart notwendig.
 
 ***
 
@@ -105,7 +105,7 @@ sudo reboot
 <img src="..\images\Updates\04_reboot.png" style="width:700px;" alt="Neustart">
 
 Danach wird die SSH-Verbindung getrennt (das ist normal).  
-Warte ca. **30–90 Sekunden** und verbinde dich dann wieder per SSH.
+Warte ca. **30–90 Sekunden** und verbinde Dich dann wieder per SSH.
 
 Beispiel:
 
@@ -144,6 +144,16 @@ Achte darauf, dass auf `/` (Root) noch genug Platz frei ist (ein paar GB sind hi
 Hier im Beispiel sind noch 21 GB verfügbar.
 
 <img src="..\images/Updates/06_diskspace.png" style="width:700px;" alt="Speicherplatz prüfen">
+
+
+***
+
+
+# ➡️ Nächster Schritt
+
+Wenn dein Pi aktualisiert ist, geht’s weiter mit Kapitel 6:
+
+➡️ [🦙 **Ollama installieren**](docs/06_ollama.md)  (damit wir ein kleines LLM lokal starten können).
 
 
 ***
@@ -196,11 +206,4 @@ Hier im Beispiel sind noch 21 GB verfügbar.
 *   `sudo apt autoremove -y` und `sudo apt clean`
 *   Wenn es weiter knapp ist: größere SD-Karte nutzen und neu flashen.
 
-***
-
-# ➡️ Nächster Schritt
-
-Wenn dein Pi aktualisiert ist, geht’s weiter mit:
-
-➡️ [**Ollama installieren**](06_ollama.md) (damit wir ein kleines LLM lokal starten können).
 

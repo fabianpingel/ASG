@@ -1,39 +1,45 @@
 # 4. 🔐 SSH-Setup: Mit dem Raspberry Pi verbinden (Headless)
 
-In diesem Kapitel verbindest du dich per **SSH** mit deinem Raspberry Pi – also **ohne Monitor, Tastatur und Maus**.  
+In diesem Kapitel verbindest Du dich per **SSH** mit deinem Raspberry Pi – also **ohne Monitor, Tastatur und Maus**.  
 Du steuerst den Pi dann vom PC/Laptop aus über ein Terminal („Retro-Computing“ mit Textbefehlen wie in den 1980ern 💀).
 
+
 ***
+
 
 ## 🎯 Lernziel
 
-Am Ende kannst du:
+Am Ende kannst Du:
 - den Raspberry Pi im Netzwerk finden (über Hostname oder IP-Adresse)
-- dich per SSH einloggen
+- Dich per SSH einloggen
 - typische SSH-Probleme schnell lösen
+
 
 ***
 
-## 📋 Was du brauchst
 
-- Raspberry Pi ist **geflasht** (Kapitel: [Betriebssystem flashen](03_os_flashen.md)) und wurde **eingeschaltet**
+## 📋 Was Du brauchst
+
+- Raspberry Pi ist **geflasht** (Kapitel: [Betriebssystem flashen](03_os_flashen.md)) und wurde **eingesteckt**
 - Pi ist im **gleichen WLAN** wie dein PC/Laptop
 - SSH wurde im Imager **aktiviert**
 - Du kennst:
   - **Hostname** (z.B. `rpi0-gruppe1` oder Standard `raspberrypi`)
   - **Benutzername** und **Passwort** (aus dem Imager)
 
-> ⏱️ Hinweis: Nach dem ersten Einschalten braucht der Pi oft **1–3 Minuten**, bis er vollständig im WLAN ist. Man erkennst das an der grünen LED. Solange diese flackert ist der Pi noch mit Lese-/Schreibvorgängen beschäftigt.
+> ⏱️ Hinweis: Nach dem ersten Einschalten braucht der Pi oft **2–4 Minuten**, bis er vollständig im WLAN ist. Man erkennt das an der grünen LED. Solange diese flackert ist der Pi noch mit Lese-/Schreibvorgängen beschäftigt.
+
 
 ***
+
 
 ## ℹ️ Begriffe kurz erklärt (für dieses SSH‑Kapitel)
 
 **SSH (Secure Shell)**  
-SSH ist ein **sicherer Fernzugriff**: Du kannst dich von deinem Computer aus bei einem anderen Gerät (z.B. dem Raspberry Pi) **anmelden** und es **über Textbefehle steuern** – verschlüsselt, damit niemand im WLAN einfach mitlesen kann.
+SSH ist ein **sicherer Fernzugriff**: Du kannst dich von deinem Computer aus bei einem anderen Gerät (z.B. dem Raspberry Pi) **anmelden** und es **über Textbefehle steuern** – und zwar verschlüsselt, damit niemand im WLAN einfach mitlesen kann.
 
 **Terminal**  
-Das Terminal ist ein **Textfenster**, in das du Befehle eintippst. Statt zu klicken, „sprichst“ du mit dem Computer über kurze Kommandos (Befehle) wie `ssh ...` oder `ping ...`.
+Das Terminal ist ein **Textfenster**, in das Du Befehle eintippst. Statt zu klicken, „sprichst“ Du mit dem Computer über kurze Kommandos (Befehle) wie `ssh ...` oder `ping ...`.
 
 **Hostname**  
 Der **Name** des Raspberry Pi im Netzwerk (z. B. `raspberrypi` oder `rpi0-gruppe1`). Damit kann man den Pi oft leichter ansprechen als mit Zahlen der IP-Adresse.
@@ -48,13 +54,14 @@ Eine praktische Endung, mit der Geräte im gleichen WLAN manchmal automatisch ge
 Ein Port ist wie eine „Tür“ am Gerät. SSH nutzt normalerweise **Port 22**. In der Regel muss man den nicht extra angeben.
 
 **„Headless“**  
-Der Raspberry Pi läuft **ohne Bildschirm, Tastatur, Maus**. Deshalb brauchst du SSH als „Fernbedienung“.
+Der Raspberry Pi läuft **ohne Bildschirm, Tastatur, Maus**. Deshalb brauchst Du SSH als „Fernbedienung“.
 
 **Ping**  
-Ein Test-Befehl, um zu prüfen, ob ein Gerät erreichbar ist (z.B. `ping raspberrypi.local`). Wenn Ping antwortet, ist das Gerät meist im Netzwerk da. (Ping ist die Abkürzung für Packet Inter-Network Groper)
+Ein Test-Befehl, um zu prüfen, ob ein Gerät erreichbar ist (z.B. `ping raspberrypi.local`). Wenn Ping antwortet, ist das Gerät meist im Netzwerk da. (Ping ist die Abkürzung für *P*acket *I*nter-*N*etwork *G*roper)
 
 **`arp -a`**  
-Ein Befehl, der eine Liste von Geräten/Adressen zeigt, die dein Computer im Netzwerk „gesehen“ hat. Damit kann man oft die IP des Pi finden.
+Ein Befehl, der eine Liste von Geräten/Adressen zeigt, die Dein Computer im Netzwerk „gesehen“ hat. Damit kann man oft die IP des Pi finden.
+
 
 ***
 
@@ -76,7 +83,7 @@ Du hast 3 Möglichkeiten. Probiere sie am besten in dieser Reihenfolge:
 
 ### Möglichkeit A (einfach): Hostname verwenden
 
-Wenn du im Imager einen Hostnamen gesetzt hast, probiere:
+Wenn Du im Imager einen Hostnamen gesetzt hast, probiere:
 
 ```bash
 ping rpi0-gruppe1.local
@@ -88,13 +95,15 @@ Oder beim Standard-Hostnamen:
 ping raspberrypi.local
 ```
 
-Wenn du Antworten bekommst (z. B. „Antwort von …“), ist der Pi erreichbar ✅
+Wenn Du Antworten bekommst (z. B. „Antwort von …“), ist der Pi erreichbar ✅
 
 <img src="..\images\SSH\01_ping_RPI.png" style="width:700px;" alt="Raspberry Pi im Netzwerk über Hostname finden">
 
 > **Warum `.local`?** Das ist ein Netzwerk-„Namensdienst“ im lokalen WLAN (mDNS). Oft funktioniert das direkt.
 
+
 ***
+
 
 ### Möglichkeit B: IP-Adresse über `arp` finden
 
@@ -114,7 +123,9 @@ Oft hilft auch: Pi kurz vom Strom trennen, wieder einstecken und **direkt danach
 
 > ✅ Tipp: Viele Schulrouter vergeben IPs wie `192.168.0.x` oder `192.168.1.x`.
 
+
 ***
+
 
 ### Möglichkeit C: Router-/WLAN-Übersicht
 
@@ -125,7 +136,9 @@ Wenn ihr zu Hause Zugriff auf euren Router habt:
 
 <img src="..\images\SSH\03_Router_RPI.png" style="width:700px;" alt="IP-Adresse über den Router finden">
 
+
 ***
+
 
 ## 4.3 Per SSH verbinden
 
@@ -159,7 +172,9 @@ Beispiel:
 ssh pi@192.168.1.42
 ```
 
+
 ***
+
 
 ## 4.4 Erste Verbindung: Sicherheitsabfrage bestätigen
 
@@ -190,7 +205,9 @@ pi@raspberrypi:~ $
 
 <img src="..\images\SSH\06_ssh_loggedin.png" style="width:700px;" alt="Passworteingabe">
 
+
 ***
+
 
 ## 4.5 ✅ Schnelltest: Bin ich wirklich auf dem Pi?
 
@@ -218,7 +235,9 @@ Wenn das sinnvolle Ausgaben liefert: perfekt ✅
 
 <img src="..\images\SSH\07_ssh_check.png" style="width:700px;" alt="Schnelltests">
 
+
 ***
+
 
 ## 4.6 Weiteres WLAN hinzufügen
 
@@ -238,7 +257,19 @@ sudo poweroff
 
 Wenn die grüne LED nicht mehr leuchtet sind alle Schreibvorgänge abgeschlossen und wir können das Netzteil aus der Steckdose ziehen.
 
+
 ***
+
+
+# ➡️ Nächster Schritt
+
+👏 Gute Arbeit — ab jetzt steuerst du deinen Pi wie ein echter Hacker 😉 !
+
+🚀 Weiter geht’s mit Kapitel 5: [⚡**System aktualisieren (Updates)**](05_updates.md)  
+
+
+***
+
 
 # 🛠️ Troubleshooting (häufige Probleme)
 
@@ -316,13 +347,7 @@ ssh BENUTZERNAME@raspberrypi.local
 
 **Lösung:** Einfach korrekt tippen und Enter drücken.
 
-***
 
-# ➡️ Nächster Schritt
-
-👏 Gute Arbeit — ab jetzt steuerst du deinen Pi wie ein echter Hacker 😉 !
-
-🚀 Weiter geht’s mit Kapitel 5: [⚡System aktualisieren (Updates)](docs/05_updates.md)  
 
 
 

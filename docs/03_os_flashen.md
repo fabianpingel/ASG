@@ -1,16 +1,16 @@
 # Raspberry Pi Imager – Betriebssystem auf einen Raspberry Pi Zero 2 W flashen
 
-Diese Anleitung erklärt dir Schritt für Schritt, wie du mit dem **Raspberry Pi Imager** ein Betriebssystem (OS) auf eine **microSD-Karte** schreibst, damit dein **Raspberry Pi Zero 2 W** damit starten kann.
+Diese Anleitung erklärt Dir Schritt für Schritt, wie Du mit dem **Raspberry Pi Imager** ein Betriebssystem (OS) auf eine **microSD-Karte** schreibst, damit Dein **Raspberry Pi Zero 2 W** damit starten kann.
 
 ***
 
 ## ✅ Was du brauchst
 
 - Raspberry Pi **Zero 2 W**
-- **microSD-Karte** (mind. 8 GB, empfohlen: 16–32 GB)
+- **microSD-Karte** (empfohlen: 32 GB)
 - **Kartenleser** (USB microSD-Reader) oder SD-Slot am PC/Laptop
 - PC/Laptop mit installiertem **Raspberry Pi Imager**
-- (Optional, aber empfohlen) WLAN-Zugangsdaten, wenn du direkt WLAN einrichten möchtest
+- WLAN-Zugangsdaten (SSID und Passwort)
 
 > ⚠️ **Wichtig:** Beim Schreiben (Flashen) werden **alle Daten auf der ausgewählten microSD-Karte gelöscht**.
 
@@ -24,31 +24,31 @@ Wenn Windows nach einem Datenträger fragt: **einfach schließen / abbrechen**.
 
 <img src="../images/RPIImager/12_RPIImager_Win.png" style="width:700px;" alt="Windows Hinweis Datenträger einlegen">
 
-> ✅ Tipp: Falls mehrere Laufwerke angeschlossen sind (USB-Stick, externe Festplatte), entferne sie kurz, damit du später **nicht aus Versehen** das falsche Laufwerk auswählst.
+> ✅ Tipp: Falls mehrere Laufwerke angeschlossen sind (USB-Stick, externe Festplatte), entferne sie kurz, damit Du später **nicht aus Versehen** das falsche Laufwerk auswählst.
 
 ***
 
 ### 1. Raspberry-Pi-Modell auswählen
-Öffne den **Raspberry Pi Imager**. Klicke auf **„Modell“** und wähle dein Gerät aus:
+Öffne den **Raspberry Pi Imager**. Klicke auf **„Modell“** und wähle Dein Gerät aus:
 
 - **Raspberry Pi Zero 2 W**
 
 <img src="../images/RPIImager/1_RPIImager_Modell.png" style="width:700px;" alt="Raspberry Pi Modell auswählen">
 
-> 💡 Warum ist wichtig: Der Imager zeigt je nach Modell passende Empfehlungen an.
+> 💡 Der Imager zeigt *je nach Modell passende Empfehlungen* an.
 
 ***
 
 ### 2. Betriebssystem (OS) auswählen
-Klicke im Raspberry Pi Imager auf **„Betriebssystem“**. Dort legst du fest, welches System später auf dem Raspberry Pi läuft.
+Klicke im Raspberry Pi Imager auf **„Betriebssystem“**. Dort legst Du fest, welches System später auf dem Raspberry Pi läuft.
 
 #### 2.0 OS-Kategorie auswählen (falls nötig)
-Falls du nicht sofort die passende Auswahl siehst, kannst du zunächst eine Kategorie öffnen – zum Beispiel **„Raspberry Pi OS (other)“** – um weitere Varianten angezeigt zu bekommen.
+Falls Du nicht sofort die passende Auswahl siehst, kannst Du zunächst eine Kategorie öffnen – zum Beispiel **„Raspberry Pi OS (other)“** – um weitere Varianten angezeigt zu bekommen.
 
 <img src="../images/RPIImager/2.0_RPIImager_OS.png" style="width:700px;" alt="Betriebssystem Kategorien">
 
 #### 2.1 Betriebssystem auswählen (für unsere Versuche)
-Für unsere Versuche reicht **Raspberry Pi OS Lite (64-bit)** völlig aus. Diese Version ist schlank, schnell installiert und läuft **ohne grafische Oberfläche** (Desktop). Das spart bRechenleistung, die wir später für unser Sprachmodell brauchen.
+Für unsere Versuche reicht **Raspberry Pi OS Lite (64-bit)** völlig aus. Diese Version ist schlank, schnell installiert und läuft **ohne grafische Oberfläche** (Desktop). Das spart Rechenleistung, die wir später für unser Sprachmodell brauchen.
 
 - **Raspberry Pi OS Lite (64-bit)** → ohne Desktop
 
@@ -68,9 +68,9 @@ Klicke auf **„Speicher“** und wähle die **richtige microSD-Karte** aus.
 
 ***
 
-## (Optional, aber empfohlen) Anpassungen / Einstellungen setzen
+## ⚙️ Anpassungen / Einstellungen setzen
 
-Im Imager kannst du vor dem Schreiben wichtige Einstellungen speichern (z. B. WLAN/SSH).  
+Im Imager kannst Du vor dem Schreiben wichtige Einstellungen speichern (z. B. WLAN/SSH).  
 Das ist notwendig, wenn dein Raspberry Pi später **ohne Monitor/Tastatur** genutzt wird („headless“).
 
 > ✅ Empfehlung für den Workshop: **Hostname + Benutzer + WLAN + SSH** setzen.
@@ -78,7 +78,7 @@ Das ist notwendig, wenn dein Raspberry Pi später **ohne Monitor/Tastatur** genu
 ***
 
 ### 4. Hostname setzen
-Der Hostname ist der Name deines Raspberry Pi im Netzwerk (z. B. `rpi0-<NAME>`).
+Der Hostname ist der Name deines Raspberry Pi im Netzwerk (z.B. `rpi02W-<NAME>`).
 
 <img src="../images/RPIImager/4_RPIImager_Hostname.png" style="width:700px;" alt="Hostname einstellen">
 
@@ -97,11 +97,11 @@ Wähle Land/Zeitzone/Tastaturlayout passend (z. B. **Germany**, **Europe/Berlin*
 
 ### 6. Benutzername und Passwort festlegen
 Lege einen Benutzernamen und ein Passwort fest.  
-**Merke dir beides!** Du brauchst es später zum Login.
+**Merke Dir beides!** Du brauchst es später zum Login.
 
 <img src="../images/RPIImager/6_RPIImager_user.png" style="width:700px;" alt="Benutzerkonto einstellen">
 
-> 🔐 Sicherheit: Nutze ein Passwort, das du dir merken kannst – und teile es nur mit deiner Lehrkraft, wenn nötig.
+> 🔐 Sicherheit: Nutze ein Passwort, das Du Dir merken kannst – und teile es nur mit deiner Lehrkraft, wenn nötig.
 
 ***
 
@@ -111,25 +111,25 @@ Trage SSID (WLAN-Name) und Passwort ein, damit sich der Raspberry Pi beim ersten
 <img src="../images/RPIImager/7_RPIImager_WLAN.png" style="width:700px;" alt="WLAN einstellen">
 
 > ⚠️ Achte auf Groß-/Kleinschreibung beim Passwort.  
-> ✅ Tipp: Der Pi Zero 2 W nutzt häufig **2.4 GHz WLAN** – falls es Probleme gibt, prüft das im Schulnetz.
+> ✅ Tipp: Der Pi Zero 2 W nutzt häufig **2.4 GHz WLAN** – falls es Probleme gibt, prüft das zu Hause/im Schulnetz.
 
 ***
 
 ### 8. SSH aktivieren (für Fernzugriff)
-Aktiviere **SSH**, wenn du später per Terminal von deinem PC aus auf den Raspberry Pi zugreifen willst.
+Aktiviere **SSH**, damit Du später per Terminal von deinem PC aus auf den Raspberry Pi zugreifen kannst.
 
 <img src="../images/RPIImager/8_RPIImager_SSH.png" style="width:700px;" alt="SSH aktivieren">
 
 #### Was ist SSH?
 **SSH** steht für **Secure Shell**.  
-Damit kannst du dich von deinem PC aus per *Terminal* mit dem Raspberry Pi verbinden – sicher und verschlüsselt. Du steuerst den Raspberry Pi dann über Textbefehle, ohne dass ein Bildschirm oder eine Maus am Pi angeschlossen sein müssen.
+Damit kannst Du dich von deinem PC aus per *Terminal* mit dem Raspberry Pi verbinden – sicher und verschlüsselt. Du steuerst den Raspberry Pi dann über Textbefehle, ohne dass ein Bildschirm oder eine Maus am Pi angeschlossen sein müssen.
 
 #### Warum brauchen wir SSH?
 Bei unseren Versuchen ist der Raspberry Pi „headless“ unterwegs – also ohne Monitor, Tastatur und Maus. SSH ist dann wie eine Fernbedienung:
 ✅ Du kannst dich einloggen, obwohl am Pi kein Bildschirm hängt  
 ✅ Du kannst Programme starten, Dateien kopieren und Einstellungen ändern  
-✅ Du kannst Fehler schnell finden (z. B. Netzwerk prüfen, Updates machen)  
-✅ Du kannst den Pi im Netzwerk erreichen (z. B. im Klassenraum-WLAN)
+✅ Du kannst Fehler schnell finden (z.B. Netzwerk prüfen, Updates machen)  
+✅ Du kannst den Pi im Netzwerk erreichen (z.B. im Klassenraum-WLAN)
 
 > ✅ Empfehlung: Nutze „Passwort-Authentifizierung“ (einfacher für den Einstieg).  
 > (Später kann man auch Schlüssel zur Authentifizierung“ benutzen – das ist aber was für Fortgeschrittene.)
@@ -161,11 +161,11 @@ Klicke dann auf **„Schreiben“**.
 
 ### 11. Warnhinweis bestätigen und Schreiben
 Der Imager warnt, dass alle Daten gelöscht werden.  
-Wenn du sicher bist: **„Ich verstehe. Lösche und schreibe“**.
+Wenn Du sicher bist: **„Ich verstehe. Lösche und schreibe“**.
 
 <img src="../images/RPIImager/11_RPIImager_write.png" style="width:700px;" alt="Löschwarnung bestätigen">
 
-> ⚠️ Bestätige nur, wenn du wirklich die **richtige SD-Karte** ausgewählt hast.
+> ⚠️ Bestätige nur, wenn Du wirklich die **richtige SD-Karte** ausgewählt hast.
 
 #### ⚠️ Windows-Meldung „Datenträger einlegen“ (kann ignoriert werden)
 Manchmal erscheint während des Schreibvorgangs in Windows ein Fenster wie „Datenträger einlegen“.  
@@ -193,14 +193,14 @@ Währenddessen **nichts abziehen**. Der Imager schreibt und prüft anschließend
 1. Wenn „Fertig“ angezeigt wird: **SD-Karte sicher entfernen** (Auswerfen).
 2. microSD in den **Raspberry Pi Zero / Zero 2 W** stecken.
 3. Raspberry Pi mit Strom verbinden (USB‑Power).
-4. Beim ersten Start kann es ein paar Minuten dauern (Erst‑Setup).
+4. Beim ersten Start wird es ein paar Minuten dauern (Erst‑Setup).
 5. Wenn die gründe LED nicht mehr blinkt, sind alle Lese-/Schreibvorgänge auf der SD Karte abgeschlossen.
 
-> ➡️ Jetzt geht’s weiter mit Kapitel 4: [⚙️ Erste Einrichtung: Start, IP finden, SSH](docs/04_ssh_setup.md), um den Pi ohne Monitor zu steuern.
+> ➡️ Jetzt geht’s weiter mit Kapitel 4: [⚙️ **Erste Einrichtung: Start, IP finden, SSH**](04_ssh_setup.md), um den Pi ohne Monitor zu steuern.
 
 ***
 
-# 🛠️ Troubleshooting (wenn etwas nicht klappt)
+# 🛠️ Troubleshooting (wenn etwas mal nicht klappt)
 
 ## 🚧 Problem 1: SD-Karte wird nicht angezeigt
 

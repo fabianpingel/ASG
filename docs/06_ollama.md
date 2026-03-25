@@ -1,9 +1,9 @@
 # 6. 🦙 Ollama installieren (und LLM lokal starten)
 
-In diesem Kapitel installierst du [**Ollama**](https://ollama.com/) auf deinem Raspberry Pi.  
+In diesem Kapitel installierst Du [**Ollama**](https://ollama.com/) auf deinem Raspberry Pi.  
 Ollama ist ein Programm, mit dem man **Sprachmodelle (LLMs)** lokal herunterladen und starten kann.
 
-<img src="..\images\Ollama\01_Ollama_App.png" style="width:700px;" alt="Windows Hinweis Datenträger einlegen">
+<img src="..\images\Ollama\01_Ollama_App.png" style="width:700px;" alt="Ollama-App (Windows)">
 
 
 > ✅ Nach der Installation prüfen wir kurz, ob Ollama läuft.  
@@ -25,7 +25,7 @@ Wenn du unsicher bist, ob der Pi Internet hat:
 ping -c 3 8.8.8.8
 ```
 
-Wenn du Antworten bekommst: ✅ Internet klappt.
+Wenn du Antworten bekommst, hast Du eine Internetverbindung ✅ 
 
 <img src="..\images\Ollama\02_Ollama_ping.png" style="width:700px;" alt="Internetverbindugn prüfen">
 
@@ -99,17 +99,22 @@ ollama list
 
 <img src="..\images\Ollama\07_Ollama_list.png" style="width:700px;" alt="Ollama Modelle">
 
-***
-
-## ✅ Mini-Check
-
-Beantworte kurz:
-
-1.  Wofür nutzen wir Ollama?
-2.  Welcher Befehl zeigt die Version?
-3.  Woran erkennst du, dass der Dienst läuft?
 
 ***
+
+
+# ➡️ Nächster Schritt
+
+➡️ Jetzt haben wir endlich alles eingerichtet, um mit einem Modell zu chatten.
+Weiter geht's mit Kapitel 7: [💬 **Mit Modellen chatten**](07_chat.md):  
+Hier laden wir ein kleines Modell und starten den Chat mit:
+
+*   `ollama run <modellname>`
+
+
+***
+
+
 
 ## 🛠️ Troubleshooting (häufige Probleme)
 
@@ -177,12 +182,4 @@ sudo apt update
 sudo apt install -y curl
 ```
 
-***
-
-# ➡️ Nächster Schritt
-
-➡️ Weiter mit **„Modell starten“**:  
-Wir laden ein kleines Modell und starten den Chat mit:
-
-*   `ollama run <modellname>`
 
