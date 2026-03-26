@@ -1,7 +1,7 @@
 # 📖 Glossar – wichtige Begriffe rund um KI, LLMs & Raspberry Pi (für Schüler:innen)
 
 Dieses Glossar erklärt zentrale Begriffe aus unserem Workshop – **kurz, verständlich und mit Alltagsbezug**.  
-**Tipp:** Wenn du ein Wort nicht kennst: zuerst hier nachschlagen 😊
+**Tipp:** Wenn Du ein Wort nicht kennst: zuerst hier nachschlagen 😊
 
 ---
 
@@ -193,10 +193,7 @@ Der Pi läuft „kopflos“ – ohne Bildschirm, Maus, Tastatur. Steuerung dann 
 ### Ollama
 Ein Programm, mit dem man LLMs lokal herunterladen und starten kann.
 
-### Modell „ziehen“ / herunterladen
+### Modell „pullen“ / herunterladen
 Beim ersten Start lädt Ollama das Modell und speichert es lokal – danach geht es auch ohne Internet (je nach Setup).
-
-### Prompt-Lab
-Übungen, in denen ihr Prompts verbessert und Ergebnisse vergleicht (was klappt gut, was nicht?).
 
 ---

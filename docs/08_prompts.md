@@ -6,22 +6,22 @@
 > (Zum Testen dürfen wir später trotzdem *absichtlich* auf Deutsch fragen – siehe Übung unten.)
 
 > ✅ Tipp: Gute Prompts sind **kurz, klar und konkret**.  
-> Noch besser: Sag dem Modell **Format** und **Zielgruppe**, z. B. „in 3 Bulletpoints“ oder „for a 5th grader“.
+> Noch besser: Sag dem Modell **Format** und **Zielgruppe**, z.B. „in 3 Bulletpoints“ oder „for a 5th grader“.
 
 ***
 
 ## 💡 Gut zu wissen
 
-Hier findest du kurze Hinweise und Tipps, die dir helfen, besser mit Sprachmodellen umzugehen.
+Hier findest Du kurze Hinweise und Tipps, die Dir helfen, besser mit Sprachmodellen umzugehen.
 
 ### 🤖 Was ist Prompting?
 
 **Prompting** bedeutet:  
-👉 *Du sagst einer KI (z. B. ChatGPT oder Copilot) genau, was sie tun soll.*
+👉 *Du sagst einer KI (z.B. ChatGPT oder Copilot) genau, was sie tun soll.*
 
-Der **Prompt** ist dabei deine **Eingabe** – also deine Frage und/oder Anweisung.
+Der **Prompt** ist dabei Deine **Eingabe** – also Deine Frage und/oder Anweisung.
 
-👉 Je klarer und genauer du fragst, desto besser ist die Antwort.
+👉 Je klarer und genauer Du fragst, desto besser ist die Antwort.
 
 #### ✏️ Beispiel:
 - ❌ Schlechter Prompt:  
@@ -34,12 +34,12 @@ Der **Prompt** ist dabei deine **Eingabe** – also deine Frage und/oder Anweisu
 ### ✍️ Wirken sich Rechtschreibfehler beim Prompting aus?
 
 **Ja – manchmal.** Kleine Tippfehler sind oft nicht schlimm, weil ein Sprachmodell meistens erkennt, was du meinst.  
-Aber: **Je mehr Fehler** oder je **unklarer** der Satz, desto eher versteht das Modell dich falsch – insbesondere bei sehr kleinen Modellen (wie bei uns auf dem Raspberry Pi Zero).
+Aber: **Je mehr Fehler** oder je **unklarer** der Satz, desto eher versteht das Modell Dich falsch – insbesondere bei sehr kleinen Modellen (wie bei uns auf dem Raspberry Pi Zero).
 
 ✅ **Faustregeln:**
 - **1–2 Tippfehler:** meistens ok.
 - **Viele Fehler / wirre Sätze:** Antwortqualität wird schlechter oder „am Thema vorbei“.
-- **Wichtige Wörter falsch geschrieben** (z. B. Fachbegriffe): Modell kann das Thema verwechseln.
+- **Wichtige Wörter falsch geschrieben** (z.B. Fachbegriffe): Modell kann das Thema verwechseln.
 
 
 #### 🎯 Praktische Regeln
@@ -98,7 +98,7 @@ Kopiere diesen Prompt (Englisch):
 1.  Prompt A: „Explain photosynthesis in two sentences.“
 2.  Prompt B: „Explain photosynthesis in great detail.“
 
-➡️ Vergleicht Geschwindigkeit,Verständlichkeit und Fehler/Unsicherheiten
+➡️ Vergleicht Geschwindigkeit, Verständlichkeit und Fehler/Unsicherheiten
 
 ### Aufgabe 2: „Prompt verbessern“
 
@@ -151,4 +151,20 @@ Verbesserter Prompt:
 
 👀 Beobachtungsauftrag:
 
-*   Gib eine Info („Mein Hund heißt Nellie) und frage 10 Zeilen später erneut.
+*   Gib dem Modell eine Info (z.B. „Mein Hund heißt Nellie) und frage später erneut.
+
+
+***
+
+# 🏁 Schlusswort – Prompting
+
+Prompting ist kein Zaubertrick, sondern eine **Fähigkeit**.  
+Ihr habt gelernt, dass KI nur so gut antworten kann, wie die **Fragen und Anweisungen**, die man ihr gibt.
+
+👉 Wer **klar denkt**, fragt auch **klar**.  
+👉 Wer experimentiert, versteht die KI besser.  
+
+Dieses Kapitel schließt nicht das Lernen ab –  
+es zeigt Euch nur, **wie wichtig eure eigenen Ideen, Worte und Entscheidungen sind**.
+
+*Die KI denkt nicht für Euch – ihr steuert sie!* 

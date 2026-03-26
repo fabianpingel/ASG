@@ -2,11 +2,11 @@
 
 Ihr habt auf dem **Raspberry Pi Zero** viele Dinge mit **Sprachmodellen** ausprobiert.  
 👉 Natürlich ist so kleine Hardware **nicht dafür gedacht**, große KI-Modelle sinnvoll zu betreiben.  
-👉 **Aber darum ging es auch nicht**: Ihr habt gelernt, *wie KI funktioniert*, wo ihre Grenzen liegen – und wie Technik praktisch erfahrbar wird.
+👉 **Aber darum ging es auch nicht**: Ihr habt gelernt, *wie LLMs funktionieren*, wo ihre Grenzen liegen – und wie Technik praktisch erfahrbar wird.
 
 Und genau das ist der richtige Lernweg 🚀
 
----
+***
 
 ## 🧭 Was kann man mit einem Raspberry Pi sinnvolles machen?
 
@@ -19,7 +19,7 @@ Der Raspberry Pi ist ideal für Dienste, die **leise, stromsparend und ständig*
 - Mediaplayer oder Infodisplay
 - Netzwerk‑Tools
 
----
+***
 
 ### 2️⃣ Ein echtes Problem lösen – mit Software
 Statt „großer KI“ kann der Raspberry Pi **alltagsnahe Probleme** lösen.  
@@ -42,9 +42,9 @@ Ein sehr bekanntes Projekt ist **Pi‑hole** 🕳️
 🧠 Hintergrund:
 - Pi‑hole prüft jede Internet‑Anfrage
 - Werbe‑Domains werden **blockiert**
-- Das funktioniert **für alle Geräte im WLAN**, ohne extra Apps [1](https://pi-hole.net/)
+- Das funktioniert **für alle Geräte im WLAN**, ohne extra Apps
 
----
+***
 
 ### 3️⃣ Lernen, wie Computer „im Hintergrund“ arbeiten
 Mit dem Raspberry Pi lernt ihr Dinge, die auf normalen PCs heutzutage „versteckt“ sind:
@@ -56,7 +56,7 @@ Mit dem Raspberry Pi lernt ihr Dinge, die auf normalen PCs heutzutage „verstec
 - Sicherheit & Datenschutz
 - Programmieren
 
----
+***
 
 ## 🏁 Fazit
 Der Raspberry Pi ist **kein Spielzeug** – aber auch **kein Hochleistungsrechner**.  

@@ -1,11 +1,11 @@
-# 7 💬 Mit Modell über Ollama  chatten  
+# 7 💬 Mit Modell über Ollama chatten  
 
->🎩 **Chapeau!** Wenn du bis hierhin durchgehalten hast, ist das eine **richtig starke Leistung!**  
-Du hast dich durch Hardware, Setup, Flashen, SSH und Updates durchgearbeitet – das ist nicht „mal eben“, sondern echte IT‑Praxis. **Sei stolz auf dich!** 👏
+>🎩 **Chapeau!** Wenn Du bis hierhin durchgehalten hast, ist das eine **richtig starke Leistung!**  
+Du hast dich durch Hardware, Setup, Flashen, SSH und Updates durchgearbeitet – das ist nicht „mal eben“, sondern echte IT‑Praxis. **Sei stolz auf Dich!** 👏
 
 
-In diesem Kapitel lernst Du, wie du mit **Ollama** ein kleines Sprachmodell startest und damit im Terminal „chattest“.  
-Außerdem bekommst du Ideen für Fragen (Prompts) und Beobachtungen, die besonders spannend sind, wenn ein Modell auf einem **Raspberry Pi Zero 2 W** läuft.
+In diesem Kapitel lernst Du, wie Du mit **Ollama** ein kleines Sprachmodell startest und damit im Terminal „chattest“.  
+Außerdem bekommst Du Ideen für Fragen (Prompts) und Beobachtungen, die besonders spannend sind, wenn ein Modell auf einem **Raspberry Pi Zero 2 W** läuft.
 
 ***
 
@@ -21,7 +21,7 @@ Am Ende kannst du:
 ## 📋 Voraussetzungen
 
 - Du bist per **SSH** auf dem Raspberry Pi eingeloggt
-- **Ollama ist installiert** und läuft (Kapitel 6 [Ollama installieren](docs/06_ollama.md))
+- **Ollama ist installiert** und läuft (Kapitel 6 [Ollama installieren](06_ollama.md))
 - Internet ist nur **für den ersten Modell-Download** nötig  
   (danach läuft es ohne Internet, weil das Modell lokal gespeichert ist)
 
@@ -59,7 +59,7 @@ Danach bist du im Chat. Du erkennst das daran, dass du direkt tippen kannst.
 
 ### Chat beenden
 
-Je nach Version klappt z. B.:
+Je nach Version klappt z.B.:
 
 *   tippe `/bye`
 *   oder `Ctrl + C` (abbrechen)
@@ -165,7 +165,7 @@ Steht hier ein anderer Wert als `throttled=0x0` gab es z.B. ein Temperaturlimit 
 
 
 > ⚠️ **Warnhinweis: Verbrennungsgefahr**    
-Bei hoher Last können Chip/Heatsink  spürbar heiß werden. Kontakt mit heißen Oberflächen kann Verbrennungen verursachen – insbesondere wenn man länger dranfasst. 
+Bei hoher Last können Chip/Heatsink spürbar heiß werden. Kontakt mit heißen Oberflächen kann Verbrennungen verursachen – insbesondere wenn man länger dranfasst. 
 
 > ℹ️ **Hinweis:** Nach intensiver Nutzung nicht direkt am Kühler anfassen, sondern abkühlen lassen und den Pi so platzieren, dass niemand versehentlich an heiße Teile kommt.
 
@@ -189,7 +189,17 @@ watch -n 30 vcgencmd measure_temp
 *   Macht z.B. alle 30 Sekunden eine Messung und zeichnet die Temperaturkurve auf.
 *   Vergleiche verschiedene Sprachmodelle
 
+
 ***
+
+
+# ➡️ Nächster Schritt
+
+➡️ Als nächstes schauen wir uns an, was ein ein kleines Modell gut kann – und was nicht? Weiter geht's mit Kapitel 8 [✍️ Prompts ans Modell senden](08_prompts.md).
+
+
+***
+
 
 # 🛠️ Troubleshooting
 
@@ -226,13 +236,5 @@ Das ist beim Pi Zero normal. Tipp:
 *   `Ctrl + C` drücken
 *   Wenn das Terminal „hängt“: SSH trennen und neu verbinden
 
-***
-
-# ➡️ Nächster Schritt
-
-➡️ Als nächstes:
-
-*   **Grenzen & Realität**: Was kann ein kleines Modell gut – und was nicht?
-*   **Faktencheck & Regeln**: Wie nutzt man LLMs sinnvoll in der Schule?
 
 
