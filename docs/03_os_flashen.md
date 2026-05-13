@@ -24,7 +24,7 @@ Wenn Windows nach einem Datenträger fragt: **einfach schließen / abbrechen**.
 
 <img src="../images/RPIImager/12_RPIImager_Win.png" style="width:700px;" alt="Windows Hinweis Datenträger einlegen">
 
-> ✅ Tipp: Falls mehrere Laufwerke angeschlossen sind (USB-Stick, externe Festplatte), entferne sie kurz, damit Du später **nicht aus Versehen** das falsche Laufwerk auswählst.
+> 💡 Tipp: Falls mehrere Laufwerke angeschlossen sind (USB-Stick, externe Festplatte), entferne sie kurz, damit Du später **nicht aus Versehen** das falsche Laufwerk auswählst.
 
 ***
 
@@ -64,7 +64,7 @@ Klicke auf **„Speicher“** und wähle die **richtige microSD-Karte** aus.
 <img src="../images/RPIImager/3_RPIImager_SD.png" style="width:700px;" alt="Speichermedium auswählen">
 
 > ⚠️ **Achtung:** Wähle wirklich nur die microSD-Karte aus – sonst könnten Daten auf einem anderen Laufwerk gelöscht werden.  
-> ✅ Tipp: Oft erkennt man die SD-Karte an der **Größe** (z. B. 32 GB).
+> 💡 Tipp: Oft erkennt man die SD-Karte an der **Größe** (z. B. 32 GB).
 
 ***
 
@@ -80,9 +80,12 @@ Das ist notwendig, wenn dein Raspberry Pi später **ohne Monitor/Tastatur** genu
 ### 4. Hostname setzen
 Der Hostname ist der Name deines Raspberry Pi im Netzwerk (z.B. `rpi02W-<NAME>`).
 
+> Für den Namen nutzt bitte jeweils die ersten beiden Buchstaben Eures Vor- und Nachnamens.
+Beispiel: Für **Fa**bian **Pi**ngel --> *fapi*
+
 <img src="../images/RPIImager/4_RPIImager_Hostname.png" style="width:700px;" alt="Hostname einstellen">
 
-> 💡 Tipp: Nutze einen eindeutigen Namen (z. B. Gruppe1, Tisch2, deine Initialen), damit man den Pi im Netzwerk später leichter findet.
+> ⚠️ Achtung: Der Hostname muss eindeutig und einzigartig sein (z. B. rpi02W-fapi, rpi02W-bari, etc.), damit man den Pi im Netzwerk später findet. Ein Hostname darf im selben Netzwerk nicht zweimal vorkommen.
 
 ***
 
@@ -99,19 +102,32 @@ Wähle Land/Zeitzone/Tastaturlayout passend (z. B. **Germany**, **Europe/Berlin*
 Lege einen Benutzernamen und ein Passwort fest.  
 **Merke Dir beides!** Du brauchst es später zum Login.
 
+> 💡 Tipp: Für den Workshop nutzt ihr *jeweils kleingeschrieben* als Benutzer Euren Vornamen und als Passwort Euren Nachnamen.
+
 <img src="../images/RPIImager/6_RPIImager_user.png" style="width:700px;" alt="Benutzerkonto einstellen">
 
-> 🔐 Sicherheit: Nutze ein Passwort, das Du Dir merken kannst – und teile es nur mit deiner Lehrkraft, wenn nötig.
+> 🔐 Sicherheit: Später nutzt Du natürlich ein sicheres Passwort, das Du Dir merken kannst – und teilst es mit deiner Lehrkraft nur wenn nötig.
+Eine Merkhilfe für sichere Passwörter findet ihr [hier](https://www.kindersache.de/bereiche/wissen/medien/mach-dein-passwort-sicher).
 
 ***
 
 ### 7. WLAN einrichten
 Trage SSID (WLAN-Name) und Passwort ein, damit sich der Raspberry Pi beim ersten Start verbinden kann.
 
+> ❗ Für den Workshop nutzen wir folgendes WLAN:
+- SSID
+```bash
+KI-Workshop
+```
+- Passwort: 
+```bash
+Workshop!2026
+```
+
 <img src="../images/RPIImager/7_RPIImager_WLAN.png" style="width:700px;" alt="WLAN einstellen">
 
 > ⚠️ Achte auf Groß-/Kleinschreibung beim Passwort.  
-> ✅ Tipp: Der Pi Zero 2 W nutzt häufig **2.4 GHz WLAN** – falls es Probleme gibt, prüft das zu Hause/im Schulnetz.
+> 💡 Tipp: Der Pi Zero 2 W nutzt häufig **2.4 GHz WLAN** – falls es Probleme gibt, prüft das zu Hause/im Schulnetz.
 
 ***
 

@@ -24,13 +24,18 @@ Am Ende kannst Du:
 - Pi ist im **gleichen WLAN** wie dein PC/Laptop
 - SSH wurde im Imager **aktiviert**
 - Du kennst:
-  - **Hostname** (z.B. `rpi0-gruppe1` oder Standard `raspberrypi`)
+  - **Hostname** (z.B. `rpi02W-fapi`)
   - **Benutzername** und **Passwort** (aus dem Imager)
 
-> ⏱️ Hinweis: Nach dem ersten Einschalten braucht der Pi oft **2–4 Minuten**, bis er vollständig im WLAN ist. Man erkennt das an der grünen LED. Solange diese flackert ist der Pi noch mit Lese-/Schreibvorgängen beschäftigt.
+> ⏱️ Hinweis: Nach dem ersten Einschalten braucht der Pi oft **2–4 Minuten**, bis er vollständig im WLAN ist. Man erkennt das an der grünen LED. Solange diese flackert ist der Pi noch mit Lese-/Schreibvorgängen beschäftigt. Erst wenn die grüne LED dauerhaft leuchtet ist der Bootvorgang abgeschlossen.
+
+
+Das Netzteil wird in den **PWR IN** Anschluss gesteckt, siehe [Bild](https://picockpit.com/raspberry-pi/de/alles-uber-raspberry-pi-zero-2-w/).
+<img src="..\images\Hardware\zero-w-ports.jpg" style="width:700px;" alt="Raspberry Pi Anschlüse">
 
 
 ***
+
 
 
 ## ℹ️ Begriffe kurz erklärt (für dieses SSH‑Kapitel)
@@ -42,10 +47,10 @@ SSH ist ein **sicherer Fernzugriff**: Du kannst dich von deinem Computer aus bei
 Das Terminal ist ein **Textfenster**, in das Du Befehle eintippst. Statt zu klicken, „sprichst“ Du mit dem Computer über kurze Kommandos (Befehle) wie `ssh ...` oder `ping ...`.
 
 **Hostname**  
-Der **Name** des Raspberry Pi im Netzwerk (z. B. `raspberrypi` oder `rpi0-gruppe1`). Damit kann man den Pi oft leichter ansprechen als mit Zahlen der IP-Adresse.
+Der **Name** des Raspberry Pi im Netzwerk (z. B. `rpi02W-fapi`). Damit kann man den Pi oft leichter ansprechen als mit Zahlen der IP-Adresse.
 
 **IP‑Adresse**  
-Die „Hausnummer“ eines Geräts im Netzwerk (z. B. `192.168.1.42`). Wenn der Hostname nicht funktioniert, klappt SSH oft über die IP (IP steht für Internet Protocol).
+Die „Hausnummer“ eines Geräts im Netzwerk (z. B. `10.19.23.166`). Wenn der Hostname nicht funktioniert, klappt SSH oft über die IP (IP steht für Internet Protocol).
 
 **`.local`**  
 Eine praktische Endung, mit der Geräte im gleichen WLAN manchmal automatisch gefunden werden (z.B. `raspberrypi.local`). Das funktioniert nicht in jedem Netzwerk, aber oft zu Hause oder in einfachen WLANs.
@@ -69,7 +74,7 @@ Ein Befehl, der eine Liste von Geräten/Adressen zeigt, die Dein Computer im Net
 ## 4.1 🖥️ Terminal öffnen (PC/Laptop)
 
 ### Windows
-- Öffne **PowerShell** oder **Windows Terminal**
+- Öffne **Windows PowerShell** oder **Terminal**
   - Startmenü → „PowerShell“ eintippen
 
 ### macOS / Linux
@@ -81,18 +86,14 @@ Ein Befehl, der eine Liste von Geräten/Adressen zeigt, die Dein Computer im Net
 
 Du hast 3 Möglichkeiten. Probiere sie am besten in dieser Reihenfolge:
 
+> 💡 Tipp: Nutzt Copy & Paste für die Befehle, um Tippfehler zu vermeiden.
+
 ### Möglichkeit A (einfach): Hostname verwenden
 
 Wenn Du im Imager einen Hostnamen gesetzt hast, probiere:
 
 ```bash
-ping rpi0-gruppe1.local
-````
-
-Oder beim Standard-Hostnamen:
-
-```bash
-ping raspberrypi.local
+ping rpi02W-fapi.local
 ```
 
 Wenn Du Antworten bekommst (z. B. „Antwort von …“), ist der Pi erreichbar ✅
@@ -100,6 +101,8 @@ Wenn Du Antworten bekommst (z. B. „Antwort von …“), ist der Pi erreichbar 
 <img src="..\images\SSH\01_ping_RPI.png" style="width:700px;" alt="Raspberry Pi im Netzwerk über Hostname finden">
 
 > **Warum `.local`?** Das ist ein Netzwerk-„Namensdienst“ im lokalen WLAN (mDNS). Oft funktioniert das direkt.
+
+> 🚧 Wenn Du im Schulnetz keine Antwort bekommst, probiere **ohne** *`.local`* am Ende.
 
 
 ***
@@ -115,13 +118,13 @@ Wenn `.local` nicht klappt, suche die IP-Adresse.
 arp -a
 ```
 
-Suche in der Liste nach einem Eintrag, der neu aussieht oder „raspberry“ ähnlich ist.  
+Suche in der Liste nach einem Eintrag, der neu aussieht.  
 
 <img src="..\images\SSH\02_arp_a.png" style="width:700px;" alt="IP-Adresse über `arp` finden">
 
 Oft hilft auch: Pi kurz vom Strom trennen, wieder einstecken und **direkt danach** nochmal `arp -a` ausführen.
 
-> ✅ Tipp: Viele Schulrouter vergeben IPs wie `192.168.0.x` oder `192.168.1.x`.
+> 💡 Tipp: Euer Schulrouter nutzt den IP-Bereich zwischen `10.19.10.xxx` oder `10.19.30.xxx`.
 
 
 ***
@@ -151,13 +154,7 @@ ssh BENUTZERNAME@HOSTNAME.local
 Beispiel:
 
 ```bash
-ssh pi@raspberrypi.local
-```
-
-oder:
-
-```bash
-ssh workshop@rpi0-gruppe1.local
+ssh fabian@rpi02W-fapi.local
 ```
 
 ### Variante 2: Verbindung per IP-Adresse
@@ -169,7 +166,7 @@ ssh BENUTZERNAME@IP_ADRESSE
 Beispiel:
 
 ```bash
-ssh pi@192.168.1.42
+ssh fabian@10.19.23.166
 ```
 
 
@@ -200,7 +197,7 @@ Dann Passwort eingeben (beim Tippen siehst du **keine Zeichen** – das ist norm
 ✅ Wenn du danach so etwas siehst, bist du drin:
 
 ```text
-pi@raspberrypi:~ $
+fabian@rpi02W-fapi:~ $
 ```
 
 <img src="..\images\SSH\06_ssh_loggedin.png" style="width:700px;" alt="Passworteingabe">
@@ -241,7 +238,36 @@ Wenn das sinnvolle Ausgaben liefert: perfekt ✅
 
 ## 4.6 Weiteres WLAN hinzufügen
 
-TODO
+Das WLAN wird ab Raspberry Pi OS Bookworm (Debian 12) über den Network Manager verwaltet. Hier gibt es zwei Möglichkeiten.
+
+### 4.6.1 Grafische TUI: nmtui
+Der einfachste Weg funktioniert über eine textbasierte Benutzerschnittstelle (TUI = **T**ext-based **G**raphical **I**nterface)
+
+```bash
+sudo nmtui
+```
+
+Die Oberfläche ist selbsterklärend – mit Pfeiltasten navigieren, Enter zum Auswählen, und schon könnt ihr Netzwerke hinzufügen, ändern oder entfernen.
+
+### 4.6.2 Kommandozeile: nmcli
+
+Oder ihr nutzt ein Kommendozeilentool (CLI = **C**ommand **L**ine **I**nterface)
+
+Alle verfügbaren WLAN-Netze anzeigen:
+```bash
+nmcli device wifi list
+```
+Aktuelle Verbindungen anzeigen:
+```bash
+nmcli connection show
+```
+Mit einem neuen WLAN verbinden:
+```bash
+nmcli device wifi connect "SSID" password "PASSWORT"
+
+# für uinserenm Workshop
+nmcli device wifi connect "KI-Workshop" password "Workshop!2026"
+```
 
 ***
 
@@ -295,7 +321,7 @@ Wenn die grüne LED nicht mehr leuchtet sind alle Schreibvorgänge abgeschlossen
 *   Nutze die IP-Adresse statt Hostname:
 
 ```bash
-ssh BENUTZERNAME@192.168.x.y
+ssh BENUTZERNAME@10.19.x.y
 ```
 
 *   Oder prüfe den Hostnamen (Imager-Einstellungen).

@@ -139,6 +139,8 @@ top
 
 Wie man in der ersten Zeile erkennt, ist die CPU hier mit 291,2% 'über'ausgelastet, weshalb die einzelnen Antwort-Tokens vom Sprachmodell auch nur sehr verzögert auf dem Terminal erscheinen.
 
+Man beendet die Anzeige mit **STRG + C**.
+
 ### 🌡️ Temperatur (Thermomanagement)
 
 ```bash
@@ -169,7 +171,7 @@ Bei hoher Last können Chip/Heatsink spürbar heiß werden. Kontakt mit heißen 
 
 > ℹ️ **Hinweis:** Nach intensiver Nutzung nicht direkt am Kühler anfassen, sondern abkühlen lassen und den Pi so platzieren, dass niemand versehentlich an heiße Teile kommt.
 
-### 🧪 Mini-Teamaufgabe (5-10 Minuten) – Temperatur & Throttling prüfen (über Terminal)
+### 🧪 7.1. Mini-Teamaufgabe (5-10 Minuten) – Temperatur & Throttling prüfen (über Terminal)
 
 Aktuelle Temperatur anzeigen:
 ```bash

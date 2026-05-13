@@ -60,6 +60,7 @@ Das Projekt basiert auf diesem englischsprachigen Tutorial:
 10. [Fazit](docs/10_fazit.md)  
 99. [Glossar](docs/99_glossar.md)
 
+Am Ende der meisten Kapitel findest Du Hilfestellungen  (🛠️ Troubleshooting), wenn etwas mal nicht klappen sollte.
 
 ***
 
@@ -83,6 +84,8 @@ Das Projekt basiert auf diesem englischsprachigen Tutorial:
     ├── 09_TBD.md
     └── 10_fazit.md
 ```
+
+> 💡 Tipp: Nutzt beim Klick auf Links die rechte Maustaste und dann die Option 'Link in neuem Tab öffnen'. Dann bleibt das Hauptfenster im Browser geöffnet.
 
 ***
 

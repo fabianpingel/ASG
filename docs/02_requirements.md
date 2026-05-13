@@ -11,6 +11,8 @@ Keine Sorge: Das meiste ist schnell vorbereitet ✅
 - [ ] microSD‑Karte (mind. **32 GB** empfohlen)
 - [ ] Netzteil: **Micro‑USB, 5V / 2.5A**
 - [ ] WLAN‑Zugang (SSID + Passwort)
+- [ ] Kühlkörper (nur den größeren Kühlkörper)
+- [ ] Gehäuse (3D Druck Ober- und Unterteil)
 - [ ] Computer/Laptop (Windows/macOS/Linux) mit SD‑Karten‑Slot oder Adapter
 
 ### Software (auf deinem Computer)
@@ -98,6 +100,8 @@ Der Raspberry Pi Zero 2 W hat WLAN schon eingebaut – man verbindet ihn wie ein
 ### Raspberry Pi Imager - Installationsanleitung
 
 Der **Raspberry Pi Imager** ist ein Programm, mit dem Du das Betriebssystem für deinen Raspberry Pi ganz einfach auf eine **microSD-Karte** kopieren kannst.
+
+Dieser Programm musst Du zunächst auf einem **PC/Laptop** installieren (nicht auf den Pi!).
 
 #### 🔽 Schritt 1: Raspberry Pi Imager herunterladen
 
@@ -187,16 +191,19 @@ Ein **Large Language Model (LLM)** ist ein Programm, das Texte verarbeitet und A
 
 👉 Merksatz: **Fehler gehören dazu – so lernt man am besten.**
 
-## 🧪 Aufgabe: Montage (5-10 Minuten)
+## 🧪 2.1 Aufgabe: Montage (5-10 Minuten)
 
 Montiert das Gehäuse um den Raspberry Pi, damit die Platine geschützt ist.
 
-Anschließend könnt ihr mit dem Abstandshalter den Kühler auf die CPU kleben. 
+Anschließend könnt ihr mit dem Abstandshalter den Kühler auf die CPU kleben. Ihr benötigt nur den größeren der beiden Kühlkörper.
 
 Der Abstandshalter wird anschließend wieder entfernt und sorgt dafür, dass zwischen dem gedruckten Kunststoff und dem Alu-Kühler kein Kontakt besteht.
 
 <img src="../images/Hardware/Hardware.gif" style="width:700px;" alt="Schreibfortschritt">
 
+Die CAD-/3mf-Daten könnt ihr hier herunterladen. Für eine gute Verbindung solltest Du beim Drucken im Slicer die Option 'FuzzySkin' für die vier Bolzen aktivieren, damit sich die beiden Gehäuseteile nicht von alleine lösen.
+
+TODO: Link einfügen, wenn Daten hochgeladen
 ***
 
 ## ➡️ Nächster Schritt

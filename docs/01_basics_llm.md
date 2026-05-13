@@ -82,7 +82,7 @@ Beim lokalen LLM passiert die Verarbeitung **auf deinem Gerät** – dadurch has
 - **Niemals persönlichen Daten** (Name, Adresse, private Infos) in Prompts eingeben! 
 
 
-## 🧪 Übung: Mensch vs. Sprachmodell (5-10 Minuten)
+## 🧪 1.1 Übung: Mensch vs. Sprachmodell (5-10 Minuten)
 
 Testet, ob **Menschen so antworten wie ein Sprachmodell** — also nach **Wahrscheinlichkeit** und **Plausibilität**.
 

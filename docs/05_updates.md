@@ -153,7 +153,7 @@ Hier im Beispiel sind noch 21 GB verfügbar.
 
 Wenn dein Pi aktualisiert ist, geht’s weiter mit Kapitel 6:
 
-➡️ [🦙 **Ollama installieren**](docs/06_ollama.md)  (damit wir ein kleines LLM lokal starten können).
+➡️ [🦙 **Ollama installieren**](06_ollama.md)  (damit wir ein kleines LLM lokal starten können).
 
 
 ***

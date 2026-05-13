@@ -1,7 +1,7 @@
 # 📖 Glossar – wichtige Begriffe rund um KI, LLMs & Raspberry Pi (für Schüler:innen)
 
 Dieses Glossar erklärt zentrale Begriffe aus unserem Workshop – **kurz, verständlich und mit Alltagsbezug**.  
-**Tipp:** Wenn Du ein Wort nicht kennst: zuerst hier nachschlagen 😊
+💡 **Tipp:** Wenn Du ein Wort nicht kennst: zuerst hier nachschlagen 😊
 
 ---
 
@@ -175,7 +175,7 @@ Der Name eines WLANs (z. B. „Schule-WLAN“).
 Die „Hausnummer“ eines Geräts im Netzwerk (z. B. `192.168.1.42`).
 
 ### Hostname
-Der Name eines Geräts im Netzwerk (z. B. `raspberrypi` oder `rpi0-gruppe1`).
+Der Name eines Geräts im Netzwerk (z.B. `rpi02W-fapi`).
 
 ### Router
 Das Gerät, das dein WLAN macht und IP-Adressen verteilt.

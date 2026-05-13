@@ -5,7 +5,7 @@
 > Damit die Antworten möglichst verständlich und zuverlässig sind, formulieren wir unsere **Prompts in einfachem Englisch**.  
 > (Zum Testen dürfen wir später trotzdem *absichtlich* auf Deutsch fragen – siehe Übung unten.)
 
-> ✅ Tipp: Gute Prompts sind **kurz, klar und konkret**.  
+> 💡 Tipp: Gute Prompts sind **kurz, klar und konkret**.  
 > Noch besser: Sag dem Modell **Format** und **Zielgruppe**, z.B. „in 3 Bulletpoints“ oder „for a 5th grader“.
 
 ***
@@ -70,7 +70,7 @@ Aber: **Je mehr Fehler** oder je **unklarer** der Satz, desto eher versteht das 
 
 ***
 
-## 🧪 Übung A: Deutsch vs. Englisch (5–10 Minuten)
+## 🧪 8.1 Übung A: Deutsch vs. Englisch (5–10 Minuten)
 
 **Ziel:** Wir testen nun, wie sich ein *kleines* Modell auf dem Pi Zero in Deutsch vs. Englisch verhält.
 
@@ -91,16 +91,16 @@ Kopiere diesen Prompt (Englisch):
 
 ***
 
-## 🧪 Übung B: Teamaufgabe (10–15 Minuten)
+## 🧪 8.2 Übung B: Teamaufgabe (10–15 Minuten)
 
-### Aufgabe 1: „Kurz vs. Lang“
+### Aufgabe 8.2.1: „Kurz vs. Lang“
 
 1.  Prompt A: „Explain photosynthesis in two sentences.“
 2.  Prompt B: „Explain photosynthesis in great detail.“
 
 ➡️ Vergleicht Geschwindigkeit, Verständlichkeit und Fehler/Unsicherheiten
 
-### Aufgabe 2: „Prompt verbessern“
+### Aufgabe 8.2.2: „Prompt verbessern“
 
 Startprompt:
 
@@ -115,9 +115,9 @@ Verbesserter Prompt:
 
 ***
 
-## 🧪 Übung C: Was konntet ihr beobachten? (5-10 Minuten)
+## 🧪 8.3 Übung C: Was konntet ihr beobachten? (5-10 Minuten)
 
-### Aufgabe 1: Geschwindigkeit & „Wartegefühl“
+### Aufgabe 8.3.1: Geschwindigkeit & „Wartegefühl“
 
 *   Wie lange dauert es, bis die **erste Antwort** kommt?
 *   Kommt Text **stückweise** (Token für Token) oder erst am Ende?
@@ -127,7 +127,7 @@ Verbesserter Prompt:
 
 *   Stoppe grob die Zeit: „Start“ → „erste Wörter sichtbar“.
 
-### Aufgabe 2: Qualität vs. Länge der Antwort
+### Aufgabe 8.3.2: Qualität vs. Länge der Antwort
 
 *   Kurze Aufgaben funktionieren oft besser.
 *   Lange Texte/komplizierte Aufgaben können schlechter werden oder abbrechen.
@@ -136,7 +136,7 @@ Verbesserter Prompt:
 
 *   Vergleiche: „Erkläre in 2 Sätzen“ vs. „Erkläre sehr ausführlich“.
 
-### Aufgabe 3: „Halluzinationen“ (selbstbewusst falsch)
+### Aufgabe 8.3.3: „Halluzinationen“ (selbstbewusst falsch)
 
 *   Klingt die Antwort plausibel, obwohl sie falsch sein könnte?
 
@@ -144,7 +144,7 @@ Verbesserter Prompt:
 
 *   Stelle eine Frage mit Zahlen/Details und prüft diese (Schulbuch/Internet/Lehrkraft).
 
-### Aufgabe 4: Kontext-Grenzen (Vergessen im Chat)
+### Aufgabe 8.3.4: Kontext-Grenzen (Vergessen im Chat)
 
 *   Merkt sich das KI-Modell alles aus dem Verlauf?
 *   Wann „vergisst“ es Details?
