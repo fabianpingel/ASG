@@ -265,7 +265,7 @@ Mit einem neuen WLAN verbinden:
 ```bash
 nmcli device wifi connect "SSID" password "PASSWORT"
 
-# für uinserenm Workshop
+# für unseren Workshop
 nmcli device wifi connect "KI-Workshop" password "Workshop!2026"
 ```
 
