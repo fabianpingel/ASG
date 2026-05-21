@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Your Own AI – Workshop</title>
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 900;font-display:swap;src:url(fonts/inter.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/inter-italic.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;src:url(fonts/jetbrains-mono.woff2) format('woff2')}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2550;--navy2:#243166;--navy3:#0f172a;
+  --orange:#bc4e21;--orange3:#fff5f0;
+  --light:#f0f4f8;--white:#fff;
+  --gray:#6b7280;--dark:#1f2937;--mid:#374151;
+  --green:#16a34a;--green-bg:#f0fdf4;--green-bd:#bbf7d0;
+  --warn:#d97706;--warn-bg:#fffbeb;--warn-bd:#fde68a;
+  --blue:#2563eb;--blue-bg:#eff6ff;--blue-bd:#bfdbfe;
+  --code-bg:#1e293b;--code-fg:#e2e8f0;
+  --font:'Inter',system-ui,sans-serif;
+  --mono:'JetBrains Mono','Fira Code',monospace;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;font-family:var(--font)}
+#deck{position:relative;width:100vw;height:100vh}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--light)}
+.slide.active{display:flex}
+
+/* Header */
+.hd{display:flex;align-items:center;justify-content:space-between;padding:0 1.6rem;height:52px;min-height:52px;background:var(--navy);flex-shrink:0}
+.hd img.logo-p{height:28px;background:white;padding:2px 7px;border-radius:5px}
+.hd img.logo-l{height:24px}
+.hd .hd-mid{display:flex;flex-direction:column;align-items:center;line-height:1.2}
+.hd .sec-lbl{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.hd .slide-no{font-size:.6rem;color:rgba(255,255,255,.28);font-family:var(--mono)}
+
+/* Progress */
+#prog{position:fixed;top:52px;left:0;right:0;height:3px;background:var(--navy2);z-index:500}
+#prog-fill{height:100%;background:var(--orange);transition:width .25s ease;width:0%}
+
+/* Body */
+.bd{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
+
+/* ── TITLE ── */
+.slide.t-title{background:var(--navy3)}
+.slide.t-title .hd{background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08)}
+.slide.t-title .bd{align-items:center;justify-content:center;text-align:center;padding:2rem 5rem;gap:1.1rem}
+.t-title .tag{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange)}
+.t-title h1{font-size:clamp(2.4rem,4.8vw,4.2rem);font-weight:900;color:var(--white);line-height:1.05}
+.t-title h1 em{color:var(--orange);font-style:normal}
+.t-title .sub{font-size:clamp(.9rem,1.7vw,1.3rem);color:rgba(255,255,255,.65);max-width:700px;line-height:1.55}
+.t-title .meta{font-size:.82rem;color:rgba(255,255,255,.35);margin-top:.3rem}
+.t-title hr{width:56px;border:none;border-top:3px solid var(--orange);margin:.2rem auto}
+.t-title .chips{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+.t-title .chip{background:rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:.25rem .8rem;border-radius:20px;font-size:.78rem;border:1px solid rgba(255,255,255,.12)}
+a.chip{text-decoration:none;transition:background .2s,color .2s}
+a.chip:hover{background:rgba(255,255,255,.18);color:white}
+.hd a{display:inline-flex;align-items:center;text-decoration:none;border-radius:6px;transition:opacity .2s}
+.hd a:hover{opacity:.75}
+
+/* ── SECTION ── */
+.slide.t-sec{background:var(--navy)}
+.slide.t-sec .hd{background:rgba(255,255,255,.04)}
+.slide.t-sec .bd{flex-direction:row}
+.t-sec .stripe{width:7px;background:var(--orange);flex-shrink:0}
+.t-sec .sec-in{flex:1;display:flex;flex-direction:column;justify-content:center;padding:2.5rem 4rem;gap:.9rem}
+.t-sec .blk{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange)}
+.t-sec h2{font-size:clamp(1.9rem,3.8vw,3.2rem);font-weight:900;color:white;line-height:1.1}
+.t-sec .desc{font-size:1rem;color:rgba(255,255,255,.6);max-width:600px;line-height:1.65}
+.t-sec .s-chips{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:.3rem}
+.t-sec .s-chip{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:rgba(255,255,255,.65);padding:.28rem .75rem;border-radius:20px;font-size:.74rem}
+.t-sec .illus{position:absolute;right:4rem;top:50%;transform:translateY(-50%);font-size:9rem;opacity:.07;pointer-events:none}
+
+/* ── CONTENT ── */
+.slide.t-con .bd{padding:1.8rem 2.4rem 1.4rem;gap:1rem}
+.t-con h2,.t-cmd h2,.t-ex h2,.t-img h2{font-size:clamp(1.3rem,2.2vw,1.8rem);font-weight:800;color:var(--navy);border-left:5px solid var(--orange);padding-left:.75rem;line-height:1.2;flex-shrink:0}
+.t-cmd h2{color:white}
+.t-ex h2{color:var(--orange);border-color:var(--orange)}
+.sub-h{font-size:.82rem;color:var(--gray);padding-left:.75rem;margin-top:-.7rem;flex-shrink:0}
+
+/* ── EXERCISE ── */
+.slide.t-ex{background:#fffcf9}
+.slide.t-ex .bd{padding:1.6rem 2.4rem 1.4rem;gap:.85rem}
+.ex-badge{display:inline-flex;align-items:center;gap:.35rem;background:var(--orange);color:white;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .65rem;border-radius:20px;width:fit-content}
+.ex-box{background:white;border:2px solid var(--orange);border-radius:12px;padding:1rem 1.3rem}
+.obs-box{background:var(--warn-bg);border:2px solid var(--warn);border-radius:12px;padding:.9rem 1.2rem}
+
+/* ── COMMAND ── */
+.slide.t-cmd{background:var(--navy3)}
+.slide.t-cmd .hd{background:rgba(255,255,255,.04)}
+.slide.t-cmd .bd{padding:1.6rem 2.4rem;gap:1rem}
+
+/* ── IMAGE ── */
+.slide.t-img .bd{padding:1.4rem 2.4rem;gap:1rem}
+
+/* ── CARDS ── */
+.card{background:white;border-radius:12px;padding:1rem 1.25rem;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.05)}
+.card h3{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:.4rem}
+.card p,.card li{font-size:.86rem;line-height:1.55;color:var(--mid)}
+.card.navy{background:var(--navy);border-color:transparent}
+.card.navy h3{color:white}
+.card.navy p,.card.navy li{color:rgba(255,255,255,.82)}
+.card.orange{background:var(--orange);border-color:transparent}
+.card.orange h3,.card.orange p{color:white}
+.card.ol{background:#fff5f0;border:1px solid #f5c9b3}
+.card.gl{background:var(--green-bg);border:1px solid var(--green-bd)}
+.card.bl{background:var(--blue-bg);border:1px solid var(--blue-bd)}
+.card.yl{background:var(--warn-bg);border:1px solid var(--warn-bd)}
+
+/* ── LISTS ── */
+ul.bl{list-style:none;display:flex;flex-direction:column;gap:.42rem}
+ul.bl li{display:flex;align-items:flex-start;gap:.5rem;font-size:.88rem;line-height:1.5;color:var(--dark)}
+ul.bl li::before{content:"▸";color:var(--orange);flex-shrink:0;margin-top:.05rem}
+ul.bl.lg li{font-size:.98rem}
+ul.bl.sm li{font-size:.78rem}
+ul.cl{list-style:none;display:flex;flex-direction:column;gap:.42rem}
+ul.cl li{display:flex;align-items:flex-start;gap:.5rem;font-size:.88rem;line-height:1.4;color:var(--dark)}
+ul.cl li::before{content:"✓";color:var(--green);font-weight:700;flex-shrink:0}
+ol.nl{list-style:none;counter-reset:item;display:flex;flex-direction:column;gap:.48rem}
+ol.nl li{display:flex;align-items:flex-start;gap:.55rem;font-size:.88rem;line-height:1.5;color:var(--dark);counter-increment:item}
+ol.nl li::before{content:counter(item);background:var(--navy);color:white;min-width:20px;height:20px;border-radius:50%;font-size:.66rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.12rem}
+
+/* ── TERMINAL ── */
+.term{background:var(--code-bg);border-radius:10px;overflow:hidden}
+.term-bar{background:#2d3748;padding:.35rem .8rem;display:flex;align-items:center;gap:.35rem}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot.r{background:#ff5f56}.dot.y{background:#ffbd2e}.dot.g{background:#27c93f}
+.term-ttl{margin:0 auto;font-size:.63rem;color:rgba(255,255,255,.32);font-family:var(--mono)}
+.term-body{padding:.7rem 1rem;font-family:var(--mono);font-size:.77rem;color:var(--code-fg);line-height:1.7}
+.p{color:#64d9a4}.c{color:#93c5fd}.cm{color:#6b7280;font-style:italic}.hi{color:#fbbf24}.er{color:#f87171}
+
+/* ── INFO BOXES ── */
+.ib{display:flex;align-items:flex-start;gap:.6rem;padding:.7rem .95rem;border-radius:8px;font-size:.82rem;line-height:1.5}
+.ib.warn{background:var(--warn-bg);border-left:4px solid var(--warn);color:#78350f}
+.ib.tip{background:var(--green-bg);border-left:4px solid var(--green);color:#14532d}
+.ib.info{background:var(--blue-bg);border-left:4px solid var(--blue);color:#1e40af}
+.ib .ico{font-size:.92rem;flex-shrink:0;margin-top:.05rem}
+
+/* ── GRID / FLEX HELPERS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;flex:1}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.85rem;flex:1}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:1.1rem;flex:1}
+.g12{display:grid;grid-template-columns:1fr 2fr;gap:1.1rem;flex:1}
+.fc{display:flex;flex-direction:column;gap:.75rem}
+.fc.sm{gap:.45rem}
+.row{display:flex;align-items:center;gap:.75rem}
+.flex1{flex:1}
+
+/* ── TABLE ── */
+table.dt{width:100%;border-collapse:collapse;font-size:.84rem}
+table.dt th{background:var(--navy);color:white;padding:.5rem .85rem;text-align:left;font-weight:600;font-size:.8rem}
+table.dt td{padding:.48rem .85rem;border-bottom:1px solid rgba(0,0,0,.07);color:var(--dark)}
+table.dt tr:nth-child(even) td{background:rgba(0,0,0,.025)}
+table.dt tr.hi td{background:rgba(188,78,33,.1);font-weight:600;color:var(--orange)}
+.card.navy table.dt th{background:rgba(255,255,255,.18);color:white;border-bottom:1px solid rgba(255,255,255,.15)}
+.card.navy table.dt td{color:rgba(255,255,255,.85);border-bottom-color:rgba(255,255,255,.1)}
+.card.navy table.dt tr:nth-child(even) td{background:rgba(255,255,255,.06)}
+.card.navy table.dt tr.hi td{background:rgba(188,78,33,.4);color:#ffcdb8;font-weight:600}
+
+/* ── TOKENS ── */
+.tok-row{display:flex;gap:.32rem;flex-wrap:wrap;align-items:center}
+.tok{border-radius:5px;padding:.22rem .48rem;font-family:var(--mono);font-size:.8rem;font-weight:600;line-height:1}
+.tok.t1{background:#dbeafe;color:#1e3a8a}
+.tok.t2{background:#dcfce7;color:#14532d}
+.tok.t3{background:#fef3c7;color:#78350f}
+.tok.t4{background:#fce7f3;color:#831843}
+.tok.t5{background:#ede9fe;color:#4c1d95}
+
+/* ── GLOSSARY ── */
+.gl-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;flex:1;overflow:auto}
+.gl-item{background:white;border-radius:8px;padding:.6rem .8rem;border-left:3px solid var(--orange)}
+.gl-item dt{font-weight:700;font-size:.82rem;color:var(--navy)}
+.gl-item dd{font-size:.74rem;color:var(--gray);margin-top:.08rem;line-height:1.4}
+
+/* ── STAT ── */
+.stat{background:var(--navy);color:white;border-radius:12px;padding:.9rem 1.1rem;text-align:center}
+.stat .n{font-size:2.1rem;font-weight:900;color:var(--orange);display:block;line-height:1}
+.stat .l{font-size:.73rem;color:rgba(255,255,255,.58);margin-top:.22rem}
+
+/* ── STEP FLOW ── */
+.flow{display:flex;align-items:center;gap:.38rem;flex-wrap:wrap}
+.fbox{background:var(--navy);color:white;border-radius:7px;padding:.42rem .7rem;font-size:.76rem;font-weight:600;text-align:center;white-space:nowrap}
+.fbox.o{background:var(--orange)}
+.farr{color:var(--orange);font-size:1.05rem;font-weight:700}
+
+/* ── IMAGE ── */
+.img-wrap{display:flex;align-items:center;justify-content:center;flex:1;min-height:0}
+.img-wrap img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+
+/* ── UTIL ── */
+code{background:#e8edf5;color:var(--navy);font-family:var(--mono);font-size:.82em;padding:.04em .28em;border-radius:4px}
+.slide.t-cmd code,.slide.t-title code{background:rgba(255,255,255,.1);color:#93c5fd}
+.kw{background:rgba(188,78,33,.12);color:var(--orange);font-weight:700;padding:0 .2em;border-radius:3px}
+.kw2{background:rgba(26,37,80,.1);color:var(--navy);font-weight:700;padding:0 .2em;border-radius:3px}
+.clr-o{color:var(--orange)}.clr-n{color:var(--navy)}.clr-g{color:var(--green)}
+.txt-c{text-align:center}.txt-sm{font-size:.82rem}.txt-xs{font-size:.72rem}.txt-muted{color:var(--gray)}
+.fw7{font-weight:700}.fw8{font-weight:800}.flex-shrink-0{flex-shrink:0}
+.img-row{display:flex;gap:.8rem;align-items:flex-start;flex:1;min-height:0}
+.img-slider{display:flex;flex-direction:column;height:100%;min-height:0;gap:.35rem}
+.slider-track{position:relative;flex:1;min-height:0;border-radius:10px;overflow:hidden;background:white;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.06)}
+.slide-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .5s ease}
+.slide-img.active{opacity:1}
+.slider-footer{display:flex;align-items:center;justify-content:center;gap:.6rem}
+.slider-dots{display:flex;gap:.4rem;align-items:center}
+.s-dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.2);cursor:pointer;transition:background .3s;border:none;padding:0;flex-shrink:0}
+.s-dot.active{background:var(--orange)}
+.slider-lbl{font-size:.65rem;color:var(--gray)}
+.img-row img{flex:1;min-width:0;max-height:100%;object-fit:contain;border-radius:7px;box-shadow:0 3px 12px rgba(0,0,0,.15)}
+.caption{font-size:.72rem;color:var(--gray);text-align:center;margin-top:.3rem}
+
+/* Nav */
+#nav{position:fixed;bottom:.9rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:.55rem;background:rgba(15,23,42,.9);backdrop-filter:blur(10px);border-radius:30px;padding:.38rem .85rem;z-index:600;box-shadow:0 4px 22px rgba(0,0,0,.4)}
+#nav button{background:none;border:none;color:white;cursor:pointer;font-size:.92rem;padding:.16rem .48rem;border-radius:6px;transition:background .15s;line-height:1}
+#nav button:hover{background:rgba(255,255,255,.15)}
+#nav .ctr{font-size:.7rem;color:rgba(255,255,255,.5);min-width:50px;text-align:center;font-family:var(--mono)}
+#nav .sec-n{font-size:.62rem;color:rgba(255,255,255,.32);max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hint{position:fixed;bottom:.35rem;right:.9rem;font-size:.58rem;color:rgba(255,255,255,.35);pointer-events:none;z-index:700;background:rgba(15,23,42,.55);padding:.15rem .45rem;border-radius:4px}
+#copyright{position:fixed;bottom:.4rem;left:1rem;font-size:.58rem;color:rgba(255,255,255,.35);pointer-events:none;z-index:700;background:rgba(15,23,42,.55);padding:.15rem .45rem;border-radius:4px}
+</style>
+</head>
+<body>
+<div id="prog"><div id="prog-fill"></div></div>
+<p id="hint">← → Pfeiltasten &nbsp;|&nbsp; F: Vollbild</p>
+<p id="copyright">© Fabian Pingel · Build Your Own AI</p>
+<div id="deck">
+
+<!-- ═══════════════════════════════════════════════════════ SLIDES HERE ═══ -->
+<!-- BLOCK_1_START -->
+
+<!-- ═══ 01 TITEL ═══ -->
+<div class="slide t-title active" data-sec="Willkommen">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Build Your Own AI</span><span class="slide-no">01</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <span class="tag">Workshop · 9./10. Klasse · ASG Plettenberg</span>
+    <h1>Build Your <em>Own AI</em></h1>
+    <hr>
+    <p class="sub">Dein eigenes Sprachmodell auf dem Raspberry Pi Zero&nbsp;2W</p>
+    <div class="chips">
+      <span class="chip">🧠 KI verstehen</span>
+      <span class="chip">🍓 Raspberry Pi</span>
+      <span class="chip">💬 Eigenes Chatbot</span>
+      <span class="chip">🔒 Lokal &amp; privat</span>
+    </div>
+    <p class="meta">Fabian Pingel · PINGEL AI Solutions · Linamar Plettenberg GmbH</p>
+  </div>
+</div>
+
+<!-- ═══ 02 AGENDA ═══ -->
+<div class="slide t-con" data-sec="Überblick">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Überblick</span><span class="slide-no">02</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Was euch heute erwartet</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy">
+          <h3>🔵 Block 1 — Heute <span style="font-weight:400;opacity:.6;font-size:.8rem">(Theorie + Setup, ~90 Min)</span></h3>
+          <ul class="bl sm" style="margin-top:.5rem">
+            <li>Was ist Künstliche Intelligenz?</li>
+            <li>Wie funktioniert ein Sprachmodell?</li>
+            <li>Euer Raspberry Pi: Hardware kennenlernen</li>
+            <li>Betriebssystem aufsetzen &amp; verbinden</li>
+          </ul>
+        </div>
+        <div class="card" style="border:2px solid var(--orange);opacity:.7">
+          <h3>🟠 Block 2 — Nächste Woche <span style="font-weight:400;color:var(--gray);font-size:.8rem">(KI in Aktion, ~90 Min)</span></h3>
+          <ul class="bl sm" style="margin-top:.5rem">
+            <li>Ollama installieren (ein Befehl!)</li>
+            <li>Erstes Gespräch mit dem Modell</li>
+            <li>Prompting: die Kunst der richtigen Frage</li>
+            <li>Reflexion &amp; Ausblick</li>
+          </ul>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card gl">
+          <h3>🎯 Lernziele</h3>
+          <ul class="cl">
+            <li>Erklären, was ein Sprachmodell ist</li>
+            <li>Selbst einen Pi einrichten &amp; bedienen</li>
+            <li>Ein KI-Modell lokal starten</li>
+            <li>Stärken <em>und</em> Grenzen von KI kennen</li>
+          </ul>
+        </div>
+        <div class="ib info">
+          <span class="ico">💡</span>
+          <span><strong>Jeder hat seinen eigenen Raspberry Pi!</strong> Ihr werdet heute alles selbst ausprobieren — kein Zuschauen!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 03 WAS IST KI ═══ -->
+<div class="slide t-con" data-sec="Block 1 · KI-Basics">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · KI-Basics</span><span class="slide-no">03</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Was ist Künstliche Intelligenz?</h2>
+    <div class="g3" style="flex:1;min-height:0">
+
+      <!-- Karte 1: Was KI nicht ist -->
+      <div class="card ol" style="display:flex;flex-direction:column;gap:.42rem">
+        <h3>❌ Was KI <em style="color:var(--orange)">nicht</em> ist</h3>
+        <ul class="bl sm">
+          <li>Kein denkender Roboter aus dem Film</li>
+          <li>Kein allwissendes Gehirn</li>
+          <li>Kein Bewusstsein, keine Gefühle</li>
+          <li>Keine echte Intelligenz wie beim Menschen</li>
+        </ul>
+        <div style="text-align:center;margin-top:auto;padding-top:.3rem">
+          <svg viewBox="0 0 100 88" xmlns="http://www.w3.org/2000/svg" style="height:72px;width:auto;opacity:.9">
+            <line x1="50" y1="4" x2="50" y2="14" stroke="#1a2550" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="50" cy="2" r="3.5" fill="#bc4e21"/>
+            <rect x="27" y="14" width="46" height="28" rx="7" fill="#1a2550"/>
+            <circle cx="39" cy="26" r="6" fill="#243166"/><circle cx="61" cy="26" r="6" fill="#243166"/>
+            <circle cx="39" cy="26" r="4" fill="#bc4e21"/><circle cx="61" cy="26" r="4" fill="#bc4e21"/>
+            <circle cx="40" cy="25" r="1.6" fill="white"/><circle cx="62" cy="25" r="1.6" fill="white"/>
+            <rect x="35" y="36" width="30" height="3" rx="1.5" fill="#bc4e21" opacity=".8"/>
+            <rect x="44" y="42" width="12" height="5" rx="2" fill="#243166"/>
+            <rect x="20" y="47" width="60" height="30" rx="7" fill="#243166"/>
+            <rect x="29" y="53" width="42" height="16" rx="4" fill="#0f172a"/>
+            <polyline points="32,61 36,56 40,64 44,53 48,61 52,58 56,65 60,56 64,61 67,61" fill="none" stroke="#bc4e21" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="6" y="51" width="12" height="20" rx="5" fill="#243166"/>
+            <rect x="82" y="51" width="12" height="20" rx="5" fill="#243166"/>
+            <rect x="5" y="72" width="14" height="6" rx="3" fill="#1a2550"/>
+            <rect x="81" y="72" width="14" height="6" rx="3" fill="#1a2550"/>
+            <rect x="30" y="77" width="13" height="9" rx="4" fill="#1a2550"/>
+            <rect x="57" y="77" width="13" height="9" rx="4" fill="#1a2550"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Karte 2: Was KI ist -->
+      <div class="card navy" style="display:flex;flex-direction:column;gap:.42rem">
+        <h3>✅ Was KI ist</h3>
+        <ul class="bl sm">
+          <li>Software, die aus <strong>Daten lernt</strong></li>
+          <li>Erkennt <strong>Muster</strong> in riesigen Datenmengen</li>
+          <li>Löst Aufgaben, die früher nur Menschen konnten</li>
+          <li>Nur so gut wie ihre Trainingsdaten</li>
+        </ul>
+        <div style="text-align:center;margin-top:auto;padding-top:.3rem">
+          <svg viewBox="0 0 110 80" xmlns="http://www.w3.org/2000/svg" style="height:68px;width:auto">
+            <line x1="18" y1="16" x2="55" y2="10" stroke="#bc4e21" stroke-width="1.2" opacity=".55"/>
+            <line x1="18" y1="16" x2="55" y2="28" stroke="#bc4e21" stroke-width="1.2" opacity=".55"/>
+            <line x1="18" y1="16" x2="55" y2="46" stroke="#bc4e21" stroke-width="1.2" opacity=".55"/>
+            <line x1="18" y1="16" x2="55" y2="64" stroke="#bc4e21" stroke-width="1.2" opacity=".55"/>
+            <line x1="18" y1="40" x2="55" y2="10" stroke="#bc4e21" stroke-width="1.2" opacity=".55"/>
+            <line x1="18" y1="40" x2="55" y2="28" stroke="#bc4e21" stroke-width="1.2" opacity=".55"/>
+            <line x1="18" y1="40" x2="55" y2="46" stroke="#bc4e21" stroke-width="1.2" opacity=".55"/>
+            <line x1="18" y1="40" x2="55" y2="64" stroke="#bc4e21" stroke-width="1.2" opacity=".55"/>
+            <line x1="18" y1="64" x2="55" y2="28" stroke="#bc4e21" stroke-width="1.2" opacity=".55"/>
+            <line x1="18" y1="64" x2="55" y2="46" stroke="#bc4e21" stroke-width="1.2" opacity=".55"/>
+            <line x1="18" y1="64" x2="55" y2="64" stroke="#bc4e21" stroke-width="1.2" opacity=".55"/>
+            <line x1="55" y1="10" x2="92" y2="26" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+            <line x1="55" y1="28" x2="92" y2="26" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+            <line x1="55" y1="46" x2="92" y2="26" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+            <line x1="55" y1="64" x2="92" y2="26" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+            <line x1="55" y1="10" x2="92" y2="54" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+            <line x1="55" y1="28" x2="92" y2="54" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+            <line x1="55" y1="46" x2="92" y2="54" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+            <line x1="55" y1="64" x2="92" y2="54" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+            <circle cx="18" cy="16" r="6.5" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.45)" stroke-width="1.5"/>
+            <circle cx="18" cy="40" r="6.5" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.45)" stroke-width="1.5"/>
+            <circle cx="18" cy="64" r="6.5" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.45)" stroke-width="1.5"/>
+            <circle cx="55" cy="10" r="6.5" fill="#bc4e21" opacity=".85"/>
+            <circle cx="55" cy="28" r="6.5" fill="#bc4e21" opacity=".85"/>
+            <circle cx="55" cy="46" r="6.5" fill="#bc4e21" opacity=".85"/>
+            <circle cx="55" cy="64" r="6.5" fill="#bc4e21" opacity=".85"/>
+            <circle cx="92" cy="26" r="8" fill="white"/>
+            <circle cx="92" cy="54" r="8" fill="white"/>
+            <text x="18" y="76" text-anchor="middle" font-size="7" fill="rgba(255,255,255,.45)" font-family="Inter,sans-serif">Input</text>
+            <text x="55" y="76" text-anchor="middle" font-size="7" fill="rgba(255,255,255,.45)" font-family="Inter,sans-serif">Lernen</text>
+            <text x="92" y="67" text-anchor="middle" font-size="7" fill="rgba(255,255,255,.45)" font-family="Inter,sans-serif">Output</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Karte 3: Alltagsbeispiele mit Simple Icons -->
+      <div class="card gl" style="display:flex;flex-direction:column;gap:.42rem">
+        <h3>📱 KI begegnet euch täglich</h3>
+        <ul class="bl sm">
+          <li>Empfehlungen bei YouTube &amp; Netflix</li>
+          <li>Sprachassistenten: Siri &amp; Google</li>
+          <li>Spam-Filter im E-Mail-Postfach</li>
+          <li>Übersetzungs-Apps &amp; Gesichtserkennung</li>
+        </ul>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.35rem .4rem;margin-top:auto;padding-top:.3rem">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:.15rem">
+            <img src="images/logos/icons/youtube.svg" alt="YouTube" style="height:26px;width:26px">
+            <span style="font-size:.6rem;color:var(--gray)">YouTube</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:.15rem">
+            <img src="images/logos/icons/netflix.svg" alt="Netflix" style="height:26px;width:26px">
+            <span style="font-size:.6rem;color:var(--gray)">Netflix</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:.15rem">
+            <img src="images/logos/icons/apple.svg" alt="Siri" style="height:26px;width:26px">
+            <span style="font-size:.6rem;color:var(--gray)">Siri</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:.15rem">
+            <img src="images/logos/icons/spotify.svg" alt="Spotify" style="height:26px;width:26px">
+            <span style="font-size:.6rem;color:var(--gray)">Spotify</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:.15rem">
+            <img src="images/logos/icons/gmail.svg" alt="Spam-Filter" style="height:26px;width:26px">
+            <span style="font-size:.6rem;color:var(--gray)">Spam-Filter</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:.15rem">
+            <img src="images/logos/icons/googletranslate.svg" alt="Übersetzer" style="height:26px;width:26px">
+            <span style="font-size:.6rem;color:var(--gray)">Übersetzer</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="ib info" style="flex-shrink:0">
+      <span class="ico">💬</span>
+      <span><strong>Heute beschäftigen wir uns mit einer speziellen KI-Art:</strong> Große Sprachmodelle (Large Language Models), kurz <span class="kw">LLM</span>. Die stecken z.B. in ChatGPT.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 04 VON REGELN ZU MUSTERN ═══ -->
+<div class="slide t-con" data-sec="Block 1 · KI-Basics">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · KI-Basics</span><span class="slide-no">04</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Von Regeln zu Mustern</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy" style="flex:1">
+          <h3>🖥️ Klassische Programmierung</h3>
+          <p style="margin-bottom:.6rem;color:rgba(255,255,255,.7)">Der Entwickler schreibt explizit alle Regeln vor:</p>
+          <div class="flow" style="margin-bottom:.7rem">
+            <div class="fbox">Regeln</div><div class="farr">+</div>
+            <div class="fbox">Eingabe</div><div class="farr">→</div>
+            <div class="fbox o">Ausgabe</div>
+          </div>
+          <p style="font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:.25rem">📌 Bsp. 1: <em>„Wenn Temperatur &gt; 37,5°C → zeige Warnung"</em></p>
+          <p style="font-size:.78rem;color:rgba(255,255,255,.55)">📌 Bsp. 2: <em>„Wenn E-Mail enthält ‚JETZT KLICKEN' → Spam"</em></p>
+        </div>
+        <div class="ib warn">
+          <span class="ico">⚠️</span>
+          <span>Problem: Für Sprache gibt es zu viele Ausnahmen – unmöglich, alle Regeln manuell zu schreiben!</span>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card orange" style="flex:1">
+          <h3>🧠 Machine Learning</h3>
+          <p style="margin-bottom:.6rem;color:rgba(255,255,255,.82)">Das Modell <strong>lernt die Regeln selbst</strong> aus Beispielen:</p>
+          <div class="flow" style="margin-bottom:.7rem">
+            <div class="fbox" style="background:rgba(255,255,255,.2)">Daten</div><div class="farr" style="color:white">+</div>
+            <div class="fbox" style="background:rgba(255,255,255,.2)">Ausgaben</div><div class="farr" style="color:white">→</div>
+            <div class="fbox" style="background:rgba(255,255,255,.3);color:#1a2550">Modell</div>
+          </div>
+          <p style="font-size:.78rem;color:rgba(255,255,255,.75);margin-bottom:.9rem">Beispiel: <em>Millionen von Texten lesen → Sprache verstehen</em></p>
+          <p style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:.3rem">🗂️ Einordnung: Wo steckt ML drin?</p>
+          <svg viewBox="0 0 260 152" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;border-radius:5px">
+            <rect x="0" y="0" width="260" height="152" rx="6" fill="#e8edf8" stroke="none"/>
+            <text x="8" y="14" font-size="10" font-weight="700" font-family="Inter,sans-serif" fill="#1a2550">KI – Künstliche Intelligenz</text>
+            <rect x="6" y="18" width="248" height="126" rx="5" fill="#ccd6ee" stroke="#1a2550" stroke-width="1.2"/>
+            <text x="14" y="31" font-size="9.5" font-weight="600" font-family="Inter,sans-serif" fill="#1a2550">Machine Learning</text>
+            <rect x="14" y="35" width="232" height="101" rx="4" fill="#b2c3e4" stroke="#243166" stroke-width="1.2"/>
+            <text x="22" y="48" font-size="9" font-weight="600" font-family="Inter,sans-serif" fill="#1a2550">Deep Learning</text>
+            <rect x="22" y="52" width="216" height="76" rx="4" fill="#f5d9c8" stroke="#bc4e21" stroke-width="1.2"/>
+            <text x="30" y="65" font-size="9" font-weight="600" font-family="Inter,sans-serif" fill="#7a2510">Generative KI</text>
+            <rect x="30" y="69" width="200" height="51" rx="4" fill="#bc4e21" stroke="#8a2f10" stroke-width="1.2"/>
+            <text x="130" y="88" font-size="11" font-weight="700" font-family="Inter,sans-serif" fill="white" text-anchor="middle">LLM</text>
+            <text x="130" y="103" font-size="7.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,.9)" text-anchor="middle">ChatGPT · Llama · SmolLM2 (unser Pi-Modell)</text>
+          </svg>
+        </div>
+        <div class="ib tip">
+          <span class="ico">✅</span>
+          <span>LLMs sind eine <strong>Unterart</strong> von Generativer KI → Deep Learning → Machine Learning. Unser SmolLM2 ist ein echtes LLM!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 05 WAS IST EIN LLM ═══ -->
+<div class="slide t-con" data-sec="Block 1 · KI-Basics">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · KI-Basics</span><span class="slide-no">05</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Was ist ein Sprachmodell (LLM)?</h2>
+    <p class="sub-h">Large Language Model — großes Sprachmodell</p>
+    <div class="g2">
+      <div class="fc">
+        <div class="card" style="flex:1">
+          <h3>💡 Die Grundidee — ganz einfach</h3>
+          <p>Ein LLM hat <strong>Milliarden von Texten</strong> gelesen: Bücher, Websites, Wikipedia, Foren…</p>
+          <p style="margin-top:.5rem">Dabei hat es gelernt: <em>Welches Wort kommt nach welchem am häufigsten vor?</em></p>
+          <div style="background:var(--light);border-radius:8px;padding:.7rem .9rem;margin-top:.7rem">
+            <p class="txt-sm" style="margin-bottom:.4rem;font-weight:600;color:var(--navy)">Beispiele:</p>
+            <p class="txt-sm">„Die Sonne geht im <span class="kw">Westen</span> unter."</p>
+            <p class="txt-sm" style="margin-top:.25rem;margin-bottom:.45rem">→ nach <em>„im"</em> folgt sehr wahrscheinlich <em>„Westen"</em></p>
+            <p class="txt-sm">„Das Städtische Albert-Schweitzer-Gymnasium in <span class="kw">Plettenberg</span>."</p>
+            <p class="txt-sm" style="margin-top:.25rem">→ nach <em>„in"</em> folgt sehr wahrscheinlich <em>„Plettenberg"</em></p>
+          </div>
+        </div>
+        <div class="ib warn">
+          <span class="ico">🚨</span>
+          <span><strong>Wichtig:</strong> Das Modell <em>versteht</em> den Text nicht wie ein Mensch. Es erkennt Muster in Wahrscheinlichkeiten!</span>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card navy">
+          <h3>📊 Wie groß sind diese Modelle?</h3>
+          <div class="g2" style="gap:.5rem;margin-top:.4rem">
+            <div class="stat"><span class="n">~1 000 Mrd.</span><span class="l">Parameter bei GPT-4</span></div>
+            <div class="stat"><span class="n">135 Mio.</span><span class="l">Parameter bei unserem Pi-Modell</span></div>
+          </div>
+          <p style="font-size:.75rem;color:rgba(255,255,255,.55);margin-top:.6rem">Parameter = die „Schalter" im Modell, die beim Training eingestellt werden</p>
+          <div style="background:rgba(255,255,255,.08);border-radius:6px;padding:.5rem .7rem;margin-top:.6rem">
+            <p style="font-size:.72rem;font-weight:600;color:rgba(255,255,255,.85);margin-bottom:.3rem">🧠 Zum Vergleich: das menschliche Gehirn</p>
+            <p style="font-size:.72rem;color:rgba(255,255,255,.7);margin-bottom:.25rem">Dein Gehirn hat ~<strong style="color:white">86 Mrd. Neuronen</strong> — GPT-4 hat mit ~1 000 Mrd. Parametern ca. <em>10× mehr als du Nervenzellen hast</em>.</p>
+            <p style="font-size:.72rem;color:rgba(255,255,255,.7)">Unser SmolLM2 mit 135 Mio. entspricht eher dem Gehirn einer <strong style="color:white">Maus</strong> (~70 Mio. Neuronen). Klein, aber es funktioniert!</p>
+          </div>
+        </div>
+        <div class="card gl">
+          <h3>🔄 So läuft eine Antwort ab</h3>
+          <ol class="nl">
+            <li>Du schreibst eine Frage (<span class="kw2">Prompt</span>)</li>
+            <li>Der Text wird in kleine Teile (<span class="kw2">Tokens</span>) zerlegt</li>
+            <li>Das Modell berechnet Wahrscheinlichkeiten</li>
+            <li>Wort für Wort entsteht die Antwort</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 06 TOKENS ═══ -->
+<div class="slide t-con" data-sec="Block 1 · KI-Basics">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · KI-Basics</span><span class="slide-no">06</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Wie „denkt" ein LLM? — Tokens &amp; Wahrscheinlichkeiten</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card">
+          <h3>🔤 Schritt 1: Text → Tokens</h3>
+          <p style="margin-bottom:.55rem">Text wird in kleine Einheiten (<span class="kw">Tokens</span>) zerlegt. Ein Token ≈ ¾ Wort.</p>
+          <div style="background:var(--light);border-radius:8px;padding:.7rem;margin-bottom:.5rem">
+            <p class="txt-xs txt-muted" style="margin-bottom:.35rem">Eingabe: „Hallo, wie geht es dir?"</p>
+            <div class="tok-row">
+              <span class="tok t1">Hall</span><span class="tok t2">o</span><span class="tok t3">,</span>
+              <span class="tok t4"> wie</span><span class="tok t5"> geht</span>
+              <span class="tok t1"> es</span><span class="tok t2"> dir</span><span class="tok t3">?</span>
+            </div>
+          </div>
+          <p class="txt-xs txt-muted">GPT-4 hat ein Kontextfenster von ~128 000 Tokens ≈ einem langen Roman</p>
+        </div>
+        <div class="card yl">
+          <h3>⏱️ Darum erscheint Text Wort für Wort</h3>
+          <p>Das Modell generiert <em>einen Token nach dem anderen</em>. Es berechnet für jeden neuen Token die Wahrscheinlichkeit — das sieht man beim Tippen des Modells!</p>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card navy">
+          <h3>🎲 Schritt 2: Wahrscheinlichkeiten berechnen</h3>
+          <p style="color:rgba(255,255,255,.75);margin-bottom:.6rem">Nach dem Satz „Die Hauptstadt von Deutschland ist…" schätzt das Modell:</p>
+          <div style="display:flex;flex-direction:column;gap:.3rem">
+            <div style="display:flex;align-items:center;gap:.6rem">
+              <span style="font-family:var(--mono);font-size:.75rem;color:rgba(255,255,255,.9);min-width:70px">„Berlin"</span>
+              <div style="flex:1;background:rgba(255,255,255,.1);border-radius:4px;height:18px;overflow:hidden">
+                <div style="width:87%;height:100%;background:var(--orange);border-radius:4px"></div>
+              </div>
+              <span style="font-size:.75rem;color:var(--orange);font-weight:700;min-width:35px">87%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:.6rem">
+              <span style="font-family:var(--mono);font-size:.75rem;color:rgba(255,255,255,.9);min-width:70px">„München"</span>
+              <div style="flex:1;background:rgba(255,255,255,.1);border-radius:4px;height:18px;overflow:hidden">
+                <div style="width:8%;height:100%;background:#6b7280;border-radius:4px"></div>
+              </div>
+              <span style="font-size:.75rem;color:var(--gray);min-width:35px">8%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:.6rem">
+              <span style="font-family:var(--mono);font-size:.75rem;color:rgba(255,255,255,.9);min-width:70px">„Hamburg"</span>
+              <div style="flex:1;background:rgba(255,255,255,.1);border-radius:4px;height:18px;overflow:hidden">
+                <div style="width:3%;height:100%;background:#6b7280;border-radius:4px"></div>
+              </div>
+              <span style="font-size:.75rem;color:var(--gray);min-width:35px">3%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:.6rem">
+              <span style="font-family:var(--mono);font-size:.75rem;color:rgba(255,255,255,.9);min-width:70px">andere…</span>
+              <div style="flex:1;background:rgba(255,255,255,.1);border-radius:4px;height:18px;overflow:hidden">
+                <div style="width:2%;height:100%;background:#6b7280;border-radius:4px"></div>
+              </div>
+              <span style="font-size:.75rem;color:var(--gray);min-width:35px">2%</span>
+            </div>
+          </div>
+        </div>
+        <div class="ib info">
+          <span class="ico">🧠</span>
+          <span>Das Modell „weiß" es nicht wirklich — es hat nur gelernt, welche Wörter statistisch zusammenpassen. Das klingt simpel, führt aber zu erstaunlichen Ergebnissen!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 07 ÜBUNG MENSCH VS MASCHINE ═══ -->
+<div class="slide t-ex" data-sec="Block 1 · Übung">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · Übung</span><span class="slide-no">07</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <div class="ex-badge">✏️ Übung 1 — Mensch vs. Maschine</div>
+    <h2>Satz vervollständigen — wie ein Sprachmodell denken</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="ex-box">
+          <p class="fw7" style="margin-bottom:.6rem;color:var(--navy)">Vervollständigt diese Sätze — so schnell wie möglich:</p>
+          <ol class="nl">
+            <li>„Im Winter ist es draußen oft sehr ___"</li>
+            <li>„Ohne Fleiß kein ___"</li>
+            <li>„Das Smartphone liegt auf dem ___"</li>
+            <li>„In Deutschland ist die Hauptstadt ___"</li>
+          </ol>
+          <p style="margin-top:.7rem;font-size:.82rem;color:var(--gray)">⏱️ 2 Minuten — schreibt eure Antworten auf!</p>
+        </div>
+        <div class="ib tip">
+          <span class="ico">💡</span>
+          <span>Genau das macht ein LLM: Es nimmt den Kontext und wählt das wahrscheinlichste nächste Wort.</span>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="obs-box">
+          <p class="fw7" style="margin-bottom:.55rem;color:#78350f">🤔 Diskutiert danach:</p>
+          <ul class="bl sm">
+            <li>Habt ihr alle dasselbe geschrieben? Warum (nicht)?</li>
+            <li>Welche Antworten kamen sofort, welche brauchten länger?</li>
+            <li>Wo habt ihr aus Erfahrung geantwortet — wo aus Wissen?</li>
+            <li>Könnte eine Antwort auch <em>falsch</em> aber trotzdem „passend" klingen?</li>
+          </ul>
+        </div>
+        <div class="card navy">
+          <h3>🔑 Das Kernergebnis</h3>
+          <p>Ein LLM macht nichts anderes — nur mit Milliarden Beispielen und enorm viel Rechenleistung. <strong>Kein echtes Verstehen, nur Mustererkennung.</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 08 CLOUD VS LOKAL ═══ -->
+<div class="slide t-con" data-sec="Block 1 · KI-Basics">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · KI-Basics</span><span class="slide-no">08</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Cloud vs. Lokal — Wo läuft das Modell?</h2>
+    <div class="g2">
+      <div class="card" style="flex:1">
+        <h3>☁️ Cloud-Modelle (z.B. ChatGPT)</h3>
+        <ul class="bl">
+          <li>Das Modell läuft auf <strong>riesigen Servern</strong> eines Unternehmens</li>
+          <li>Deine Anfrage reist durchs Internet zum Server — und zurück</li>
+          <li>Das Unternehmen <strong>sieht deine Eingaben</strong></li>
+          <li>Sehr leistungsstark, aber: Datenschutz?</li>
+        </ul>
+        <div style="background:var(--light);border-radius:8px;padding:.6rem;margin-top:.7rem">
+          <p class="txt-sm txt-c">Du → 🌐 Internet → 🏢 Server (USA) → 🌐 → Du</p>
+        </div>
+      </div>
+      <div class="card navy" style="flex:1">
+        <h3>🏠 Lokale Modelle (unser Projekt!)</h3>
+        <ul class="bl">
+          <li>Das Modell läuft <strong>auf eurem eigenen Gerät</strong></li>
+          <li>Kein Internet nötig nach dem Download</li>
+          <li>Eure Daten <strong>bleiben bei euch</strong></li>
+          <li>Kleiner, aber: ihr habt die volle Kontrolle</li>
+        </ul>
+        <div style="background:rgba(255,255,255,.08);border-radius:8px;padding:.6rem;margin-top:.7rem">
+          <p class="txt-sm txt-c" style="color:rgba(255,255,255,.8)">Du → 🍓 Raspberry Pi (lokal) → Du</p>
+        </div>
+      </div>
+    </div>
+    <div class="ib warn" style="margin-top:.3rem">
+      <span class="ico">🔐</span>
+      <span><strong>Grundregel:</strong> Gebt niemals persönliche Daten (Name, Adresse, Passwörter) in einen KI-Chatbot ein — weder lokal noch in der Cloud. Ihr wisst nie genau, was damit passiert.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 09 GRENZEN VON KI ═══ -->
+<div class="slide t-con" data-sec="Block 1 · KI-Basics">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · KI-Basics</span><span class="slide-no">09</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Was KI kann — und was nicht</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card gl">
+          <h3>✅ KI ist gut bei …</h3>
+          <ul class="bl">
+            <li>Texte schreiben, zusammenfassen, übersetzen</li>
+            <li>Code erklären oder einfachen Code schreiben</li>
+            <li>Ideen brainstormen und strukturieren</li>
+            <li>Fragen beantworten (aus dem Trainingswissen)</li>
+            <li>Stil anpassen, Texte umformulieren</li>
+          </ul>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card ol">
+          <h3>❌ KI hat Schwächen bei …</h3>
+          <ul class="bl">
+            <li><strong>Aktuelle Infos:</strong> Trainingsdaten haben ein Ablaufdatum</li>
+            <li><strong>Rechnen:</strong> Zahlen werden wie Tokens behandelt — keine echte Mathematik</li>
+            <li><strong>Fakten:</strong> Kann Dinge erfinden, die falsch aber plausibel klingen</li>
+            <li><strong>Quellen:</strong> Erfindet manchmal Bücher, Studien oder Links</li>
+          </ul>
+        </div>
+        <div class="card yl">
+          <h3>🤥 Halluzinationen</h3>
+          <p>Ein LLM erfindet manchmal Fakten — selbstbewusst und überzeugend klingend. Das nennt man <span class="kw">Halluzination</span>. Deshalb: <strong>Wichtige Infos immer gegenprüfen!</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 10 SECTION: HARDWARE ═══ -->
+<div class="slide t-sec" data-sec="Block 1 · Hardware">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · Hardware</span><span class="slide-no">10</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <div class="stripe"></div>
+    <div class="sec-in">
+      <span class="blk">Jetzt wird's praktisch</span>
+      <h2>🍓 Unser Hardware-Projekt</h2>
+      <p class="desc">Ein vollständiger Computer — kleiner als eine Kreditkarte, günstiger als eine Kinokarte. Darauf laufen wir ein echtes KI-Modell.</p>
+      <div class="s-chips">
+        <span class="s-chip">🔧 Raspberry Pi Zero 2W</span>
+        <span class="s-chip">💾 microSD-Karte</span>
+        <span class="s-chip">🔌 Netzteil</span>
+        <span class="s-chip">📦 3D-gedrucktes Gehäuse</span>
+      </div>
+    </div>
+    <div class="illus">🍓</div>
+  </div>
+</div>
+
+<!-- BLOCK_1_END -->
+<!-- BLOCK_2_START -->
+
+<!-- ═══ 11 RASPBERRY PI ZERO 2W ═══ -->
+<div class="slide t-con" data-sec="Block 1 · Hardware">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · Hardware</span><span class="slide-no">11</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Der Raspberry Pi Zero 2W</h2>
+    <p class="sub-h">Ein vollständiger Computer — für ca. 15 €</p>
+    <div class="g12">
+      <div class="fc">
+        <div class="card navy">
+          <h3>⚡ Technische Daten</h3>
+          <table class="dt" style="margin-top:.4rem">
+            <tr><th>Eigenschaft</th><th>Wert</th></tr>
+            <tr><td>CPU</td><td>4-Kern ARM Cortex-A53, 1 GHz</td></tr>
+            <tr><td>RAM</td><td>512 MB LPDDR2</td></tr>
+            <tr><td>Speicher</td><td>microSD-Karte (wir: 32 GB)</td></tr>
+            <tr><td>WLAN</td><td>802.11 b/g/n (2,4 GHz)</td></tr>
+            <tr><td>Bluetooth</td><td>4.2 BLE</td></tr>
+            <tr><td>Anschlüsse</td><td>Mini-HDMI, 2× Micro-USB, CSI</td></tr>
+            <tr><td>GPIO</td><td>40-polige Stiftleiste</td></tr>
+            <tr><td>Strom</td><td>5V / 2,5A via Micro-USB</td></tr>
+            <tr><td>Gewicht</td><td>10 g</td></tr>
+            <tr class="hi"><td>Größe</td><td>65 × 30 mm (~halbe Kreditkarte)</td></tr>
+          </table>
+        </div>
+        <div class="ib info">
+          <span class="ico">📊</span>
+          <span>Zum Vergleich: Ein Büro-PC der 1990er hatte weniger Rechenleistung — und kostete mehrere Tausend Euro.</span>
+        </div>
+      </div>
+      <div class="img-wrap">
+        <img src="images/Hardware/zero-w-ports.jpg" alt="Raspberry Pi Zero 2W Ports">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 12 VERGLEICH PI vs PC ═══ -->
+<div class="slide t-con" data-sec="Block 1 · Hardware">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · Hardware</span><span class="slide-no">12</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Kleiner Computer, große Wirkung</h2>
+    <div class="fc" style="flex:1">
+      <table class="dt">
+        <tr>
+          <th>Eigenschaft</th>
+          <th>🖥️ Desktop-PC 1996<br><img src="images/Hardware/desktop-pc-1996.jpg" alt="Desktop PC 1996" style="width:100%;max-height:90px;object-fit:cover;border-radius:4px;margin-top:.35rem;display:block"></th>
+          <th>🍓 Pi Zero 2W (2021)<br><img src="images/Hardware/zero-w-ports.jpg" alt="Raspberry Pi Zero 2W" style="width:100%;max-height:90px;object-fit:cover;border-radius:4px;margin-top:.35rem;display:block"></th>
+          <th>💻 Euer Laptop heute<br><img src="images/Hardware/laptop-modern.jpg" alt="Moderner Laptop" style="width:100%;max-height:90px;object-fit:cover;border-radius:4px;margin-top:.35rem;display:block"></th>
+        </tr>
+        <tr>
+          <td>Preis</td>
+          <td>~2 000 €</td>
+          <td class="hi">~15 €</td>
+          <td>~500–1 500 €</td>
+        </tr>
+        <tr>
+          <td>CPU-Kerne</td>
+          <td>1 Kern</td>
+          <td>4 Kerne</td>
+          <td>4–16 Kerne</td>
+        </tr>
+        <tr>
+          <td>RAM</td>
+          <td>32 MB</td>
+          <td>512 MB</td>
+          <td>8–32 GB</td>
+        </tr>
+        <tr>
+          <td>Stromverbrauch</td>
+          <td>~200 Watt</td>
+          <td class="hi">~2 Watt</td>
+          <td>15–65 Watt</td>
+        </tr>
+        <tr>
+          <td>Betriebssystem</td>
+          <td>Windows 95</td>
+          <td>Linux</td>
+          <td>Windows / macOS</td>
+        </tr>
+        <tr>
+          <td>KI-Modell lauffähig?</td>
+          <td>❌ Nein</td>
+          <td class="hi">✅ Ja (klein)</td>
+          <td>✅ Ja (groß)</td>
+        </tr>
+      </table>
+      <div class="ib tip">
+        <span class="ico">🌱</span>
+        <span><strong>Warum ist der Pi so billig?</strong> Er verzichtet auf alles, was man nicht braucht: kein Bildschirm, keine Tastatur, keine aufwändige Kühlung. Nur das Wesentliche — ideal zum Lernen!</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 13 CHECKLISTE + AUFGABE GEHÄUSE ═══ -->
+<div class="slide t-ex" data-sec="Block 1 · Hardware">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · Hardware</span><span class="slide-no">13</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <div class="ex-badge">🔧 Aufgabe — Zusammenbau</div>
+    <h2>Checkliste &amp; Gehäuse zusammenbauen</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="ex-box">
+          <p class="fw7" style="margin-bottom:.55rem;color:var(--navy)">📦 Was sollte in eurem Paket sein?</p>
+          <ul class="cl">
+            <li>Raspberry Pi Zero 2W</li>
+            <li>microSD-Karte (32 GB, bereits mit OS geflasht)</li>
+            <li>Micro-USB-Netzteil (5V / 2,5A)</li>
+            <li>Kühlkörper (kleines schwarzes Pad)</li>
+            <li>3D-gedrucktes Gehäuse (Ober- &amp; Unterteil)</li>
+          </ul>
+        </div>
+        <div class="ib warn">
+          <span class="ico">⚡</span>
+          <span><strong>Netzteil:</strong> Unbedingt das richtige Netzteil (5V/2,5A) verwenden! Ein falsches Netzteil kann den Pi dauerhaft beschädigen.</span>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="ex-box">
+          <p class="fw7" style="margin-bottom:.55rem;color:var(--navy)">🔩 Zusammenbau — Schritt für Schritt:</p>
+          <ol class="nl">
+            <li>Pi in das Gehäuse-Unterteil einlegen (Ports zeigen nach außen)</li>
+            <li>Schutzfolie vom Kühlkörper abziehen</li>
+            <li>Kühlkörper mittig auf den silbernen Chip des Pi kleben</li>
+            <li>Gehäuse-Oberteil aufstecken — bis es einrastet</li>
+            <li>microSD-Karte in den Schlitz an der Seite stecken</li>
+          </ol>
+        </div>
+        <div class="ib tip">
+          <span class="ico">🌡️</span>
+          <span>Der Kühlkörper ist wichtig! Ohne ihn wird der Pi sehr heiß und wird langsamer — das merkt ihr später beim KI-Gespräch.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 14 SECTION: SETUP ═══ -->
+<div class="slide t-sec" data-sec="Block 1 · Setup">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · Setup</span><span class="slide-no">14</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <div class="stripe"></div>
+    <div class="sec-in">
+      <span class="blk">Vom leeren Pi zum laufenden System</span>
+      <h2>⚙️ Setup in 4 Schritten</h2>
+      <p class="desc">Jetzt richtet ihr euren Raspberry Pi ein. Am Ende könnt ihr euch remote einloggen und das System ist bereit für das KI-Modell.</p>
+      <div class="s-chips">
+        <span class="s-chip">1️⃣ OS flashen</span>
+        <span class="s-chip">2️⃣ SSH verbinden</span>
+        <span class="s-chip">3️⃣ Updates installieren</span>
+        <span class="s-chip">4️⃣ Ollama installieren</span>
+      </div>
+    </div>
+    <div class="illus">⚙️</div>
+  </div>
+</div>
+
+<!-- ═══ 15 OS FLASHEN 1/2 ═══ -->
+<div class="slide t-img" data-sec="Block 1 · Setup">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · Setup</span><span class="slide-no">15</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Betriebssystem flashen (1/2) — Raspberry Pi Imager</h2>
+    <p class="sub-h">Das Betriebssystem auf die microSD-Karte schreiben</p>
+    <div class="g2" style="flex:1;min-height:0">
+      <div class="fc">
+        <div class="ib info" style="flex-shrink:0">
+          <span class="ico">💿</span>
+          <span>Der <strong>Raspberry Pi Imager</strong> schreibt das Betriebssystem auf die SD-Karte — wie eine Installations-DVD, nur schneller.</span>
+        </div>
+        <div class="card" style="flex:1">
+          <h3>📋 Ablauf</h3>
+          <ol class="nl">
+            <li>microSD in euren Computer stecken</li>
+            <li>Raspberry Pi Imager starten</li>
+            <li>Modell wählen: <code>Raspberry Pi Zero 2 W</code></li>
+            <li>Betriebssystem: <code>Raspberry Pi OS (Legacy, 64-bit) Lite</code></li>
+            <li>Speicher: eure SD-Karte auswählen</li>
+          </ol>
+        </div>
+        <div class="ib warn" style="flex-shrink:0">
+          <span class="ico">⚠️</span>
+          <span><strong>Achtung:</strong> Beim Flashen werden alle Daten auf der SD-Karte gelöscht! Unbedingt die richtige Karte auswählen.</span>
+        </div>
+      </div>
+      <div class="img-slider" id="slider-15">
+        <div class="slider-track">
+          <img class="slide-img active" src="images/RPIImager/1_RPIImager_Modell.png" alt="Modell auswählen">
+          <img class="slide-img" src="images/RPIImager/2.0_RPIImager_OS.png" alt="OS auswählen">
+        </div>
+        <div class="slider-footer">
+          <div class="slider-dots">
+            <button class="s-dot active" onclick="goSlide('slider-15',0)" title="Bild 1"></button>
+            <button class="s-dot" onclick="goSlide('slider-15',1)" title="Bild 2"></button>
+          </div>
+          <span class="slider-lbl" id="slider-15-lbl">1 / 2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 16 OS FLASHEN 2/2 ═══ -->
+<div class="slide t-img" data-sec="Block 1 · Setup">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · Setup</span><span class="slide-no">16</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Betriebssystem flashen (2/2) — Einstellungen</h2>
+    <p class="sub-h">Vor dem Schreiben wichtige Konfiguration vornehmen</p>
+    <div class="g2" style="flex:1;min-height:0">
+      <div class="fc">
+        <div class="card">
+          <h3>⚙️ Diese Einstellungen setzen:</h3>
+          <table class="dt" style="margin-top:.4rem">
+            <tr><th>Einstellung</th><th>Wert</th></tr>
+            <tr><td>Hostname</td><td><code>rpi02W-[euerName]</code></td></tr>
+            <tr><td>Benutzername</td><td><code>[euer Vorname]</code></td></tr>
+            <tr><td>Passwort</td><td><code>[euer Nachname]</code></td></tr>
+            <tr><td>WLAN SSID</td><td><code>KI-Workshop</code></td></tr>
+            <tr><td>WLAN-Passwort</td><td><code>Workshop!2026</code></td></tr>
+            <tr class="hi"><td>SSH</td><td>✅ Aktivieren (Passwort)</td></tr>
+          </table>
+        </div>
+        <div class="ib tip">
+          <span class="ico">🏷️</span>
+          <span>Der Hostname ist wichtig: Mit <code>rpi02W-fapi</code> findet ihr euren Pi im Netzwerk — auch wenn 10 Pis gleichzeitig laufen!</span>
+        </div>
+      </div>
+      <div class="img-slider" id="slider-16">
+        <div class="slider-track">
+          <img class="slide-img active" src="images/RPIImager/4_RPIImager_Hostname.png" alt="Hostname setzen">
+          <img class="slide-img" src="images/RPIImager/7_RPIImager_WLAN.png" alt="WLAN konfigurieren">
+          <img class="slide-img" src="images/RPIImager/8_RPIImager_SSH.png" alt="SSH aktivieren">
+        </div>
+        <div class="slider-footer">
+          <div class="slider-dots">
+            <button class="s-dot active" onclick="goSlide('slider-16',0)" title="Bild 1"></button>
+            <button class="s-dot" onclick="goSlide('slider-16',1)" title="Bild 2"></button>
+            <button class="s-dot" onclick="goSlide('slider-16',2)" title="Bild 3"></button>
+          </div>
+          <span class="slider-lbl" id="slider-16-lbl">1 / 3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 17 SSH ERKLÄRT ═══ -->
+<div class="slide t-con" data-sec="Block 1 · Setup">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · Setup</span><span class="slide-no">17</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>SSH — Fernzugriff ohne Bildschirm</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy" style="flex:1">
+          <h3>🖥️ Was bedeutet „Headless"?</h3>
+          <p>Der Raspberry Pi hat keinen eigenen Bildschirm und keine Tastatur angeschlossen. Er läuft „kopflos" (<span style="color:var(--orange);font-weight:700">headless</span>).</p>
+          <p style="margin-top:.5rem;color:rgba(255,255,255,.75)">Wir bedienen ihn komplett über das Netzwerk — von eurem Computer aus.</p>
+        </div>
+        <div class="card gl">
+          <h3>🔐 Was ist SSH?</h3>
+          <p><span class="kw2">SSH</span> = Secure Shell. Eine <strong>verschlüsselte Verbindung</strong> zum Terminal des Pi.</p>
+          <p style="margin-top:.4rem">Stellt euch vor: Ihr habt eine sichere, direkte Telefonleitung zum Pi — alles was ihr tippt, wird dort ausgeführt.</p>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card">
+          <h3>🔍 Pi im Netzwerk finden</h3>
+          <p style="margin-bottom:.55rem">Erst muss der Pi booten (~2–4 Min nach Einstecken). Dann:</p>
+          <div class="term">
+            <div class="term-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="term-ttl">Terminal / PowerShell</span></div>
+            <div class="term-body">
+              <span class="cm"># Option A: Hostname (einfachste Methode)</span><br>
+              <span class="p">$</span> <span class="c">ping rpi02W-fapi.local</span><br><br>
+              <span class="cm"># Option B: alle Geräte im Netz anzeigen</span><br>
+              <span class="p">$</span> <span class="c">arp -a</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>🔌 Verbinden</h3>
+          <div class="term">
+            <div class="term-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+            <div class="term-body">
+              <span class="p">$</span> <span class="c">ssh &lt;vorname&gt;@rpi02W-&lt;kürzel&gt;.local</span><br>
+              <span class="hi">The authenticity of host ... can't be established.</span><br>
+              <span class="hi">Are you sure you want to continue? (yes/no)</span><br>
+              <span class="p">&gt;</span> <span class="c">yes</span><br>
+              <span class="hi">fabian@rpi02W-fapi.local's password:</span><br>
+              <span class="p">&gt;</span> <span class="cm">[Passwort eintippen — unsichtbar!]</span><br>
+              <span class="p">fabian@rpi02W-fapi:~$</span> <span class="hi">✓ Verbunden!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 18 SYSTEM AKTUALISIEREN ═══ -->
+<div class="slide t-cmd" data-sec="Block 1 · Setup">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · Setup</span><span class="slide-no">18</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>System aktualisieren — sicher &amp; stabil</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy">
+          <h3>❓ Warum Updates?</h3>
+          <ul class="bl">
+            <li>Schließt Sicherheitslücken</li>
+            <li>Stabiler bei der Ollama-Installation</li>
+            <li>Weniger Fehler beim Einrichten</li>
+          </ul>
+        </div>
+        <div class="term">
+          <div class="term-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="term-ttl">SSH-Terminal auf dem Pi</span></div>
+          <div class="term-body">
+            <span class="cm"># 1. Paketlisten aktualisieren (was gibt's Neues?)</span><br>
+            <span class="p">pi@rpi:~$</span> <span class="c">sudo apt update</span><br><br>
+            <span class="cm"># 2. Updates installieren (~5–10 Min)</span><br>
+            <span class="p">pi@rpi:~$</span> <span class="c">sudo apt full-upgrade -y</span><br><br>
+            <span class="cm"># 3. Aufräumen</span><br>
+            <span class="p">pi@rpi:~$</span> <span class="c">sudo apt autoremove -y</span><br><br>
+            <span class="cm"># 4. Neustart</span><br>
+            <span class="p">pi@rpi:~$</span> <span class="c">sudo reboot</span>
+          </div>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="img-wrap" style="flex:1">
+          <img src="images/Updates/02_upgrade.png" alt="apt upgrade läuft">
+        </div>
+        <div class="ib warn" style="flex-shrink:0;color:#78350f">
+          <span class="ico">⏱️</span>
+          <span>Der Upgrade-Schritt dauert 5–10 Minuten. Nicht abbrechen! Nach dem Neustart 30–60 Sekunden warten, dann neu per SSH verbinden.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 19 BLOCK 1 ZUSAMMENFASSUNG ═══ -->
+<div class="slide t-con" data-sec="Block 1 · Zusammenfassung">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 1 · Zusammenfassung</span><span class="slide-no">19</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>✅ Block 1 geschafft! — Was ihr jetzt wisst</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy" style="flex:1">
+          <h3>🧠 KI-Theorie</h3>
+          <ul class="cl">
+            <li>Was Künstliche Intelligenz ist (und nicht ist)</li>
+            <li>Wie ein Sprachmodell aus Mustern lernt</li>
+            <li>Was Tokens sind und wie Wahrscheinlichkeiten funktionieren</li>
+            <li>Unterschied Cloud ↔ Lokal</li>
+            <li>Was Halluzinationen sind</li>
+          </ul>
+        </div>
+        <div class="card orange" style="flex:1">
+          <h3>🔧 Praxis</h3>
+          <ul class="cl">
+            <li>Raspberry Pi Zero 2W kennen und zusammengebaut</li>
+            <li>Betriebssystem geflasht</li>
+            <li>Per SSH verbunden</li>
+            <li>System aktualisiert</li>
+          </ul>
+        </div>
+      </div>
+      <div class="fc" style="justify-content:center;align-items:center;gap:1.5rem">
+        <div style="text-align:center;padding:1.5rem">
+          <div style="font-size:4rem;margin-bottom:.5rem">🗓️</div>
+          <p class="fw8" style="font-size:1.3rem;color:var(--navy)">Block 2 startet in einer Woche!</p>
+          <p style="color:var(--gray);margin-top:.4rem">Dann installieren wir Ollama und starten unser erstes KI-Gespräch.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 20 SECTION OPENER BLOCK 2 ═══ -->
+<div class="slide t-sec" data-sec="Block 2 · KI in Aktion">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2</span><span class="slide-no">20</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <div class="stripe"></div>
+    <div class="sec-in">
+      <span class="blk">Block 2 — KI in Aktion</span>
+      <h2>💬 Euer eigenes Sprachmodell</h2>
+      <p class="desc">Jetzt passiert's: Wir installieren ein KI-Modell auf eurem Raspberry Pi und führen das erste Gespräch. Ihr beobachtet, was dabei technisch passiert.</p>
+      <div class="s-chips">
+        <span class="s-chip">🦙 Ollama installieren</span>
+        <span class="s-chip">🤖 Modell herunterladen</span>
+        <span class="s-chip">💬 Chatten</span>
+        <span class="s-chip">✍️ Prompting lernen</span>
+      </div>
+    </div>
+    <div class="illus">💬</div>
+  </div>
+</div>
+
+<!-- ═══ 21 OLLAMA INSTALLIEREN ═══ -->
+<div class="slide t-cmd" data-sec="Block 2 · KI in Aktion">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2 · Ollama</span><span class="slide-no">21</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Ollama installieren — ein Befehl reicht</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy">
+          <h3>🦙 Was ist Ollama?</h3>
+          <ul class="bl">
+            <li>Open-Source-Tool zum lokalen Betrieb von KI-Modellen</li>
+            <li>Lädt Modelle herunter und verwaltet sie</li>
+            <li>Startet einen kleinen Server im Hintergrund</li>
+            <li>Komplett kostenlos — Community-Projekt</li>
+          </ul>
+        </div>
+        <div class="term">
+          <div class="term-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="term-ttl">Installation (SSH-Terminal)</span></div>
+          <div class="term-body">
+            <span class="cm"># Ein-Befehl-Installation (~1–5 Min)</span><br>
+            <span class="p">pi@rpi:~$</span> <span class="c">curl -fsSL https://ollama.com/install.sh | sh</span><br><br>
+            <span class="cm"># Installation prüfen</span><br>
+            <span class="p">pi@rpi:~$</span> <span class="c">ollama --version</span><br>
+            <span class="hi">ollama version 0.x.x</span><br><br>
+            <span class="cm"># Dienst-Status prüfen</span><br>
+            <span class="p">pi@rpi:~$</span> <span class="c">ollama list</span><br>
+            <span class="cm"># (Liste ist noch leer — kein Modell geladen)</span>
+          </div>
+        </div>
+      </div>
+      <div class="img-wrap">
+        <img src="images/Ollama/03_Ollama_install.png" alt="Ollama installiert sich">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 22 MODELL STARTEN ═══ -->
+<div class="slide t-cmd" data-sec="Block 2 · KI in Aktion">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2 · Erstes Chat</span><span class="slide-no">22</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Erstes Modell herunterladen &amp; starten</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy">
+          <h3>🤖 Unser Modell: SmolLM2</h3>
+          <table class="dt" style="margin-top:.4rem">
+            <tr><th>Eigenschaft</th><th>Wert</th></tr>
+            <tr><td>Name</td><td><code style="background:rgba(255,255,255,.1);color:#93c5fd">smollm2:135m-instruct-q4_K_S</code></td></tr>
+            <tr><td>Größe</td><td>~102 MB (passt auf den Pi!)</td></tr>
+            <tr><td>Parameter</td><td>135 Millionen</td></tr>
+            <tr class="hi"><td>Sprache</td><td>Englisch (funktioniert besser)</td></tr>
+          </table>
+        </div>
+        <div class="term">
+          <div class="term-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+          <div class="term-body">
+            <span class="cm"># Modell starten (beim ersten Mal: Download)</span><br>
+            <span class="p">pi@rpi:~$</span> <span class="c">ollama run smollm2:135m-instruct-q4_K_S</span><br>
+            <span class="hi">pulling manifest...</span><br>
+            <span class="hi">pulling gguf... ████████░░ 80%</span><br>
+            <span class="hi">&gt;&gt;&gt;</span> <span class="cm">← Hier könnt ihr tippen!</span><br><br>
+            <span class="cm"># Chat beenden</span><br>
+            <span class="hi">&gt;&gt;&gt;</span> <span class="c">/bye</span>
+          </div>
+        </div>
+      </div>
+      <div class="img-wrap">
+        <img src="images/Chat/02_chat_ollama_run.png" alt="Ollama Chat läuft">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 23 WAS PASSIERT GERADE ═══ -->
+<div class="slide t-img" data-sec="Block 2 · KI in Aktion">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2 · Hardware beobachten</span><span class="slide-no">23</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Was passiert gerade im Pi?</h2>
+    <p class="sub-h">CPU, RAM und Token-Ausgabe live beobachten</p>
+    <div class="g2" style="flex:1;min-height:0">
+      <div class="fc">
+        <div class="card">
+          <h3>📊 CPU-Last messen</h3>
+          <p style="margin-bottom:.5rem">In einem zweiten Terminal-Fenster:</p>
+          <div class="term">
+            <div class="term-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+            <div class="term-body">
+              <span class="p">pi@rpi:~$</span> <span class="c">top</span><br>
+              <span class="cm"># Zeigt CPU-Last in Echtzeit</span><br>
+              <span class="hi">%Cpu: 291.2 us ← über 200% = alle Kerne voll!</span>
+            </div>
+          </div>
+        </div>
+        <div class="card gl">
+          <h3>👀 Was ihr beobachten könnt</h3>
+          <ul class="cl">
+            <li>Text erscheint <strong>Wort für Wort</strong> (Token für Token)</li>
+            <li>CPU-Last springt auf fast 300%</li>
+            <li>Manchmal dauert die erste Antwort länger</li>
+            <li>Kleine Modelle = schneller, aber weniger „klug"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="img-wrap">
+        <img src="images/Ollama/08_Ollama_top.png" alt="top zeigt CPU-Last">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 24 TEMPERATUR + THROTTLING ═══ -->
+<div class="slide t-con" data-sec="Block 2 · KI in Aktion">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2 · Hardware beobachten</span><span class="slide-no">24</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Wenn der Pi „schwitzt" — Temperatur &amp; Throttling</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card">
+          <h3>🌡️ Temperatur messen</h3>
+          <div class="term">
+            <div class="term-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+            <div class="term-body">
+              <span class="p">pi@rpi:~$</span> <span class="c">vcgencmd measure_temp</span><br>
+              <span class="hi">temp=62.0'C</span><br><br>
+              <span class="p">pi@rpi:~$</span> <span class="c">vcgencmd get_throttled</span><br>
+              <span class="hi">throttled=0x0</span> <span class="cm">← 0x0 = alles ok!</span>
+            </div>
+          </div>
+        </div>
+        <div class="card navy">
+          <h3>🔥 Temperaturstufen</h3>
+          <table class="dt" style="margin-top:.4rem">
+            <tr><th>Temperatur</th><th>Status</th></tr>
+            <tr><td>40–50°C</td><td style="color:var(--green)">✅ Ruhezustand, normal</td></tr>
+            <tr><td>60–75°C</td><td style="color:var(--warn)">⚠️ Unter Last, ok</td></tr>
+            <tr><td>&gt; 80°C</td><td style="color:var(--orange)">🔥 Throttling beginnt</td></tr>
+            <tr><td>&gt; 85°C</td><td style="color:#ef4444">🚨 Starkes Throttling</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card ol">
+          <h3>⚡ Was ist Throttling?</h3>
+          <p>Wenn der Pi zu heiß wird, drosselt er <strong>automatisch seine Geschwindigkeit</strong> — zum Schutz der Hardware.</p>
+          <p style="margin-top:.4rem">Das ist wie beim Auto: Wenn der Motor überhitzt, wird die Motorleistung reduziert.</p>
+          <p style="margin-top:.4rem">Ergebnis: Das Modell antwortet noch langsamer als ohnehin!</p>
+        </div>
+        <div class="ib warn">
+          <span class="ico">🤚</span>
+          <span><strong>Vorsicht:</strong> Der Kühlkörper und das Gehäuse können beim Betrieb heiß werden. Nicht anfassen, wenn das Modell rechnet — Verbrennungsgefahr!</span>
+        </div>
+        <div class="ib tip">
+          <span class="ico">❄️</span>
+          <span>Darum ist der Kühlkörper so wichtig: Er leitet Wärme ab und verhindert Throttling. Ohne ihn wäre das Modell noch langsamer.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 25 WAS IST PROMPTING ═══ -->
+<div class="slide t-con" data-sec="Block 2 · Prompting">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2 · Prompting</span><span class="slide-no">25</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Was ist Prompting?</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy" style="flex:1">
+          <h3>✍️ Definition</h3>
+          <p>Ein <span style="color:var(--orange);font-weight:700">Prompt</span> ist die Eingabe, die ihr an das Modell schickt.</p>
+          <p style="margin-top:.5rem;color:rgba(255,255,255,.8)"><span style="color:var(--orange);font-weight:700">Prompting</span> ist die Kunst, das Modell so anzuweisen, dass es die bestmögliche Antwort liefert.</p>
+          <p style="margin-top:.5rem;color:rgba(255,255,255,.65);font-size:.82rem">Klare Anweisung → bessere Antwort. Vage Frage → schwammige Antwort.</p>
+        </div>
+        <div class="card gl">
+          <h3>🌍 Englisch vs. Deutsch</h3>
+          <p>Unser kleines Pi-Modell wurde hauptsächlich mit <strong>englischen Texten</strong> trainiert.</p>
+          <ul class="bl sm" style="margin-top:.4rem">
+            <li>Englische Prompts → bessere Qualität</li>
+            <li>Deutsche Prompts funktionieren, aber oft schlechter</li>
+            <li>Bei großen Modellen (ChatGPT) kein Unterschied</li>
+          </ul>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card">
+          <h3>📏 5 Regeln für gute Prompts</h3>
+          <ol class="nl">
+            <li><strong>Konkret sein:</strong> Was genau wollt ihr wissen?</li>
+            <li><strong>Format vorgeben:</strong> „Antworte in 3 Sätzen" / „Erstelle eine Liste"</li>
+            <li><strong>Kontext geben:</strong> „Du bist ein Lehrer und erklärst…"</li>
+            <li><strong>Auf Englisch schreiben</strong> (bei unserem Pi-Modell)</li>
+            <li><strong>Schlüsselwörter korrekt schreiben</strong> — Typos verwirren kleine Modelle</li>
+          </ol>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+          <div class="card ol" style="padding:.7rem .85rem">
+            <h3 style="font-size:.78rem;color:var(--orange)">❌ Schlechter Prompt</h3>
+            <p style="font-size:.78rem;font-family:var(--mono);margin-top:.3rem">„erklär mir das"</p>
+          </div>
+          <div class="card gl" style="padding:.7rem .85rem">
+            <h3 style="font-size:.78rem;color:var(--green)">✅ Guter Prompt</h3>
+            <p style="font-size:.78rem;font-family:var(--mono);margin-top:.3rem">„Explain photosynthesis in 3 simple sentences for a 15-year-old."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 26 ÜBUNG A DEUTSCH VS ENGLISCH ═══ -->
+<div class="slide t-ex" data-sec="Block 2 · Übungen">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2 · Übungen</span><span class="slide-no">26</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <div class="ex-badge">🧪 Übung A — Deutsch vs. Englisch</div>
+    <h2>Gleiche Frage — zwei Sprachen</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="ex-box">
+          <p class="fw7" style="margin-bottom:.55rem;color:var(--navy)">Stellt dem Modell dieselbe Frage auf Deutsch und auf Englisch:</p>
+          <div style="background:var(--light);border-radius:8px;padding:.7rem;margin-bottom:.5rem">
+            <p class="txt-sm fw7" style="color:var(--gray);margin-bottom:.3rem">Deutsch:</p>
+            <p style="font-family:var(--mono);font-size:.8rem">„Erkläre mir, wie das Internet funktioniert."</p>
+          </div>
+          <div style="background:var(--light);border-radius:8px;padding:.7rem">
+            <p class="txt-sm fw7" style="color:var(--gray);margin-bottom:.3rem">Englisch:</p>
+            <p style="font-family:var(--mono);font-size:.8rem">„Explain how the internet works in simple terms."</p>
+          </div>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="obs-box">
+          <p class="fw7" style="margin-bottom:.5rem;color:#78350f">📝 Was notiert ihr?</p>
+          <ul class="bl sm">
+            <li>Wie lange dauert die Antwort jeweils?</li>
+            <li>Wie verständlich ist der Text?</li>
+            <li>Wie vollständig ist die Antwort?</li>
+            <li>Gibt es Fehler oder merkwürdige Sätze?</li>
+            <li>Hält sich das Modell an die Sprache des Prompts?</li>
+          </ul>
+        </div>
+        <div class="card navy">
+          <h3>💡 Erwartet wird…</h3>
+          <p>Die englische Antwort sollte flüssiger, vollständiger und schneller kommen. Das zeigt: Ein Modell ist nur so gut wie seine Trainingsdaten.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 27 ÜBUNG B PROMPT-QUALITÄT ═══ -->
+<div class="slide t-ex" data-sec="Block 2 · Übungen">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2 · Übungen</span><span class="slide-no">27</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <div class="ex-badge">🧪 Übung B — Prompt-Qualität</div>
+    <h2>Klarer Prompt = bessere Antwort</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="ex-box">
+          <p class="fw7" style="margin-bottom:.6rem;color:var(--navy)">Aufgabe B.1 — „Kurz vs. Lang":</p>
+          <div class="g2" style="gap:.5rem">
+            <div style="background:#fff0ee;border:1px solid #f5c9b3;border-radius:8px;padding:.6rem">
+              <p class="txt-xs fw7 clr-o" style="margin-bottom:.3rem">Prompt A (kurz):</p>
+              <p style="font-family:var(--mono);font-size:.77rem">„Tell me about space."</p>
+            </div>
+            <div style="background:var(--green-bg);border:1px solid var(--green-bd);border-radius:8px;padding:.6rem">
+              <p class="txt-xs fw7 clr-g" style="margin-bottom:.3rem">Prompt B (präzise):</p>
+              <p style="font-family:var(--mono);font-size:.77rem">„Explain in 2 sentences what a black hole is, suitable for a 15-year-old."</p>
+            </div>
+          </div>
+        </div>
+        <div class="ex-box">
+          <p class="fw7" style="margin-bottom:.6rem;color:var(--navy)">Aufgabe B.2 — „Rolle zuweisen":</p>
+          <div style="background:var(--green-bg);border:1px solid var(--green-bd);border-radius:8px;padding:.6rem">
+            <p style="font-family:var(--mono);font-size:.77rem">„You are a friendly teacher. Explain what DNA is in 3 short sentences that a 10-year-old would understand."</p>
+          </div>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="obs-box">
+          <p class="fw7" style="margin-bottom:.5rem;color:#78350f">🔍 Vergleicht die Antworten:</p>
+          <ul class="bl sm">
+            <li>Wann ist die Antwort kürzer/länger als erwartet?</li>
+            <li>Hält sich das Modell an die Vorgabe „2 Sätze"?</li>
+            <li>Macht die Rollen-Anweisung einen Unterschied?</li>
+            <li>Wann klingt die Antwort „natürlicher"?</li>
+          </ul>
+        </div>
+        <div class="card navy">
+          <h3>🎯 Erkenntnis</h3>
+          <p>Je klarer ihr denkt, desto besser antwortet das Modell. <strong>Gutes Prompting ist eine Fähigkeit</strong> — die ihr gerade gelernt habt!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 28 ÜBUNG C HALLUZINATIONEN ═══ -->
+<div class="slide t-ex" data-sec="Block 2 · Übungen">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2 · Übungen</span><span class="slide-no">28</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <div class="ex-badge">🧪 Übung C — Halluzinationen entlarven</div>
+    <h2>Wenn KI erfindet — und trotzdem sicher klingt</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="ex-box">
+          <p class="fw7" style="margin-bottom:.55rem;color:var(--navy)">Testet diese Prompts:</p>
+          <ol class="nl">
+            <li style="font-family:var(--mono);font-size:.8rem">„Who was the first person to walk on Mars?"</li>
+            <li style="font-family:var(--mono);font-size:.8rem">„What is the capital of the country Bloravia?"</li>
+            <li style="font-family:var(--mono);font-size:.8rem">„List 3 famous books by the author Max Mustermensch."</li>
+          </ol>
+          <p style="margin-top:.6rem;font-size:.8rem;color:var(--gray)">💡 Diese Fragen haben keine richtigen Antworten — oder das Modell kann sie nicht wissen.</p>
+        </div>
+        <div class="ex-box">
+          <p class="fw7" style="margin-bottom:.4rem;color:var(--navy)">Kontext-Gedächtnis testen:</p>
+          <ol class="nl" style="font-size:.8rem">
+            <li>Schreibe: <span style="font-family:var(--mono)">„My name is &lt;euer Name&gt;."</span></li>
+            <li>Schreibe zwei weitere Fragen über ein anderes Thema</li>
+            <li>Dann frage: <span style="font-family:var(--mono)">„What is my name?"</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card ol">
+          <h3>🤥 Was sind Halluzinationen?</h3>
+          <p>Das Modell erfindet Fakten — aber klingt dabei <strong>absolut sicher und überzeugend</strong>. Es lügt nicht absichtlich, es macht immer das Wahrscheinlichste — auch wenn das falsch ist.</p>
+        </div>
+        <div class="obs-box">
+          <p class="fw7" style="margin-bottom:.45rem;color:#78350f">📝 Beobachtet und diskutiert:</p>
+          <ul class="bl sm">
+            <li>Antwortet das Modell bei falschen Fragen mit „Ich weiß es nicht"?</li>
+            <li>Erfindet es plausibel klingende Antworten?</li>
+            <li>Erinnert sich das Modell an euren Namen?</li>
+          </ul>
+        </div>
+        <div class="card navy">
+          <h3>🔑 Kernerkenntnis</h3>
+          <p>KI ist kein Lexikon. Faktische Aussagen immer gegenchecken — bei wichtigen Entscheidungen niemals blind vertrauen!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 29 WAS HABEN WIR GELERNT ═══ -->
+<div class="slide t-con" data-sec="Block 2 · Reflexion">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2 · Reflexion</span><span class="slide-no">29</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Was haben wir heute gelernt?</h2>
+    <div class="g3" style="flex:1">
+      <div class="card navy">
+        <h3>🧠 KI verstehen</h3>
+        <ul class="cl sm">
+          <li>LLMs lernen Muster, kein echtes Verstehen</li>
+          <li>Tokens &amp; Wahrscheinlichkeiten sind die Basis</li>
+          <li>Grenzen: Halluzinationen, kein aktuelles Wissen</li>
+          <li>Cloud vs. lokal: Datenschutz-Unterschied</li>
+        </ul>
+      </div>
+      <div class="card orange">
+        <h3>🔧 Technik gemacht</h3>
+        <ul class="cl sm">
+          <li>Linux-Terminal benutzt</li>
+          <li>Raspberry Pi eingerichtet</li>
+          <li>Per SSH remote verbunden</li>
+          <li>Ollama installiert &amp; Modell geladen</li>
+        </ul>
+      </div>
+      <div class="card gl">
+        <h3>✍️ Prompting gelernt</h3>
+        <ul class="cl sm">
+          <li>Klare Prompts = bessere Antworten</li>
+          <li>Englisch vs. Deutsch ausprobiert</li>
+          <li>Rollen und Format vorgeben</li>
+          <li>Halluzinationen erkannt &amp; getestet</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ib info" style="margin-top:.3rem">
+      <span class="ico">🏆</span>
+      <span><strong>Ihr habt heute etwas gemacht, das die meisten Erwachsenen nicht können:</strong> Ihr habt ein KI-Modell selbst auf einem eigenen Computer installiert und wisst, was dabei passiert.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 30 WAS KANN DER PI NOCH ═══ -->
+<div class="slide t-con" data-sec="Block 2 · Ausblick">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2 · Ausblick</span><span class="slide-no">30</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Was kann der Pi noch? — Projekte &amp; Ideen</h2>
+    <div class="g3" style="flex:1">
+      <div class="card navy">
+        <h3>🛡️ Pi-hole</h3>
+        <p>Ein DNS-Server, der Werbung und Tracker <strong>für alle Geräte im Netzwerk</strong> blockiert — bevor sie überhaupt geladen werden.</p>
+        <p style="margin-top:.4rem;font-size:.8rem;color:rgba(255,255,255,.6)">Keine App nötig. Läuft für Handy, TV, Laptop gleichzeitig.</p>
+      </div>
+      <div class="card gl">
+        <h3>🌤️ Heimserver</h3>
+        <ul class="bl sm">
+          <li>Eigene Cloud (Nextcloud)</li>
+          <li>Hausautomation (Home Assistant)</li>
+          <li>Wetterstation mit Sensoren</li>
+          <li>Netzwerk-Scanner &amp; Überwachung</li>
+        </ul>
+      </div>
+      <div class="card bl">
+        <h3>🎓 Weiterlernen</h3>
+        <ul class="bl sm">
+          <li>Linux-Befehle vertiefen</li>
+          <li>Python auf dem Pi programmieren</li>
+          <li>Eigene Webseite hosten</li>
+          <li>Größere Modelle auf einem besseren Pi ausprobieren</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ib tip">
+      <span class="ico">🍓</span>
+      <span>Der Raspberry Pi ist kein Spielzeug — er läuft weltweit in Schulen, Forschungslabors und Unternehmen. <strong>Was ihr heute gelernt habt, gilt auch für echte Server.</strong></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 31 KI UND IHR ═══ -->
+<div class="slide t-con" data-sec="Block 2 · Ausblick">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Block 2 · Ausblick</span><span class="slide-no">31</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>KI &amp; Ihr — Was bedeutet das für eure Zukunft?</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy" style="flex:1">
+          <h3>💼 KI verändert Berufe</h3>
+          <ul class="bl">
+            <li>Routineaufgaben werden automatisiert</li>
+            <li>Neue Berufe entstehen: Prompt Engineer, KI-Trainer, KI-Ethiker</li>
+            <li>Kreativität, kritisches Denken &amp; soziale Kompetenz bleiben wichtig</li>
+            <li>Wer KI versteht, hat einen Vorteil — egal in welchem Beruf</li>
+          </ul>
+        </div>
+        <div class="card ol">
+          <h3>⚠️ Was bleibt wichtig</h3>
+          <ul class="bl sm">
+            <li><strong>Kritisch denken:</strong> KI-Ausgaben hinterfragen</li>
+            <li><strong>Quellen prüfen:</strong> Halluzinationen erkennen</li>
+            <li><strong>Datenschutz:</strong> Was gebt ihr preis?</li>
+            <li><strong>Verantwortung:</strong> KI entscheidet nicht für euch</li>
+          </ul>
+        </div>
+      </div>
+      <div class="fc" style="justify-content:center">
+        <div class="card gl" style="flex:1">
+          <h3>🎯 Eure neue Superkraft</h3>
+          <p>Ihr habt heute etwas verstanden, das viele Menschen als „Magie" betrachten. Ihr wisst jetzt:</p>
+          <ul class="cl" style="margin-top:.5rem">
+            <li>KI ist keine Magie — sondern Mathematik &amp; Daten</li>
+            <li>Auch kleine Computer können KI ausführen</li>
+            <li>Die richtigen Fragen stellen ist eine Fähigkeit</li>
+            <li>Technologie ist etwas, das ihr gestalten könnt</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 32 FAZIT ═══ -->
+<div class="slide t-sec" data-sec="Fazit">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Fazit</span><span class="slide-no">32</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <div class="stripe"></div>
+    <div class="sec-in">
+      <span class="blk">Das nehmt ihr mit</span>
+      <h2>🏁 Ihr wisst jetzt, was unter der Haube steckt</h2>
+      <p class="desc">KI ist keine schwarze Box mehr. Ihr habt heute selbst erlebt, wie ein Sprachmodell funktioniert — und wo seine Grenzen liegen.</p>
+      <div class="s-chips">
+        <span class="s-chip">🧠 LLMs verstanden</span>
+        <span class="s-chip">🍓 Pi eingerichtet</span>
+        <span class="s-chip">💬 Modell gestartet</span>
+        <span class="s-chip">✍️ Prompting gelernt</span>
+        <span class="s-chip">🤥 Halluzinationen erkannt</span>
+      </div>
+    </div>
+    <div class="illus">🏁</div>
+  </div>
+</div>
+
+<!-- ═══ 33 DANKE ═══ -->
+<div class="slide t-title" data-sec="Ende">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Build Your Own AI</span><span class="slide-no">33</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <span class="tag">Ende des Workshops</span>
+    <h1>Danke &amp; <em>viel Erfolg!</em></h1>
+    <hr>
+    <p class="sub">Habt ihr noch Fragen? Jetzt ist die Zeit!</p>
+    <div class="chips">
+      <a class="chip" href="mailto:info@fabian-pingel.de">📧 info@fabian-pingel.de</a>
+      <a class="chip" href="https://www.fabian-pingel.de" target="_blank">🌐 fabian-pingel.de</a>
+      <a class="chip" href="https://github.com/fabianpingel/ASG" target="_blank">🐙 github.com/fabianpingel/ASG</a>
+    </div>
+    <p class="meta">Workshop ermöglicht durch <strong style="color:var(--orange)">Linamar Plettenberg GmbH</strong> · Fabian Pingel · PINGEL AI Solutions</p>
+  </div>
+</div>
+
+<!-- BLOCK_2_END -->
+<!-- RESERVE_START -->
+
+<!-- ═══ 34 SECTION: RESERVE ═══ -->
+<div class="slide t-sec" data-sec="Reserve · Vertiefung">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Reserve</span><span class="slide-no">34</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <div class="stripe"></div>
+    <div class="sec-in">
+      <span class="blk">Bonus-Material · Reserve-Block</span>
+      <h2>📚 Vertiefung &amp; Glossar</h2>
+      <p class="desc">Diese Folien sind für neugierige Schüler:innen oder wenn noch Zeit bleibt. Kein Pflichtprogramm — aber wer mehr wissen möchte, findet hier Antworten.</p>
+      <div class="s-chips">
+        <span class="s-chip">🧪 Wie lernt KI?</span>
+        <span class="s-chip">🗜️ Quantisierung</span>
+        <span class="s-chip">🛡️ Pi-hole</span>
+        <span class="s-chip">📖 Glossar</span>
+        <span class="s-chip">🛠️ Troubleshooting</span>
+      </div>
+    </div>
+    <div class="illus">📚</div>
+  </div>
+</div>
+
+<!-- ═══ 35 WIE LERNT EIN KI-MODELL ═══ -->
+<div class="slide t-con" data-sec="Reserve · Vertiefung">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Reserve · Vertiefung</span><span class="slide-no">35</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Wie lernt ein KI-Modell? — Training vereinfacht</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy" style="flex:1">
+          <h3>📚 Phase 1: Pre-Training</h3>
+          <p style="color:rgba(255,255,255,.82)">Das Modell liest Milliarden von Texten aus dem Internet, Büchern und Artikeln.</p>
+          <p style="margin-top:.4rem;color:rgba(255,255,255,.65)">Aufgabe: Immer das nächste Wort vorhersagen. Millionen von Korrekturen pro Sekunde.</p>
+          <div style="margin-top:.6rem;background:rgba(255,255,255,.08);border-radius:8px;padding:.55rem">
+            <p style="font-size:.78rem;color:rgba(255,255,255,.7)">⏱️ GPT-4 Training: Monate auf tausenden Spezial-GPUs</p>
+            <p style="font-size:.78rem;color:rgba(255,255,255,.7)">💰 Kosten: ca. 100 Millionen US-Dollar</p>
+          </div>
+        </div>
+        <div class="card gl">
+          <h3>🎯 Phase 2: Fine-Tuning</h3>
+          <p>Das bereits trainierte Modell wird auf <strong>spezifische Aufgaben</strong> spezialisiert: z.B. höfliche Chatbot-Antworten, Programmierhilfe, medizinische Fragen.</p>
+          <p style="margin-top:.4rem;font-size:.82rem;color:var(--gray)">Unser SmolLM2 wurde als „instruct" (Anweisungsmodell) feinabgestimmt.</p>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card">
+          <h3>🔢 Was sind Parameter?</h3>
+          <p>Parameter sind die <strong>verstellbaren Schalter</strong> im Modell. Beim Training werden sie millionenfach angepasst.</p>
+          <div class="g2" style="gap:.5rem;margin-top:.5rem">
+            <div class="stat"><span class="n">135 Mio.</span><span class="l">SmolLM2 (unser Pi)</span></div>
+            <div class="stat"><span class="n">70 Mrd.</span><span class="l">Llama 3 (Laptop)</span></div>
+          </div>
+        </div>
+        <div class="ib info">
+          <span class="ico">🧩</span>
+          <span>Mehr Parameter = mehr Kapazität für komplexe Zusammenhänge — aber auch mehr Rechenleistung und Speicher nötig. Darum läuft GPT-4 nicht auf einem Pi!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 36 QUANTISIERUNG ═══ -->
+<div class="slide t-con" data-sec="Reserve · Vertiefung">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Reserve · Vertiefung</span><span class="slide-no">36</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Quantisierung — Warum läuft das Modell auf dem Pi?</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy" style="flex:1">
+          <h3>🗜️ Das Problem</h3>
+          <p>Ein unverkleinertes KI-Modell speichert jeden Parameter als 32-Bit-Zahl (sehr genau, aber groß).</p>
+          <p style="margin-top:.4rem;color:rgba(255,255,255,.75)">SmolLM2 mit 135 Mio. Parametern × 4 Byte = <strong style="color:var(--orange)">540 MB</strong> — zu groß für 512 MB RAM!</p>
+        </div>
+        <div class="card orange" style="flex:1">
+          <h3>✂️ Die Lösung: Quantisierung</h3>
+          <p>Zahlen werden <strong>weniger genau</strong> gespeichert (4-Bit statt 32-Bit). Das Modell wird kleiner, aber kaum schlechter.</p>
+          <div style="background:rgba(255,255,255,.13);border-radius:6px;padding:.5rem .7rem;margin-top:.5rem">
+            <p style="font-size:.72rem;font-weight:700;color:rgba(255,255,255,.95);margin-bottom:.3rem">📐 Wie im Matheunterricht — Kreisfläche (r = 5 cm):</p>
+            <p style="font-size:.71rem;font-family:var(--mono);color:rgba(255,255,255,.88);margin-bottom:.18rem">32-Bit: π = 3,14159265… → A = <strong style="color:white">78,5398 cm²</strong></p>
+            <p style="font-size:.71rem;font-family:var(--mono);color:rgba(255,255,255,.88);margin-bottom:.3rem">4-Bit:&nbsp; π ≈ 3,14&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → A = <strong style="color:white">78,5000 cm²</strong></p>
+            <p style="font-size:.68rem;color:rgba(255,255,255,.7)">Unterschied: &lt; 0,05 % — fürs Ergebnis kaum spürbar, aber viel weniger Speicher!</p>
+          </div>
+          <p style="margin-top:.45rem;color:rgba(255,255,255,.85);font-size:.78rem"><code style="background:rgba(255,255,255,.15);color:white">q4_K_S</code> = 4-Bit-Quantisierung → nur ~<strong>102 MB</strong>!</p>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card">
+          <h3>📸 Analogie: Bildkomprimierung</h3>
+          <p>Stellt euch ein Foto vor:</p>
+          <ul class="bl sm" style="margin-top:.4rem">
+            <li><strong>Original (PNG):</strong> 10 MB, perfekte Qualität</li>
+            <li><strong>JPEG komprimiert:</strong> 500 KB, kaum sichtbarer Unterschied</li>
+          </ul>
+          <p style="margin-top:.5rem">Quantisierung macht dasselbe mit KI-Modellen — kleinere Datei, fast gleiche Leistung.</p>
+        </div>
+        <div class="card yl">
+          <h3>📋 Modelle für den Pi (unter 500 MB)</h3>
+          <table class="dt" style="margin-top:.4rem">
+            <tr><th>Modell</th><th>Größe</th></tr>
+            <tr><td><code>smollm2:135m-instruct-q4_K_S</code></td><td>102 MB</td></tr>
+            <tr><td><code>gemma3:270m</code></td><td>292 MB</td></tr>
+            <tr><td><code>granite4:350m-h</code></td><td>366 MB</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 37 PI-HOLE VERTIEFUNG ═══ -->
+<div class="slide t-con" data-sec="Reserve · Vertiefung">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Reserve · Vertiefung</span><span class="slide-no">37</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Pi-hole — Werbung im ganzen Netzwerk blockieren</h2>
+    <div class="g2">
+      <div class="fc">
+        <div class="card navy" style="flex:1">
+          <h3>🌐 Wie funktioniert das Internet normalerweise?</h3>
+          <p style="color:rgba(255,255,255,.82)">Wenn ihr eine Website aufruft, fragt euer Computer zuerst: <em>„Wo ist diese Seite?"</em> — das ist ein <span style="color:var(--orange);font-weight:700">DNS-Request</span>.</p>
+          <p style="margin-top:.4rem;color:rgba(255,255,255,.65)">Auch Werbung kommt von eigenen Servern — und stellt vorher einen DNS-Request.</p>
+        </div>
+        <div class="card orange" style="flex:1">
+          <h3>🛡️ Was macht Pi-hole?</h3>
+          <p>Pi-hole ist ein <strong>DNS-Server</strong> auf eurem Pi. Er beantwortet alle DNS-Anfragen im Netzwerk.</p>
+          <p style="margin-top:.4rem;color:rgba(255,255,255,.85)">Bekannte Werbe-Adressen → Pi-hole sagt <strong>„Existiert nicht"</strong> → Werbung wird nie geladen.</p>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="card gl">
+          <h3>✅ Vorteile</h3>
+          <ul class="cl sm">
+            <li>Blockiert Werbung auf <strong>allen Geräten</strong> gleichzeitig (Handy, TV, Laptop)</li>
+            <li>Keine App nötig — läuft im Netzwerk</li>
+            <li>Seiten laden schneller (kein Werbe-Download)</li>
+            <li>Schützt auch vor Tracking-Domains</li>
+            <li>Lässt sich einfach auf dem Pi installieren</li>
+          </ul>
+        </div>
+        <div class="ib info">
+          <span class="ico">🎓</span>
+          <span>Pi-hole zeigt: Mit einfachen Mitteln kann man echte Probleme lösen. <strong>Das ist angewandte Informatik</strong> — und ihr habt heute alle Grundlagen dafür gelernt.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 38 GLOSSAR I ═══ -->
+<div class="slide t-con" data-sec="Reserve · Glossar">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Reserve · Glossar</span><span class="slide-no">38</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Glossar I — KI &amp; Sprachmodelle</h2>
+    <div class="gl-grid">
+      <dl class="gl-item"><dt>KI / Künstliche Intelligenz</dt><dd>Software, die aus Daten lernt und Aufgaben löst, die früher Menschen brauchten.</dd></dl>
+      <dl class="gl-item"><dt>Machine Learning</dt><dd>KI-Methode, bei der das Modell Regeln selbst aus Beispielen lernt — nicht programmiert bekommt.</dd></dl>
+      <dl class="gl-item"><dt>LLM (Large Language Model)</dt><dd>Großes Sprachmodell, das Text erzeugt, indem es das wahrscheinlichste nächste Wort vorhersagt.</dd></dl>
+      <dl class="gl-item"><dt>Token</dt><dd>Kleinste Einheit, in die Text zerlegt wird (~¾ Wort). Das Modell denkt in Tokens, nicht in Buchstaben.</dd></dl>
+      <dl class="gl-item"><dt>Parameter</dt><dd>Die verstellbaren „Schalter" im Modell. Mehr Parameter = mehr Kapazität, aber mehr Rechenaufwand.</dd></dl>
+      <dl class="gl-item"><dt>Training</dt><dd>Phase, in der das Modell riesige Textmengen liest und seine Parameter anpasst.</dd></dl>
+      <dl class="gl-item"><dt>Prompt</dt><dd>Die Eingabe (Frage oder Anweisung), die ihr an das KI-Modell schickt.</dd></dl>
+      <dl class="gl-item"><dt>Prompting</dt><dd>Die Kunst, Prompts so zu formulieren, dass das Modell bestmöglich antwortet.</dd></dl>
+      <dl class="gl-item"><dt>Halluzination</dt><dd>Wenn das Modell Fakten erfindet, die falsch sind — aber überzeugend klingen.</dd></dl>
+      <dl class="gl-item"><dt>Kontextfenster</dt><dd>Wie viel Text das Modell „gleichzeitig im Blick" hat. Ältere Teile des Gesprächs „vergisst" es.</dd></dl>
+      <dl class="gl-item"><dt>Quantisierung</dt><dd>Komprimierungsverfahren für KI-Modelle — kleinere Datei, kaum schlechtere Qualität.</dd></dl>
+      <dl class="gl-item"><dt>Fine-Tuning</dt><dd>Spezialisierung eines bereits trainierten Modells auf eine bestimmte Aufgabe (z.B. Chatbot).</dd></dl>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 39 GLOSSAR II ═══ -->
+<div class="slide t-con" data-sec="Reserve · Glossar">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Reserve · Glossar</span><span class="slide-no">39</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Glossar II — Hardware &amp; Netzwerk</h2>
+    <div class="gl-grid">
+      <dl class="gl-item"><dt>Raspberry Pi Zero 2W</dt><dd>Einplatinencomputer (65×30 mm), ~15 €, läuft mit Linux. W = WLAN integriert.</dd></dl>
+      <dl class="gl-item"><dt>microSD-Karte</dt><dd>Winzige Speicherkarte, die beim Pi als Festplatte dient (Betriebssystem + Daten).</dd></dl>
+      <dl class="gl-item"><dt>Betriebssystem (OS)</dt><dd>Grundsoftware, die Hardware und Programme verwaltet. Beim Pi: Raspberry Pi OS (Linux).</dd></dl>
+      <dl class="gl-item"><dt>Headless</dt><dd>Pi läuft ohne Bildschirm und Tastatur — wird per SSH über das Netzwerk bedient.</dd></dl>
+      <dl class="gl-item"><dt>SSH (Secure Shell)</dt><dd>Verschlüsselte Verbindung zum Terminal eines anderen Computers über das Netzwerk.</dd></dl>
+      <dl class="gl-item"><dt>Terminal</dt><dd>Texteingabe-Fenster, über das man den Computer per Befehle steuert.</dd></dl>
+      <dl class="gl-item"><dt>IP-Adresse</dt><dd>Eindeutige Adresse eines Geräts im Netzwerk (z.B. 192.168.1.42).</dd></dl>
+      <dl class="gl-item"><dt>Hostname</dt><dd>Name eines Geräts im Netzwerk (z.B. rpi02W-fapi). Leichter zu merken als IP.</dd></dl>
+      <dl class="gl-item"><dt>CPU</dt><dd>Prozessor — „Gehirn" des Computers. Der Pi Zero 2W hat 4 Kerne à 1 GHz.</dd></dl>
+      <dl class="gl-item"><dt>RAM</dt><dd>Arbeitsspeicher — was der Computer gerade verarbeitet. Pi Zero 2W hat 512 MB.</dd></dl>
+      <dl class="gl-item"><dt>Throttling</dt><dd>Automatische CPU-Drosselung bei Überhitzung — der Pi wird langsamer, um sich zu schützen.</dd></dl>
+      <dl class="gl-item"><dt>DNS</dt><dd>„Telefonbuch des Internets": Übersetzt Domainnamen (z.B. google.com) in IP-Adressen.</dd></dl>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 40 GLOSSAR III ═══ -->
+<div class="slide t-con" data-sec="Reserve · Glossar">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Reserve · Glossar</span><span class="slide-no">40</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Glossar III — Befehle &amp; Tools</h2>
+    <div class="gl-grid">
+      <dl class="gl-item"><dt>apt update</dt><dd>Aktualisiert die Liste verfügbarer Software-Pakete (installiert noch nichts).</dd></dl>
+      <dl class="gl-item"><dt>apt full-upgrade -y</dt><dd>Installiert alle verfügbaren Updates. -y bestätigt alle Rückfragen automatisch.</dd></dl>
+      <dl class="gl-item"><dt>sudo</dt><dd>„Superuser do" — führt einen Befehl mit Administrator-Rechten aus.</dd></dl>
+      <dl class="gl-item"><dt>ssh &lt;user&gt;@&lt;host&gt;</dt><dd>Öffnet eine SSH-Verbindung zu einem anderen Computer (&lt;user&gt; = Benutzername, &lt;host&gt; = IP-Adresse oder Hostname).</dd></dl>
+      <dl class="gl-item"><dt>ping &lt;hostname&gt;</dt><dd>Prüft, ob ein Gerät im Netzwerk erreichbar ist. Beispiel: <code>ping rpi02W-fapi.local</code></dd></dl>
+      <dl class="gl-item"><dt>Ollama</dt><dd>Open-Source-Tool zum lokalen Betrieb von KI-Modellen. Lädt Modelle herunter und startet einen lokalen Server.</dd></dl>
+      <dl class="gl-item"><dt>ollama run &lt;modell&gt;</dt><dd>Startet ein Modell und öffnet den interaktiven Chat. Beim ersten Mal: Download.</dd></dl>
+      <dl class="gl-item"><dt>ollama list</dt><dd>Zeigt alle lokal installierten Modelle an.</dd></dl>
+      <dl class="gl-item"><dt>ollama pull &lt;modell&gt;</dt><dd>Lädt ein Modell herunter ohne es sofort zu starten.</dd></dl>
+      <dl class="gl-item"><dt>top</dt><dd>Zeigt CPU-Auslastung und laufende Prozesse in Echtzeit an.</dd></dl>
+      <dl class="gl-item"><dt>vcgencmd measure_temp</dt><dd>Zeigt die aktuelle CPU-Temperatur des Raspberry Pi an.</dd></dl>
+      <dl class="gl-item"><dt>sudo reboot / poweroff</dt><dd>Startet den Pi neu (reboot) oder fährt ihn sicher herunter (poweroff).</dd></dl>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 41 TROUBLESHOOTING ═══ -->
+<div class="slide t-con" data-sec="Reserve · Troubleshooting">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Reserve · Troubleshooting</span><span class="slide-no">41</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>🛠️ Troubleshooting — Häufige Probleme &amp; Lösungen</h2>
+    <div class="g2" style="flex:1">
+      <div class="fc sm">
+        <div class="card yl">
+          <h3>❌ SSH: „Connection timed out"</h3>
+          <ul class="bl sm">
+            <li>Pi noch nicht fertig gebootet? → 3–4 Min warten</li>
+            <li>WLAN-Daten beim Flashen falsch? → Neu flashen</li>
+            <li>Hostname falsch? → <code>arp -a</code> für IP-Adresse nutzen</li>
+          </ul>
+        </div>
+        <div class="card yl">
+          <h3>❌ SSH: „Permission denied"</h3>
+          <ul class="bl sm">
+            <li>Benutzername oder Passwort falsch eingegeben</li>
+            <li>Beim Tippen des Passworts sind keine Zeichen sichtbar — das ist normal!</li>
+            <li>Groß-/Kleinschreibung beachten</li>
+          </ul>
+        </div>
+        <div class="card yl">
+          <h3>❌ <code>ollama: command not found</code></h3>
+          <ul class="bl sm">
+            <li>SSH-Session neu starten: <code>exit</code>, dann neu verbinden</li>
+            <li>Ollama-Dienst starten: <code>sudo systemctl start ollama</code></li>
+          </ul>
+        </div>
+      </div>
+      <div class="fc sm">
+        <div class="card yl">
+          <h3>❌ Modell-Download hängt / bricht ab</h3>
+          <ul class="bl sm">
+            <li>WLAN-Verbindung prüfen: <code>ping -c 3 8.8.8.8</code></li>
+            <li>Einfach nochmal <code>ollama run …</code> — setzt automatisch fort</li>
+            <li>Genug Speicher? <code>df -h</code> prüfen (mind. 500 MB frei)</li>
+          </ul>
+        </div>
+        <div class="card yl">
+          <h3>❌ Modell extrem langsam</h3>
+          <ul class="bl sm">
+            <li>Temperatur prüfen: <code>vcgencmd measure_temp</code></li>
+            <li>Über 80°C? → Throttling! Pause einlegen, abkühlen lassen</li>
+            <li>Kühlkörper richtig aufgeklebt?</li>
+          </ul>
+        </div>
+        <div class="card gl">
+          <h3>✅ Pi sicher ausschalten</h3>
+          <ul class="bl sm">
+            <li>Niemals einfach Strom trennen!</li>
+            <li>Immer: <code>sudo poweroff</code> → warten bis LEDs aus</li>
+            <li>Dann erst das Netzteil abziehen</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 42 MEHR MODELLE ═══ -->
+<div class="slide t-con" data-sec="Reserve · Vertiefung">
+  <div class="hd">
+    <a href="https://www.fabian-pingel.de" target="_blank"><img class="logo-p" src="images/logos/pingel-logo.png" alt="PINGEL AI Solutions"></a>
+    <div class="hd-mid"><span class="sec-lbl">Reserve · Mehr Modelle</span><span class="slide-no">42</span></div>
+    <a href="https://www.linamar.com" target="_blank"><img class="logo-l" src="images/logos/linamar-logo.svg" alt="Linamar Plettenberg GmbH"></a>
+  </div>
+  <div class="bd">
+    <h2>Weitere Modelle ausprobieren</h2>
+    <p class="sub-h">Nur Modelle unter ~450 MB sind für den Pi Zero 2W geeignet</p>
+    <div class="fc" style="flex:1">
+      <table class="dt">
+        <tr>
+          <th>Modell</th>
+          <th>Befehl</th>
+          <th>Größe</th>
+          <th>Stärken</th>
+        </tr>
+        <tr class="hi">
+          <td>SmolLM2 135M</td>
+          <td><code>smollm2:135m-instruct-q4_K_S</code></td>
+          <td>102 MB</td>
+          <td>Schnellste Option, gut für erste Tests</td>
+        </tr>
+        <tr>
+          <td>Gemma3 270M</td>
+          <td><code>gemma3:270m</code></td>
+          <td>292 MB</td>
+          <td>Etwas klüger, von Google</td>
+        </tr>
+        <tr>
+          <td>Granite 4 350M</td>
+          <td><code>granite4:350m-h</code></td>
+          <td>366 MB</td>
+          <td>IBM-Modell, gut für strukturierte Aufgaben</td>
+        </tr>
+      </table>
+      <div class="g3" style="margin-top:.3rem">
+        <div class="term" style="grid-column:span 3">
+          <div class="term-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="term-ttl">Ollama Befehle</span></div>
+          <div class="term-body" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 2rem">
+            <span><span class="p">$</span> <span class="c">ollama list</span><br><span class="cm"># installierte Modelle</span></span>
+            <span><span class="p">$</span> <span class="c">ollama pull gemma3:270m</span><br><span class="cm"># herunterladen</span></span>
+            <span><span class="p">$</span> <span class="c">ollama rm smollm2:135m...</span><br><span class="cm"># löschen (Platz sparen)</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="ib warn">
+        <span class="ico">💾</span>
+        <span>Die SD-Karte hat nur 32 GB — installiert nicht zu viele Modelle gleichzeitig. Mit <code>df -h</code> könnt ihr den freien Speicher prüfen.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESERVE_END -->
+
+</div><!-- #deck -->
+
+<div id="nav">
+  <button onclick="go(-1)" title="Zurück">&#9664;</button>
+  <span class="sec-n" id="sec-name"></span>
+  <span class="ctr" id="ctr"></span>
+  <button onclick="go(1)" title="Weiter">&#9654;</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let cur = 0;
+
+function go(d) {
+  slides[cur].classList.remove('active');
+  cur = (cur + d + total) % total;
+  slides[cur].classList.add('active');
+  update();
+}
+
+function update() {
+  document.getElementById('ctr').textContent = (cur+1) + ' / ' + total;
+  document.getElementById('prog-fill').style.width = ((cur+1)/total*100) + '%';
+  const lbl = slides[cur].dataset.sec || '';
+  document.getElementById('sec-name').textContent = lbl;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); go(-1); }
+  if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
+  if (e.key === 'Home') { slides[cur].classList.remove('active'); cur=0; slides[cur].classList.add('active'); update(); }
+  if (e.key === 'End')  { slides[cur].classList.remove('active'); cur=total-1; slides[cur].classList.add('active'); update(); }
+});
+
+// Touch swipe
+let tx = 0;
+document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+document.addEventListener('touchend',   e => { const dx = e.changedTouches[0].clientX - tx; if(Math.abs(dx)>50) go(dx<0?1:-1); });
+
+update();
+
+// Image sliders — auto-advance every 10 s
+const sliderState = {};
+function goSlide(id, idx) {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  wrap.querySelectorAll('.slide-img').forEach((img, i) => img.classList.toggle('active', i === idx));
+  wrap.querySelectorAll('.s-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  const lbl = document.getElementById(id + '-lbl');
+  const total = wrap.querySelectorAll('.slide-img').length;
+  if (lbl) lbl.textContent = (idx + 1) + ' / ' + total;
+  sliderState[id] = idx;
+}
+function initSlider(id, count) {
+  sliderState[id] = 0;
+  setInterval(() => goSlide(id, (sliderState[id] + 1) % count), 10000);
+}
+initSlider('slider-15', 2);
+initSlider('slider-16', 3);
+</script>
+</body>
+</html>
