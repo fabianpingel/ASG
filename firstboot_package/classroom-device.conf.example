@@ -1,0 +1,68 @@
+# =====================================================================
+# classroom-device.conf
+# ---------------------------------------------------------------------
+# Diese Datei liegt auf der Windows-lesbaren Boot-Partition der SD-Karte:
+#   /boot/firmware/classroom-device.conf
+# oder bei älteren Images:
+#   /boot/classroom-device.conf
+#
+# Pro SD-Karte kannst du hier individuelle Werte setzen.
+# Beim ersten Start liest classroom-firstboot diese Datei und richtet Gerät,
+# WLAN, Benutzer, Hostname, SSH-Keys etc. ein.
+#
+# WICHTIG:
+# - Diese Datei ist eine Shell-Konfigurationsdatei.
+# - Nur vertrauenswürdige Inhalte eintragen.
+# - Klartextpasswörter sind auf der Boot-Partition sichtbar.
+#   Besser: CLASSROOM_PASSWORD_HASH verwenden.
+# =====================================================================
+
+# Eindeutige Nummer/ID der Karte/des Raspberry Pi
+DEVICE_ID="01"
+
+# Hostname. Wenn leer, wird automatisch gebildet: HOST_PREFIX-DEVICE_ID
+HOST_PREFIX="rpi02w"
+HOSTNAME="rpi02w-01"
+
+# WLAN-Konfiguration
+WIFI_COUNTRY="DE"
+WIFI_SSID="MEIN_SCHUL_WLAN"
+WIFI_PSK="MEIN_WLAN_PASSWORT"
+WIFI_CONNECTION_NAME="classroom-wifi"
+
+# Benutzer-Konfiguration
+CREATE_CLASSROOM_USER=1
+CLASSROOM_USER="student01"
+CLASSROOM_FULLNAME="Student 01"
+
+# Variante A: Klartextpasswort, einfach aber auf Boot-Partition sichtbar.
+CLASSROOM_PASSWORD="StartPasswort01!"
+
+# Variante B: Passwort-Hash, bevorzugt.
+# Auf einem Linux/Pi erzeugen mit:
+#   openssl passwd -6
+# Dann CLASSROOM_PASSWORD leer lassen und Hash hier eintragen.
+CLASSROOM_PASSWORD_HASH=""
+
+# 1 = Schüler muss Passwort beim ersten Login ändern.
+# Hinweis: Kann im Unterricht stören, wenn SSH/headless genutzt wird.
+FORCE_PASSWORD_CHANGE=0
+
+# 1 = Nutzer bekommt sudo-Rechte.
+CLASSROOM_USER_SUDO=1
+
+# 1 = typische Raspberry-Pi-Gruppen hinzufügen: gpio, i2c, spi, video, render, netdev, ...
+ADD_RPI_GROUPS=1
+
+# Alten Master-User entfernen?
+# Empfehlung zunächst: 0 lassen, bis alles sicher funktioniert.
+REMOVE_OLD_USER=0
+OLD_USER_TO_REMOVE="DEIN_MASTER_USERNAME"
+
+# WLAN/Internet-Anforderungen
+REQUIRE_WIFI_CONNECTIVITY=1
+REQUIRE_INTERNET=0
+PING_TARGET="8.8.8.8"
+
+# Nach erfolgreichem First-Boot vorsichtig History/Temp bereinigen
+CLEANUP_ON_SUCCESS=1
