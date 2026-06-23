@@ -218,6 +218,44 @@ load_config() {
     PING_TARGET="${PING_TARGET:-8.8.8.8}"
     CLEANUP_ON_SUCCESS="${CLEANUP_ON_SUCCESS:-1}"
 
+    # ------------------------------------------------------------
+    # Windows-CRLF-Zeilenenden aus classroom-device.conf abfangen
+    # ------------------------------------------------------------
+    # Wenn classroom-device.conf unter Windows bearbeitet wurde,
+    # können Werte ein verstecktes \r am Ende enthalten.
+    # Beispiel: HOSTNAME="rpi02w-03\r"
+    # Das macht Hostname/User/WLAN-Werte ungültig.
+    strip_cr() {
+        printf '%s' "$1" | tr -d '\r'
+    }
+
+    DEVICE_ID="$(strip_cr "${DEVICE_ID:-}")"
+
+    WIFI_SSID="$(strip_cr "${WIFI_SSID:-}")"
+    WIFI_PSK="$(strip_cr "${WIFI_PSK:-}")"
+    WIFI_COUNTRY="$(strip_cr "${WIFI_COUNTRY:-}")"
+    WIFI_CONNECTION_NAME="$(strip_cr "${WIFI_CONNECTION_NAME:-}")"
+
+    HOST_PREFIX="$(strip_cr "${HOST_PREFIX:-}")"
+    HOSTNAME="$(strip_cr "${HOSTNAME:-}")"
+
+    CLASSROOM_USER="$(strip_cr "${CLASSROOM_USER:-}")"
+    CLASSROOM_FULLNAME="$(strip_cr "${CLASSROOM_FULLNAME:-}")"
+    CLASSROOM_PASSWORD="$(strip_cr "${CLASSROOM_PASSWORD:-}")"
+    CLASSROOM_PASSWORD_HASH="$(strip_cr "${CLASSROOM_PASSWORD_HASH:-}")"
+
+    CREATE_CLASSROOM_USER="$(strip_cr "${CREATE_CLASSROOM_USER:-1}")"
+    FORCE_PASSWORD_CHANGE="$(strip_cr "${FORCE_PASSWORD_CHANGE:-0}")"
+    CLASSROOM_USER_SUDO="$(strip_cr "${CLASSROOM_USER_SUDO:-1}")"
+    ADD_RPI_GROUPS="$(strip_cr "${ADD_RPI_GROUPS:-1}")"
+    REMOVE_OLD_USER="$(strip_cr "${REMOVE_OLD_USER:-0}")"
+    OLD_USER_TO_REMOVE="$(strip_cr "${OLD_USER_TO_REMOVE:-}")"
+
+    REQUIRE_WIFI_CONNECTIVITY="$(strip_cr "${REQUIRE_WIFI_CONNECTIVITY:-1}")"
+    REQUIRE_INTERNET="$(strip_cr "${REQUIRE_INTERNET:-0}")"
+    PING_TARGET="$(strip_cr "${PING_TARGET:-8.8.8.8}")"
+    CLEANUP_ON_SUCCESS="$(strip_cr "${CLEANUP_ON_SUCCESS:-1}")"
+
     CONFIG_LOADED=1
 }
 
@@ -657,8 +695,12 @@ run_firstboot() {
 
     touch "$DONE_FLAG"
     rm -f "$ENABLED_FLAG" "$FAILED_FLAG" 2>/dev/null || true
-    systemctl disable classroom-firstboot.service >/dev/null 2>&1 || true
-    systemctl disable classroom-firstboot-bootfallback.service >/dev/null 2>&1 || true
+    
+    # Service bewusst NICHT deaktivieren.
+    # Er bleibt enabled, startet aber nur, wenn classroom-firstboot.enabled existiert.
+    # Dadurch kann man später am Windows-PC durch Marker-Dateien erneut auslösen.
+    #systemctl disable classroom-firstboot.service >/dev/null 2>&1 || true
+    #systemctl disable classroom-firstboot-bootfallback.service >/dev/null 2>&1 || true
 
     log "[OK] Classroom First-Boot erfolgreich abgeschlossen."
     log "[INFO] Marker-Datei geschrieben: $DONE_FLAG"
