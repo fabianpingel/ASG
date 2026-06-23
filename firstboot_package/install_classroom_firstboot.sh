@@ -23,17 +23,17 @@ set -euo pipefail
 # Diese Werte sind Fallbacks. Pro SD-Karte kann später auf der Windows-lesbaren
 # Boot-Partition eine classroom-device.conf abgelegt werden, die diese Werte überschreibt.
 
-DEFAULT_WIFI_SSID=""
-DEFAULT_WIFI_PSK=""
+DEFAULT_WIFI_SSID="KI-Workshop"
+DEFAULT_WIFI_PSK="Workshop!2026"
 DEFAULT_WIFI_COUNTRY="DE"
-DEFAULT_WIFI_CONNECTION_NAME="classroom-wifi"
+DEFAULT_WIFI_CONNECTION_NAME="ASG-wifi"
 
-DEFAULT_HOST_PREFIX="rpi-zero"
+DEFAULT_HOST_PREFIX="rpi02w"
 DEFAULT_HOSTNAME=""              # leer = automatisch aus HOST_PREFIX + DEVICE_ID/Serial
 
 CREATE_CLASSROOM_USER=1
-DEFAULT_CLASSROOM_USER="student"
-DEFAULT_CLASSROOM_FULLNAME="Student"
+DEFAULT_CLASSROOM_USER="user"
+DEFAULT_CLASSROOM_FULLNAME="Schueler"
 DEFAULT_CLASSROOM_PASSWORD=""      # Klartext-Fallback; besser pro Karte setzen oder HASH verwenden
 DEFAULT_CLASSROOM_PASSWORD_HASH="" # bevorzugt, wenn gesetzt: z.B. openssl passwd -6
 FORCE_PASSWORD_CHANGE=0

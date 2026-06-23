@@ -18,25 +18,25 @@
 # =====================================================================
 
 # Eindeutige Nummer/ID der Karte/des Raspberry Pi
-DEVICE_ID="01"
+DEVICE_ID="02"
 
 # Hostname. Wenn leer, wird automatisch gebildet: HOST_PREFIX-DEVICE_ID
 HOST_PREFIX="rpi02w"
-HOSTNAME="rpi02w-01"
+HOSTNAME="rpi02w-02"
 
 # WLAN-Konfiguration
 WIFI_COUNTRY="DE"
-WIFI_SSID="MEIN_SCHUL_WLAN"
-WIFI_PSK="MEIN_WLAN_PASSWORT"
-WIFI_CONNECTION_NAME="classroom-wifi"
+WIFI_SSID="KI-Workshop"
+WIFI_PSK="Workshop!2026"
+WIFI_CONNECTION_NAME="ASG-wifi"
 
 # Benutzer-Konfiguration
 CREATE_CLASSROOM_USER=1
-CLASSROOM_USER="student01"
-CLASSROOM_FULLNAME="Student 01"
+CLASSROOM_USER="user02"
+CLASSROOM_FULLNAME="Schueler 02"
 
 # Variante A: Klartextpasswort, einfach aber auf Boot-Partition sichtbar.
-CLASSROOM_PASSWORD="StartPasswort01!"
+CLASSROOM_PASSWORD="Workshop!2026"
 
 # Variante B: Passwort-Hash, bevorzugt.
 # Auf einem Linux/Pi erzeugen mit:
