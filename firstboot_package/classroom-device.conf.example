@@ -6,23 +6,26 @@
 # oder bei älteren Images:
 #   /boot/classroom-device.conf
 #
-# Pro SD-Karte kannst du hier individuelle Werte setzen.
-# Beim ersten Start liest classroom-firstboot diese Datei und richtet Gerät,
+# Pro SD-Karte werden hier individuelle Werte gesetzt.
+# Beim ersten Start liest 'install_classroom_firstboot.sh' diese Datei und richtet Gerät,
 # WLAN, Benutzer, Hostname, SSH-Keys etc. ein.
+#
+# TODO:
+# - alle 'XX' durch Nummer der SD Karte ersetzen
 #
 # WICHTIG:
 # - Diese Datei ist eine Shell-Konfigurationsdatei.
 # - Nur vertrauenswürdige Inhalte eintragen.
-# - Klartextpasswörter sind auf der Boot-Partition sichtbar.
+# - Klartextpasswörter sind auf der Boot-Partition sichtbar!
 #   Besser: CLASSROOM_PASSWORD_HASH verwenden.
 # =====================================================================
 
-# Eindeutige Nummer/ID der Karte/des Raspberry Pi
-DEVICE_ID="02"
+# Eindeutige Nummer/ID der Karte/des Raspberry Pi zum Beispiel DEVICE_ID="02"
+DEVICE_ID="XX"
 
 # Hostname. Wenn leer, wird automatisch gebildet: HOST_PREFIX-DEVICE_ID
 HOST_PREFIX="rpi02w"
-HOSTNAME="rpi02w-02"
+HOSTNAME="rpi02w-XX"
 
 # WLAN-Konfiguration
 WIFI_COUNTRY="DE"
@@ -32,8 +35,8 @@ WIFI_CONNECTION_NAME="ASG-wifi"
 
 # Benutzer-Konfiguration
 CREATE_CLASSROOM_USER=1
-CLASSROOM_USER="user02"
-CLASSROOM_FULLNAME="Schueler 02"
+CLASSROOM_USER="userXX"
+CLASSROOM_FULLNAME="SchuelerXX"
 
 # Variante A: Klartextpasswort, einfach aber auf Boot-Partition sichtbar.
 CLASSROOM_PASSWORD="Workshop!2026"

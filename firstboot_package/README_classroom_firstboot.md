@@ -1,6 +1,6 @@
-# Raspberry Pi Classroom First-Boot Setup
+# Raspberry Pi First-Boot Setup
 
-Dieses Paket richtet ein reproduzierbares First-Boot-System für Raspberry Pi Zero 2 W Schulkarten ein.
+Dieses Paket richtet ein reproduzierbares First-Boot-System für Raspberry Pi Zero 2 W SD-Karten ein.
 
 ## Zielarchitektur
 
